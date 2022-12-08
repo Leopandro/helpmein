@@ -31,7 +31,7 @@ class Header implements ArrayAccessEntityInterface
 
     /**
      * Название класса коллекции заголовков. Нужно, чтобы перевести заголовок колонки,
-     * т.к. является ключом в языковых файлах skillstaff/resources/lang/ru/list_headers.php
+     * т.к. является ключом в языковых файлах laradock/resources/lang/ru/list_headers.php
      * @var string
      */
     public string $collectionClassName;

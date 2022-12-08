@@ -13,19 +13,23 @@ export interface User {
 
 export const useAuthStore = defineStore("auth", () => {
   const errors = ref("");
+  const messages = ref("");
   const user = ref<User>({} as User);
   const isAuthenticated = ref(!!JwtService.getToken());
 
   function setAuth(authUser: User) {
     isAuthenticated.value = true;
+    console.log(authUser);
     user.value = authUser;
     errors.value = "";
-      console.log(user.value);
     JwtService.saveToken(user.value.token);
   }
 
   function setError(error: any) {
-    errors.value = error;
+      error ? errors.value = error : errors.value = '';
+  }
+  function setMessage(message: any) {
+    messages.value = message;
   }
 
   function purgeAuth() {
@@ -50,19 +54,30 @@ export const useAuthStore = defineStore("auth", () => {
   }
 
   function register(credentials: User) {
-    return ApiService.post("register", credentials)
+    return ApiService.post("auth/register", credentials)
       .then(({ data }) => {
-        setAuth(data);
+        setAuth(data.data);
       })
       .catch(({ response }) => {
         setError(response.data.errors);
       });
   }
 
+  function updatePassword(object) {
+      return ApiService.post("auth/update-password", object)
+          .then(() => {
+
+          })
+          .catch(({ response }) => {
+              setMessage(response.data.message);
+              setError(response.data.errors);
+          });
+  }
+
   function forgotPassword(email: string) {
-    return ApiService.post("forgot_password", email)
+    return ApiService.post("auth/remind-password", email)
       .then(() => {
-        setError({});
+
       })
       .catch(({ response }) => {
         setError(response.data.errors);
@@ -74,6 +89,7 @@ export const useAuthStore = defineStore("auth", () => {
       ApiService.setHeader();
       ApiService.post("verify_token")
         .then(({ data }) => {
+            setAuth(data.data);
         })
         .catch(({ response }) => {
           setError(response.data.errors);
@@ -86,11 +102,13 @@ export const useAuthStore = defineStore("auth", () => {
 
   return {
     errors,
+      messages,
     user,
     isAuthenticated,
     login,
     logout,
     register,
+    updatePassword,
     forgotPassword,
     verifyAuth,
   };

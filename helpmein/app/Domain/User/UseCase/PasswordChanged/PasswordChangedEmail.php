@@ -12,7 +12,7 @@ class PasswordChangedEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(protected $user, protected $password)
+    public function __construct(protected $user, protected $token)
     {
     }
 
@@ -25,10 +25,11 @@ class PasswordChangedEmail extends Mailable
     {
         return $this->view('email.user.password-reset')
                 ->with([
-                    'password' => $this->password,
+                    'resetPasswordLink' => request()->getHost().'/#/password-update?token='.$this->token,
                     'user' => $this->user,
+                    'subject' => 'Password reset'
                 ])
-                ->from('admin@immunitet.com', 'Password remind')
-                ->subject('Password remind');
+                ->from('admin@admin.com', 'Password reset url')
+                ->subject('Password reset url');
     }
 }

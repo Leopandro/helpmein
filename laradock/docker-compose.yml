@@ -1068,7 +1068,6 @@ services:
 
   ### frontend-server ####################################################
     frontend-server:
-      container_name: frontend_server
       build:
         context: ${FRONTEND_SERVER_CODE_PATH_HOST}
         args:

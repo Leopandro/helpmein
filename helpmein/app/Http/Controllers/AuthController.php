@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Auth\Model\PasswordReset;
 use App\Domain\User\Model\User;
 use App\Domain\User\Request\AuthenticateUserRequest;
 use App\Domain\User\Request\ChangePasswordRequest;
@@ -11,8 +12,10 @@ use App\Domain\User\Service\AuthenticationService;
 use App\Domain\User\UseCase\PasswordChanged\PasswordChangedEmail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use JetBrains\PhpStorm\ArrayShape;
@@ -30,7 +33,9 @@ class AuthController extends Controller
         $user = $service->getUserByCredentials($data['email'], $data['password']);
         $token = $service->createUserToken($user);
 
-        return ['token' => $token];
+        $userData = $user->attributesToArray();
+        $userData['token'] = $token;
+        return $userData;
     }
 
     #[ArrayShape(['user' => "array"])]
@@ -47,23 +52,30 @@ class AuthController extends Controller
         ];
     }
 
-    public function verifyToken(Request $request): JsonResponse
+    public function verifyToken(Request $request, AuthenticationService $service): JsonResponse
     {
-        return $this->getSuccessResponse([
-            'errors' => [
-                'error1'
-            ]
-        ]);
+        $user = auth('sanctum')->user();
+        $token = $request->bearerToken();
+        $userAttributes = $user->attributesToArray();
+        $userAttributes['token'] = $token;
+        return $this->getSuccessResponse($userAttributes);
     }
 
-    public function register(RegisterRequest $request): JsonResponse
+    public function register(RegisterRequest $request, AuthenticationService $service): JsonResponse
     {
         $user = new User();
         $user->login = $request->get('login');
         $user->email = $request->get('email');
+        $user->name = $request->get('first_name');
+        $user->surname = $request->get('last_name');
         $user->password = bcrypt($request->get('password'));
-        if ($result = $user->save()) {
-            return $this->getSuccessResponse([]);
+
+
+        $userData = $user->attributesToArray();
+        if ($user->save()) {
+            $token = $service->createUserToken($user);
+            $userData['token'] = $token;
+            return $this->getSuccessResponse($userData);
         } else {
             return $this->getErrorResponse(["Ошибка"],422);
         }
@@ -71,12 +83,36 @@ class AuthController extends Controller
 
     public function remindPassword(RemindPasswordRequest $request): JsonResponse
     {
+        /** @var User $user */
         $user = User::query()->where('email','=',$request->get('email'))->firstOrFail();
-        $newPassword = Str::random(10);
-        $user->password = bcrypt($newPassword);
-        Mail::to($user->email)->send(new PasswordChangedEmail($user, $newPassword));
+        $token = Str::random(20);
+
+        $passwordReset = PasswordReset::query()->updateOrCreate([
+            'email' => $user->email
+        ], [
+            'token' => $token
+        ]);
+        Mail::to($user->email)->send(new PasswordChangedEmail($user, $token));
         if ($result = $user->save()) {
             return $this->getSuccessResponse([]);
+        } else {
+            return $this->getErrorResponse(["Ошибка"],422);
+        }
+    }
+
+    public function updatePassword(ChangePasswordRequest $request, AuthenticationService $service): JsonResponse
+    {
+        $token = $request->get('token');
+
+        $password_reset = \App\Domain\Auth\Model\PasswordReset::query()->where('token',$token)->firstOrFail();
+        /** @var User $user */
+        $user = User::query()->where('email','=',$password_reset->email)->firstOrFail();
+        $user->password =  bcrypt($request->get('password'));
+        if ($result = $user->save()) {
+            $token = $service->createUserToken($user);
+            $userData = $user->attributesToArray();
+            $userData['token'] = $token;
+            return $this->getSuccessResponse($userData);
         } else {
             return $this->getErrorResponse(["Ошибка"],422);
         }

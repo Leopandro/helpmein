@@ -16,7 +16,7 @@
         <!--begin::Username-->
         <div class="d-flex flex-column">
           <div class="fw-bold d-flex align-items-center fs-5">
-            Max Smith
+              {{ username }}
             <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2"
               >Pro</span
             >
@@ -298,7 +298,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import {defineComponent, computed, onUnmounted, onMounted} from "vue";
 import { useI18n } from "vue-i18n";
 import { useAuthStore } from "@/stores/auth";
 import { useRouter } from "vue-router";
@@ -310,7 +310,6 @@ export default defineComponent({
     const router = useRouter();
     const i18n = useI18n();
     const store = useAuthStore();
-
     i18n.locale.value = localStorage.getItem("lang")
       ? (localStorage.getItem("lang") as string)
       : "en";
@@ -355,10 +354,15 @@ export default defineComponent({
     const currentLangugeLocale = computed(() => {
       return countries[i18n.locale.value as keyof typeof countries];
     });
-
+      const username = computed(() => {
+          const store = useAuthStore();
+          const user = store.user;
+          return user.name + ' ' + user.surname;
+      });
     return {
       signOut,
       setLang,
+        username,
       currentLanguage,
       currentLangugeLocale,
       countries,

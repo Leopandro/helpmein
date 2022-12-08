@@ -19,12 +19,16 @@ use App\Http\Controllers as Controller;
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/verify_token', [Controller\AuthController::class, 'verifyToken']);
 
-    Route::get('user/list', function () {
-        return User::query()->get()->toArray();
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('/info/{user}', [Controller\UserController::class, 'info'])->name('info');
+        Route::post('/create', [Controller\UserController::class, 'create'])->name('create');
+        Route::post('/edit/{user}', [Controller\UserController::class, 'edit'])->name('edit');
+        Route::get('/list', [Controller\UserController::class, 'list'])->name('list');
     });
 });
 Route::group(['prefix' => 'auth'], function () {
     Route::post('/login', [Controller\AuthController::class, 'login']);
+    Route::post('/update-password', [Controller\AuthController::class, 'updatePassword'])->name('update-password');
     Route::post('/register', [Controller\AuthController::class, 'register']);
     Route::post('/remind-password', [Controller\AuthController::class, 'remindPassword']);
     Route::post('/change-password', [Controller\AuthController::class, 'changePassword']);

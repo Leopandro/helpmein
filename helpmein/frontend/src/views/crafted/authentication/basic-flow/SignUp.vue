@@ -272,8 +272,8 @@ export default defineComponent({
       // Send login request
       await store.register(values);
 
-      const error = Object.values(store.errors);
-
+      const error = store.errors;
+      console.log(error);
       if (!error) {
         Swal.fire({
           text: "You have successfully logged in!",

@@ -30,7 +30,7 @@
                 <a
                   href="#"
                   class="text-gray-800 text-hover-primary fs-2 fw-bold me-1"
-                  >Max Smith</a
+                  >{{ user.first_name }}</a
                 >
                 <a href="#">
                   <span class="svg-icon svg-icon-1 svg-icon-primary">
@@ -323,11 +323,18 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Dropdown3 from "@/components/dropdown/Dropdown3.vue";
+import {useAuthStore} from "@/stores/auth";
 
 export default defineComponent({
   name: "profile-page-layout",
   components: {
     Dropdown3,
   },
+    setup() {
+        const user = useAuthStore().user;
+        return {
+            user
+        }
+    }
 });
 </script>

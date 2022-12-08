@@ -17,6 +17,7 @@ import { initInlineSvg } from "@/core/plugins/inline-svg";
 import { initVeeValidate } from "@/core/plugins/vee-validate";
 
 import "@/core/plugins/prismjs";
+import {vue3Debounce} from "vue-debounce";
 const app = createApp(App);
 
 app.use(createPinia());
@@ -29,7 +30,7 @@ initInlineSvg(app);
 initVeeValidate();
 
 app.use(i18n);
-
+app.directive('debounce', vue3Debounce({ lock: true }))
 app.directive("tooltip", (el) => {
   new Tooltip(el);
 });

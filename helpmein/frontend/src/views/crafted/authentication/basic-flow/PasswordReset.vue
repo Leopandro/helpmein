@@ -74,6 +74,7 @@ import { ErrorMessage, Field, Form as VForm } from "vee-validate";
 import { useAuthStore } from "@/stores/auth";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "password-reset",
@@ -84,6 +85,7 @@ export default defineComponent({
   },
   setup() {
     const store = useAuthStore();
+      const router = useRouter();
 
     const submitButton = ref<HTMLButtonElement | null>(null);
 
@@ -105,11 +107,11 @@ export default defineComponent({
       // Send login request
       await store.forgotPassword(values);
 
-      const error = Object.values(store.errors);
+      const error = store.errors;
 
       if (!error) {
         Swal.fire({
-          text: "You have successfully logged in!",
+          text: "Password reset link successfully sent",
           icon: "success",
           buttonsStyling: false,
           confirmButtonText: "Ok, got it!",
@@ -117,7 +119,10 @@ export default defineComponent({
           customClass: {
             confirmButton: "btn fw-semobold btn-light-primary",
           },
-        });
+        }).then(() => {
+            // Go to page after successfully login
+            router.push({ name: "sign-in" });
+        });;
       } else {
         Swal.fire({
           text: error[0] as string,

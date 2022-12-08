@@ -5,6 +5,7 @@ namespace App\Domain\User\Model;
 use App\Domain\Company\Model\Company;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -19,8 +20,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string password
  * @property string middle_name
  * @property string surname
+ * @property string remember_token
  * @property string email
- * @property Company company
  */
 class User extends Authenticatable
 {
@@ -53,9 +54,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function company(): HasOne
+    public function clients(): BelongsToMany
     {
-        return $this->hasOne(Company::class);
+        return $this->belongsToMany(User::class, 'user_clients', 'user_id', 'client_id');
+    }
+
+    public function teachers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_clients','client_id','user_id');
     }
 
     public static function createUser(

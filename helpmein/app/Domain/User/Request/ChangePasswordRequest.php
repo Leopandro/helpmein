@@ -13,9 +13,9 @@ class ChangePasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'currentPassword' => sprintf('required|string|min:%d', config('settings.password_min_length')),
-            'newPassword' => sprintf('required|string|min:%d', config('settings.password_min_length')),
-            'confirmNewPassword' => sprintf('required|string|min:%d', config('settings.password_min_length')),
+            'token' => 'required|string',
+            'password' => sprintf('required|string|min:%d', config('settings.password_min_length')),
+            'password_confirm' => sprintf('required|string|min:%d', config('settings.password_min_length')),
         ];
     }
 }

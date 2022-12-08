@@ -2,9 +2,9 @@ up: docker-up
 
 stop: docker-stop
 
-init: docker-up php-composer-install php-migrate docker-prune
+init: docker-up php-composer-install php-migrate
 
-init-local: docker-clean docker-up-local php-composer-install php-migrate docker-prune
+init-local: docker-clean docker-up-local php-composer-install php-migrate
 
 docker-clean:
 	docker-compose down --remove-orphans
@@ -32,7 +32,7 @@ php-composer-install:
 	docker-compose exec --user=laradock workspace composer install
 
 php-migrate:
-	docker-compose exec --user=laradock workspace php artisan migrate
+	docker-compose exec --user=laradock workspace php artisan migrate --seed
 
 php-migrate-force:
 	docker-compose exec --user=laradock workspace php artisan migrate --force

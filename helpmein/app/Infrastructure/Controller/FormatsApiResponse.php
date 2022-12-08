@@ -43,11 +43,11 @@ trait FormatsApiResponse
      */
     protected function getSingleErrorResponse(string $message, int $code = 400, array $data = [], $errorCode = ''): JsonResponse
     {
-        return $this->getErrorResponse([
-            'code' => $errorCode,
-            'source' => '-',
-            'title' => $message,
-        ], $code, $data);
+        return new JsonResponse([
+            'success' => false,
+            'data' => $data,
+            'message' => $message,
+        ], $code);
     }
 
     /**

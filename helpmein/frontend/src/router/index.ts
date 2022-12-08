@@ -120,7 +120,7 @@ const routes: Array<RouteRecordRaw> = [
         name: "user-list",
         component: () => import("@/views/users/UserListing.vue"),
         meta: {
-          pageTitle: "Users Listing",
+          pageTitle: "Список клиентов",
           breadcrumbs: ["Apps", "User"],
         },
       },
@@ -129,7 +129,16 @@ const routes: Array<RouteRecordRaw> = [
         name: "user-create",
         component: () => import("@/views/users/UserCreate.vue"),
         meta: {
-          pageTitle: "Users Create",
+          pageTitle: "Создать клиента",
+          breadcrumbs: ["Apps", "User"],
+        },
+      },
+      {
+        path: "/user/edit/:id",
+        name: "user-edit",
+        component: () => import("@/views/users/UserEdit.vue"),
+        meta: {
+          pageTitle: "Редактировать клиента",
           breadcrumbs: ["Apps", "User"],
         },
       },
@@ -164,6 +173,15 @@ const routes: Array<RouteRecordRaw> = [
           import("@/views/crafted/authentication/basic-flow/PasswordReset.vue"),
         meta: {
           pageTitle: "Password reset",
+        },
+      },
+      {
+        path: "/password-update",
+        name: "password-update",
+        component: () =>
+          import("@/views/crafted/authentication/basic-flow/PasswordUpdate.vue"),
+        meta: {
+          pageTitle: "Password update",
         },
       },
     ],

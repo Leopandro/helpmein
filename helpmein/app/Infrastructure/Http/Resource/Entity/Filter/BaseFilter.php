@@ -37,7 +37,7 @@ class BaseFilter implements ArrayAccessEntityInterface
 
     /**
      * Название класса коллекции фильтров. Нужно, чтобы перевести заголовок фильтров,
-     * т.к. является ключом в языковых файлах skillstaff/resources/lang/ru/list_filters.php
+     * т.к. является ключом в языковых файлах laradock/resources/lang/ru/list_filters.php
      * @var string
      */
     public string $collectionClassName;

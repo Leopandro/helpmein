@@ -11,7 +11,7 @@
                     <input
                         type="text"
                         v-model="search"
-                        @input="searchItems()"
+                        v-debounce:400="searchItems"
                         class="form-control form-control-solid w-250px ps-15"
                         placeholder="Search Users"
                     />
@@ -46,16 +46,23 @@
             <table id="kt_datatable_zero_configuration" class="table table-row-bordered gy-5">
                 <thead>
                 <tr class="fw-semibold fs-6 text-muted">
-                    <th>Username</th>
-                    <th>Name</th>
-                    <th>Email</th>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>E-mail</th>
+                    <th>-</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="user of users">
-                    <td>{{ user.login }}</td>
                     <td>{{ user.name }}</td>
+                    <td>{{ user.surname }}</td>
                     <td>{{ user.email }}</td>
+                    <td>
+                        <router-link :to="'edit/'+user.id">
+                            <a href="javascript:;" class="btn btn-icon-primary btn-text-primary"><i class="bi bi-pencil-square fs-4 me-2"></i></a>
+                        </router-link>
+                        <a href="javascript:;" class="btn btn-icon-danger btn-text-danger"><i class="bi bi-backspace fs-4 me-2"></i></a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -72,6 +79,7 @@ import AddCustomerModal from "@/components/modals/forms/AddCustomerModal.vue";
 import type {ICustomer} from "@/core/data/customers";
 import arraySort from "array-sort";
 import ApiService from "@/core/services/ApiService";
+import {vue3Debounce} from "vue-debounce";
 
 export default defineComponent({
     name: "user-list",
@@ -84,9 +92,11 @@ export default defineComponent({
     },
 
     methods: {
-        deleteCustomer(id: number) {
-
-        },
+        async searchItems() {
+            await ApiService.get('/user/list','?search=' + this.search).then((data: any) => {
+                this.users = data.data;
+            })
+        }
     },
     data() {
         return {
