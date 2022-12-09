@@ -173,6 +173,7 @@ import { useRoute } from "vue-router";
 import MainMenuConfig from "@/core/config/MainMenuConfig";
 import { sidebarMenuIcons } from "@/core/helpers/config";
 import { useI18n } from "vue-i18n";
+import {useAuthStore} from "@/stores/auth";
 
 export default defineComponent({
   name: "sidebar-menu",
@@ -180,9 +181,11 @@ export default defineComponent({
   setup() {
     const { t, te } = useI18n();
     const route = useRoute();
+    const store = useAuthStore();
     const scrollElRef = ref<null | HTMLElement>(null);
 
     onMounted(() => {
+        console.log(store.roles);
       if (scrollElRef.value) {
         scrollElRef.value.scrollTop = 0;
       }

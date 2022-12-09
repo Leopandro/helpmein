@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @property int id
@@ -25,7 +26,7 @@ use Laravel\Sanctum\HasApiTokens;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -56,12 +57,12 @@ class User extends Authenticatable
 
     public function clients(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'user_clients', 'user_id', 'client_id');
-    }
-
-    public function teachers(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'user_clients','client_id','user_id');
+        return $this
+            ->belongsToMany(User::class, 'user_clients', 'user_id', 'client_id')
+            ->withPivot([
+                'name',
+                'surname'
+            ]);
     }
 
     public static function createUser(

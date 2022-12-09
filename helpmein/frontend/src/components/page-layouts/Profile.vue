@@ -30,7 +30,7 @@
                 <a
                   href="#"
                   class="text-gray-800 text-hover-primary fs-2 fw-bold me-1"
-                  >{{ user.first_name }}</a
+                  >{{ user.name }}</a
                 >
                 <a href="#">
                   <span class="svg-icon svg-icon-1 svg-icon-primary">

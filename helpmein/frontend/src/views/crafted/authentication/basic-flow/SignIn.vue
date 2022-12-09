@@ -168,6 +168,7 @@ import { useAuthStore, type User } from "@/stores/auth";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
 import * as Yup from "yup";
+import {usePermissionStore} from "@/stores/permission";
 
 export default defineComponent({
   name: "sign-in",
@@ -179,7 +180,7 @@ export default defineComponent({
   setup() {
     const store = useAuthStore();
     const router = useRouter();
-
+    const permissionStore = usePermissionStore();
     const submitButton = ref<HTMLButtonElement | null>(null);
 
     //Create form validation object
@@ -204,6 +205,8 @@ export default defineComponent({
       // Send login request
       await store.login(values);
       const error = store.errors;
+      const permissions = store.permissions;
+      console.log(permissions);
       if (error.length === 0) {
         Swal.fire({
           text: "You have successfully logged in!",
@@ -215,8 +218,7 @@ export default defineComponent({
             confirmButton: "btn fw-semobold btn-light-primary",
           },
         }).then(() => {
-          // Go to page after successfully login
-          router.push({ name: "dashboard" });
+          router.push({ name: permissionStore.getUrlByRole(store.roles) });
         });
       } else {
         Swal.fire({

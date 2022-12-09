@@ -5,6 +5,7 @@ use Faker\Generator;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Domain\User\Model\User;
+use Spatie\Permission\Models\Role;
 
 /**
  * Class UserSeeder
@@ -34,5 +35,6 @@ class AdminSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
         $user->save();
+        $user->assignRole(Role::findByName('Teacher'));
     }
 }

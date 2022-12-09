@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Auth\Model\PasswordReset;
+use App\Domain\Client\Model\Client;
 use App\Domain\User\Gates\UserEditGate;
 use App\Domain\User\Model\User;
 use App\Domain\User\Request\UserCreateRequest;
@@ -19,6 +20,7 @@ class UserController extends Controller
 {
     public function info(Request $request, User $user): JsonResponse
     {
+        Gate::authorize(UserEditGate::getCode(), $user->id);
         return $this->getSuccessResponse((new UserInfoResource($user))->toArray($request));
     }
     public function create(UserCreateRequest $request): JsonResponse
@@ -26,13 +28,17 @@ class UserController extends Controller
         $user = new User();
         $user->login = $request->get('login');
         $user->email = $request->get('email');
-        $user->name = $request->get('first_name');
-        $user->surname = $request->get('last_name');
+        $user->name = $request->get('name');
+        $user->surname = $request->get('surname');
         $user->password = '';
         if ($result = $user->save()) {
             $id = auth('sanctum')->user()->getAuthIdentifier();
             $token = \Illuminate\Support\Str::random(32);
-            $user->teachers()->attach($id, ['token' => $token]);
+            $user->teachers()->attach($id, [
+                'token' => $token,
+                'name' => $user->name,
+                'surname' => $user->surname
+            ]);
 
             $passwordReset = PasswordReset::query()->updateOrCreate([
                 'email' => $user->email
@@ -51,8 +57,13 @@ class UserController extends Controller
         Gate::authorize(UserEditGate::getCode(), $user->id);
         $user->login = $request->get('login');
         $user->email = $request->get('email');
-        $user->name = $request->get('first_name');
-        $user->surname = $request->get('last_name');
+
+        $user->teachers()
+            ->sync([
+                auth('sanctum')->id() => [
+                    'name' => $request->get('name'),
+                    'surname' => $request->get('surname')
+                ]]);
         if ($result = $user->save()) {
             return $this->getSuccessResponse([]);
         } else {
@@ -63,19 +74,20 @@ class UserController extends Controller
     public function list(Request $request) {
         /** @var User $user */
         $user = auth('sanctum')->user();
-        /** @var Builder $clients */
-        $clients = User::query();
-        $clients
-            ->whereHas('teachers', function (Builder $query) {
-                $query->where('user_id', '=', auth('sanctum')->id());
+        /** @var Builder $query */
+        $query = Client::query();
+        $search = $request->get('search');
+        $query
+            ->with('teachers')
+            ->whereHas('teachers', function (Builder $query) use ($search) {
+                $query->where('user_clients.user_id', '=', auth('sanctum')->id());
+
+                if ($search) {
+                    $query->where('user_clients.name','ILIKE', "%$search%")
+                        ->orWhere('user_clients.surname','ILIKE', "%$search%")
+                        ->orWhere('email','ILIKE', "%$search%");;
+                }
             });
-        if ($search = $request->get('search')) {
-            $clients->where(function($clients) use ($search) {
-                $clients->where('name','ILIKE', "%$search%")
-                    ->orWhere('surname','ILIKE', "%$search%")
-                    ->orWhere('email','ILIKE', "%$search%");
-            });
-        }
-        return $clients->get();
+        return UserInfoResource::collection($query->get())->toArray($request);
     }
 }

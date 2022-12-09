@@ -34,6 +34,8 @@ class AuthController extends Controller
         $token = $service->createUserToken($user);
 
         $userData = $user->attributesToArray();
+        $userData['permissions'] = $user->getPermissionsViaRoles();
+        $userData['roles'] = $user->getRoleNames();
         $userData['token'] = $token;
         return $userData;
     }
@@ -66,8 +68,8 @@ class AuthController extends Controller
         $user = new User();
         $user->login = $request->get('login');
         $user->email = $request->get('email');
-        $user->name = $request->get('first_name');
-        $user->surname = $request->get('last_name');
+        $user->name = $request->get('name');
+        $user->surname = $request->get('surname');
         $user->password = bcrypt($request->get('password'));
 
 
