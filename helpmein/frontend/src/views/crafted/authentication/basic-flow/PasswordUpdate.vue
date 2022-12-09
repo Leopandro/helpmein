@@ -118,7 +118,7 @@ export default defineComponent({
                   },
               }).then(() => {
                   // Go to page after successfully login
-                  router.push({ name: "sign-in" });
+                  this.$router.push({ name: "sign-in" });
               });;
           } else {
               Swal.fire({

@@ -226,6 +226,7 @@ import { useAuthStore, type User } from "@/stores/auth";
 import { useRouter } from "vue-router";
 import { PasswordMeterComponent } from "@/assets/ts/components";
 import Swal from "sweetalert2";
+import {usePermissionStore} from "@/stores/permission";
 
 export default defineComponent({
   name: "sign-up",
@@ -271,6 +272,7 @@ export default defineComponent({
 
       // Send login request
       await store.register(values);
+      const permissionStore = usePermissionStore();
 
       const error = store.errors;
       const message = store.messages;
@@ -287,7 +289,7 @@ export default defineComponent({
           },
         }).then(function () {
           // Go to page after successfully login
-          router.push({ name: "dashboard" });
+            router.push({ name: permissionStore.getUrlByRole(store.roles) });
         });
       } else {
         Swal.fire({

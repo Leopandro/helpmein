@@ -5,11 +5,22 @@ import {
 } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { useConfigStore } from "@/stores/config";
+import {usePermissionStore} from "@/stores/permission";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/dashboard",
+  redirect: to => {
+      // the function receives the target route as the argument
+      // a relative location doesn't start with `/`
+      // or { path: 'profile'}
+      const auth = useAuthStore();
+      const permission = usePermissionStore();
+      console.log(auth.roles)
+      console.log(permission)
+      console.log(permission.getUrlByRole(auth.roles))
+      return permission.getUrlByRole(auth.roles);
+  },
     component: () => import("@/layouts/main-layout/MainLayout.vue"),
     meta: {
       middleware: "auth",

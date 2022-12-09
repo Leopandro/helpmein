@@ -20,9 +20,10 @@ class UserInvationEmail extends Mailable
      */
     public function build()
     {
+        $url = request()->getScheme().'://'.request()->getHost().'/#/password-update?token='.$this->token;
         return $this->view('email.user.password-create')
             ->with([
-                'resetPasswordLink' => request()->getHost().'/#/password-update?token='.$this->token,
+                'resetPasswordLink' => $url,
                 'user' => $this->user,
                 'subject' => 'Задайте пароль для вашего личного кабинета'
             ])

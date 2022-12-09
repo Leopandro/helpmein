@@ -17,7 +17,12 @@ export const useAuthStore = defineStore("auth", () => {
     const status = ref(500);
     const user = ref<User>({} as User);
     const permissions = ref("");
-    const roles = ref("");
+    let roles
+    try {
+        roles = ref(JSON.parse(localStorage.getItem('roles')));
+    } catch(e) {
+        roles = ref("")
+    }
     const isAuthenticated = ref(!!JwtService.getToken());
 
     function setAuth(authUser: User) {
@@ -31,7 +36,12 @@ export const useAuthStore = defineStore("auth", () => {
         error ? errors.value = error : errors.value = '';
     }
     function setRoles(role: any) {
-        role ? roles.value = role : roles.value = '';
+        if (role) {
+            localStorage.setItem('roles', JSON.stringify(role));
+            roles.value = role;
+        } else {
+            roles.value = '';
+        }
     }
 
     function setStatus(statusCode: any) {
@@ -81,6 +91,8 @@ export const useAuthStore = defineStore("auth", () => {
         return ApiService.post("auth/register", credentials)
             .then(({data}) => {
                 setAuth(data.data);
+                setRoles(data.data.roles);
+                setPermissions(data.data.permissions);
             })
             .catch(({response}) => {
                 setError(response.data.errors);

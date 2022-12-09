@@ -218,7 +218,7 @@ export default defineComponent({
             confirmButton: "btn fw-semobold btn-light-primary",
           },
         }).then(() => {
-          router.push({ name: permissionStore.getUrlByRole(store.roles) });
+          router.push({ path: permissionStore.getUrlByRole(store.roles) });
         });
       } else {
         Swal.fire({

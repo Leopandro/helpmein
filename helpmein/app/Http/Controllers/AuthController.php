@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use JetBrains\PhpStorm\ArrayShape;
+use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
@@ -75,8 +76,11 @@ class AuthController extends Controller
 
         $userData = $user->attributesToArray();
         if ($user->save()) {
+            $user->assignRole(Role::findByName('Teacher', 'sanctum'));
             $token = $service->createUserToken($user);
             $userData['token'] = $token;
+            $userData['permissions'] = $user->getPermissionsViaRoles();
+            $userData['roles'] = $user->getRoleNames();
             return $this->getSuccessResponse($userData);
         } else {
             return $this->getErrorResponse(["Ошибка"],422);
