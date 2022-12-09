@@ -15,6 +15,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Gate;
+use Spatie\Permission\Guard;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -32,6 +34,7 @@ class UserController extends Controller
         $user->surname = $request->get('surname');
         $user->password = '';
         if ($result = $user->save()) {
+            $user->assignRole(Role::findByName('Client'));
             $id = auth('sanctum')->user()->getAuthIdentifier();
             $token = \Illuminate\Support\Str::random(32);
             $user->teachers()->attach($id, [
@@ -39,7 +42,6 @@ class UserController extends Controller
                 'name' => $user->name,
                 'surname' => $user->surname
             ]);
-
             $passwordReset = PasswordReset::query()->updateOrCreate([
                 'email' => $user->email
             ], [

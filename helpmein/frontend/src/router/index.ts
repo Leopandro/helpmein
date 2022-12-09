@@ -27,7 +27,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/task/list",
         name: "task-list",
-        component: () => import("@/views/Dashboard.vue"),
+        component: () => import("@/views/task/TaskListing.vue"),
         meta: {
           pageTitle: "Список задач",
           breadcrumbs: ["Задачи"],

@@ -55,6 +55,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected string $guard_name = 'sanctum';
+
+    public function teachers(): BelongsToMany
+    {
+        return $this
+            ->belongsToMany(User::class, 'user_clients','client_id','user_id')
+            ->withPivot([
+                'name',
+                'surname'
+            ]);
+    }
+
     public function clients(): BelongsToMany
     {
         return $this

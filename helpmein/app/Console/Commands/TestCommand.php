@@ -6,6 +6,7 @@ use App\Domain\User\Model\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Password;
+use Spatie\Permission\Models\Role;
 
 class TestCommand extends Command
 {
@@ -31,9 +32,7 @@ class TestCommand extends Command
     public function handle()
     {
         /** @var User $user */
-        $user = User::query()->first();
-
-        $status = Password::createToken($user);
+        $user = Role::findByName('Client');
         return;
     }
 }
