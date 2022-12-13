@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PasswordReset extends Model
 {
-    protected $fillable = ['token'];
+    protected $fillable = ['token', 'email'];
 
     public $timestamps = false;
 
