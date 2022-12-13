@@ -35,7 +35,7 @@
                         <span class="svg-icon svg-icon-2">
                           <inline-svg src="/media/icons/duotune/arrows/arr075.svg"/>
                         </span>
-                            Add User
+                            Добавить клиента
                         </button>
                     </router-link>
 

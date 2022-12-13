@@ -54,7 +54,7 @@ php-ide-helper-generate:
 	docker-compose exec workspace composer ide-helpers
 
 workspace-connect:
-	docker exec --user=laradock -it skillstaff_workspace_1 bash
+	docker exec --user=laradock -it helpmein_workspace_1 bash
 
 # Полная очистка кэша и перезапуск воркеров horizon
 laravel-cache-clear:
@@ -91,14 +91,14 @@ test:
 seed:
 	docker-compose exec workspace /bin/bash -c 'php artisan migrate:fresh && php artisan db:seed'
 
-# Файл дампа /root/.laradock/data/postgres/skillstaff.dump
+# Файл дампа /root/.laradock/data/postgres/helpmein.dump
 db-dump:
-	docker-compose exec postgres /bin/bash -c 'pg_dump  --dbname=skillstaff --host=postgres --port=5432 --user=skillstaff --format=custom --file=/var/lib/postgresql/data/skillstaff.dump'
+	docker-compose exec postgres /bin/bash -c 'pg_dump  --dbname=helpmein --host=postgres --port=5432 --user=helpmein --format=custom --file=/var/lib/postgresql/data/helpmein.dump'
 
 # Залить дамп БД
-# Файл кинуть в /root/.laradock/data/postgres/skillstaff.dump (либо postgres12)
+# Файл кинуть в /root/.laradock/data/postgres/helpmein.dump (либо postgres12)
 db-restore:
-	docker-compose exec postgres /bin/bash -c 'pg_restore --clean --if-exists  --dbname=skillstaff --host=postgres --port=5432 --user=skillstaff /var/lib/postgresql/data/skillstaff.dump'
+	docker-compose exec postgres /bin/bash -c 'pg_restore --clean --if-exists  --dbname=helpmein --host=postgres --port=5432 --user=helpmein /var/lib/postgresql/data/helpmein.dump'
 
 # Reset to Dev
 rd:

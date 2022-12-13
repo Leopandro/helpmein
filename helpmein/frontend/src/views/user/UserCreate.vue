@@ -12,7 +12,7 @@
                     <div class="image-input image-input-outline" data-kt-image-input="true"
                          style="background-image: url(&quot;/metronic8/vue/demo1//media/avatars/blank.png&quot;);">
                         <div class="image-input-wrapper w-125px h-125px"
-                             :style="{'background-image': model.image ? model.image : 'url(&quot;/media/avatars/blank.png&quot;)'}"></div>
+                             :style="{'background-image': model.avatar ? model.avatar : 'url(&quot;/media/avatars/blank.png&quot;)'}"></div>
                         <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
 
                                data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar"><i
@@ -27,6 +27,10 @@
                             <i class="bi bi-x fs-2"></i>
                         </span></div>
                     <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+
+                    <div v-if="errors.avatar" class="fv-plugins-message-container invalid-feedback">
+                        <div data-field="daterangepicker_input" data-validator="notEmpty">{{ errors.avatar[0] }}</div>
+                    </div>
                 </div>
             </div>
             <div class="row mb-6">
@@ -56,7 +60,16 @@
                     </div>
                 </div>
             </div>
-            <a href="javascript:;" v-on:click="submitForm" class="btn btn-success">Сохранить</a>
+            <button ref="submitButton" href="javascript:;" v-on:click="submitForm" type="submit" class="btn btn-success">
+
+                <span class="indicator-label"> Сохранить </span>
+                        <span class="indicator-progress">
+                    Please wait...
+                    <span
+                class="spinner-border spinner-border-sm align-middle ms-2"
+            ></span>
+          </span>
+            </button>
         </div>
     </div>
 </template>
@@ -65,6 +78,7 @@
 import ApiService from "../../core/services/ApiService";
 import Swal from "sweetalert2";
 import {useRouter} from "vue-router";
+import {ref} from "vue";
 export default {
     name: "UserCreate",
     data() {
@@ -72,15 +86,19 @@ export default {
             errors: {},
             model: {
                 email: '',
-                image: '',
+                avatar: '',
                 name: '',
                 surname: ''
             }
         }
     },
     methods: {
-        submitForm() {
-            ApiService.post("user/create", this.model)
+        async submitForm() {
+            this.$refs.submitButton.disabled = true;
+            // Activate indicator
+            this.$refs.submitButton.setAttribute("data-kt-indicator", "on");
+            console.log(this.$refs.submitButton)
+            await ApiService.post("user/create", this.model)
                 .then(() => {
                     Swal.fire({
                         text: "Клиент успешно создан",
@@ -110,10 +128,13 @@ export default {
                         },
                     });
                 });
+
+            this.$refs.submitButton.disabled = false;
+            this.$refs.submitButton.setAttribute("data-kt-indicator", "off");
         },
         deleteImage() {
             console.log('delete')
-            this.model.image = '';
+            this.model.avatar = '';
         },
         handleImage(e) {
             console.log('handleImage')
@@ -124,7 +145,7 @@ export default {
             const reader = new FileReader();
 
             reader.onload = (e) => {
-                this.model.image = 'url(' + e.target.result + ')';
+                this.model.avatar = 'url(' + e.target.result + ')';
             }
 
             reader.readAsDataURL(fileObject);
