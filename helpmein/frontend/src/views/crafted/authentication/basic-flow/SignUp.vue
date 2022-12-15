@@ -289,7 +289,7 @@ export default defineComponent({
           },
         }).then(function () {
           // Go to page after successfully login
-            router.push({ name: permissionStore.getUrlByRole(store.roles) });
+            router.push({ path: permissionStore.getUrlByRole(store.roles) });
         });
       } else {
         Swal.fire({
