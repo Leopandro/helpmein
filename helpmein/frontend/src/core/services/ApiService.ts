@@ -21,6 +21,13 @@ class ApiService {
     ApiService.vueInstance.use(VueAxios, axios);
     ApiService.vueInstance.axios.defaults.baseURL =
       import.meta.env.VITE_APP_API_URL;
+    ApiService.vueInstance.axios.interceptors.response.use(function (config) {
+        // Do something before request is sent
+        return config;
+    }, function (error) {
+        // Do something with request error
+        return Promise.reject(error);
+    });
   }
 
   /**

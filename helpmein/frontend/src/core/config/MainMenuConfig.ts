@@ -12,10 +12,15 @@ const MainMenuConfig: Array<MenuItem> = [
   {
     pages: [
       {
-        heading: "Пользователи",
+        heading: "Клиенты",
         route: "/user/list",
         svgIcon: "/media/icons/duotune/communication/com006.svg",
         fontIcon: "bi-person",
+      },{
+        heading: "Задачи",
+        route: "/task-category/list",
+        svgIcon: "/media/icons/duotune/communication/com006.svg",
+        fontIcon: "default",
       },
     ],
   },

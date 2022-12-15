@@ -25,6 +25,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/edit/{user}', [Controller\UserController::class, 'edit'])->name('edit');
         Route::get('/list', [Controller\UserController::class, 'list'])->name('list');
     });
+
+    Route::group(['prefix' => 'category-tree'], function () {
+        Route::get('/list', [Controller\CategoryTreeController::class, 'list'])->name('list');
+    });
 });
 Route::group(['prefix' => 'auth'], function () {
     Route::post('/login', [Controller\AuthController::class, 'login']);

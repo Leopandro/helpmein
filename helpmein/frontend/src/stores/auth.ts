@@ -134,6 +134,9 @@ export const useAuthStore = defineStore("auth", () => {
                 .catch(({response}) => {
                     setError(response.data.errors);
                     setStatus(response.status);
+                    window.location.href = '/#/sign-in';
+                    window.location.reload();
+                    // router.push('/sign-in').then();
                     purgeAuth();
                 });
         } else {

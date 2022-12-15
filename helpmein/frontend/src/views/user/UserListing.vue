@@ -13,7 +13,7 @@
                         v-model="search"
                         v-debounce:400="searchItems"
                         class="form-control form-control-solid w-250px ps-15"
-                        placeholder="Search Users"
+                        placeholder="Поиск клиентов"
                     />
                 </div>
                 <!--end::Search-->

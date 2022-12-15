@@ -15,7 +15,6 @@ import ApiService from "@/core/services/ApiService";
 import { initApexCharts } from "@/core/plugins/apexcharts";
 import { initInlineSvg } from "@/core/plugins/inline-svg";
 import { initVeeValidate } from "@/core/plugins/vee-validate";
-
 import "@/core/plugins/prismjs";
 import {vue3Debounce} from "vue-debounce";
 const app = createApp(App);

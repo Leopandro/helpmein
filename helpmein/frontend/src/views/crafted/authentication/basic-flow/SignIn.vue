@@ -27,13 +27,6 @@
       </div>
       <!--begin::Heading-->
 
-      <div class="mb-10 bg-light-info p-8 rounded">
-        <div class="text-info">
-          Use account <strong>admin@demo.com</strong> and password
-          <strong>demo</strong> to continue.
-        </div>
-      </div>
-
       <!--begin::Input group-->
       <div class="fv-row mb-10">
         <!--begin::Label-->
@@ -231,7 +224,7 @@ export default defineComponent({
             confirmButton: "btn fw-semobold btn-light-danger",
           },
         }).then(() => {
-          errors = {};
+          let errors = {};
         });
       }
 

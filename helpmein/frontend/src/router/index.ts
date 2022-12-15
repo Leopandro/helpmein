@@ -50,7 +50,16 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/user/UserListing.vue"),
         meta: {
           pageTitle: "Список клиентов",
-          breadcrumbs: ["Apps", "User"],
+          breadcrumbs: ["Клиенты"],
+        },
+      },
+      {
+        path: "/task-category/list",
+        name: "task-category-list",
+        component: () => import("@/views/task-category/TaskListing.vue"),
+        meta: {
+          pageTitle: "Список задач",
+          breadcrumbs: ["Задачи"],
         },
       },
       {
@@ -59,7 +68,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/user/UserCreate.vue"),
         meta: {
           pageTitle: "Создать клиента",
-          breadcrumbs: ["Apps", "User"],
+          breadcrumbs: ["Клиенты"],
         },
       },
       {
@@ -68,7 +77,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/user/UserEdit.vue"),
         meta: {
           pageTitle: "Редактировать клиента",
-          breadcrumbs: ["Apps", "User"],
+          breadcrumbs: ["User"],
         },
       },
     ],
