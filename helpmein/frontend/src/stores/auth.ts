@@ -19,7 +19,7 @@ export const useAuthStore = defineStore("auth", () => {
     const permissions = ref("");
     let roles
     try {
-        roles = ref(JSON.parse(localStorage.getItem('roles')));
+        roles = ref(JSON.parse(localStorage.getItem('roles') ?? ""));
     } catch(e) {
         roles = ref("")
     }
