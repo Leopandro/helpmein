@@ -726,7 +726,7 @@ ENV NVM_DIR /home/laradock/.nvm
 ARG NVM_NODEJS_ORG_MIRROR
 ENV NVM_NODEJS_ORG_MIRROR ${NVM_NODEJS_ORG_MIRROR}
 
-RUN if [ ${INSTALL_NODE} = true ]; then
+RUN if [ ${INSTALL_NODE} = true ]; then \
     # Install nvm (A Node Version Manager)
     mkdir -p $NVM_DIR && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash \
