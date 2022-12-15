@@ -7,9 +7,9 @@ ENV APP_ROOT /app
 
 WORKDIR ${APP_ROOT}
 
-RUN npm install
-ADD ./package-lock.json ${APP_ROOT}
 ADD ./package.json ${APP_ROOT}
+ADD ./package-lock.json ${APP_ROOT}
+RUN npm install
 
 ARG FRONTEND_SERVER_API_BASE_URL
 ARG FRONTEND_SERVER_API_BASE_URL_BROWSER
