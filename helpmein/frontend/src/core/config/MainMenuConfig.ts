@@ -20,7 +20,7 @@ const MainMenuConfig: Array<any> = [
               },{
                   heading: "Задачи",
                   route: "/task-category/list",
-                  svgIcon: "/media/icons/duotune/communication/com006.svg",
+                  svgIcon: "/media/icons/duotune/files/folder.svg",
                   fontIcon: "default",
               },
           ],
@@ -35,7 +35,7 @@ const MainMenuConfig: Array<any> = [
               },{
                   heading: "Задачи",
                   route: "/task-category/list",
-                  svgIcon: "/media/icons/duotune/communication/com006.svg",
+                  svgIcon: "/media/icons/duotune/files/folder.svg",
                   fontIcon: "default",
               },
           ],

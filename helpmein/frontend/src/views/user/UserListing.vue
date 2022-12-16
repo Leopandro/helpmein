@@ -59,9 +59,9 @@
                     <td>{{ user.email }}</td>
                     <td>
                         <router-link :to="'edit/'+user.id">
-                            <a href="javascript:;" class="btn btn-icon-primary btn-text-primary"><i class="bi bi-pencil-square fs-4 me-2"></i></a>
+                            <a href="javascript:;" class="btn btn-icon-primary btn-text-primary p-0"><i class="bi bi-pencil-square fs-4 me-2"></i></a>
                         </router-link>
-                        <a href="javascript:;" class="btn btn-icon-danger btn-text-danger"><i class="bi bi-backspace fs-4 me-2"></i></a>
+                        <a href="javascript:;" class="btn btn-icon-danger btn-text-danger p-0"><i class="bi bi-backspace fs-4 me-2"></i></a>
                     </td>
                 </tr>
                 </tbody>
