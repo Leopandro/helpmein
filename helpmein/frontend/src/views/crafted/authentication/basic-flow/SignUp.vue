@@ -7,41 +7,29 @@
       novalidate
       @submit="onSubmitRegister"
       id="kt_login_signup_form"
-      :validation-schema="registration"
     >
       <!--begin::Heading-->
       <div class="mb-10 text-center">
         <!--begin::Title-->
-        <h1 class="text-dark mb-3">Create an Account</h1>
+        <h1 class="text-dark mb-3">Создать аккаунт</h1>
         <!--end::Title-->
 
         <!--begin::Link-->
         <div class="text-gray-400 fw-semobold fs-4">
-          Already have an account?
+          Уже зарегистрированы?
 
           <router-link to="/sign-in" class="link-primary fw-bold">
-            Sign in here
+            Войти в аккаунт
           </router-link>
         </div>
         <!--end::Link-->
       </div>
       <!--end::Heading-->
 
-      <!--begin::Action-->
-      <button type="button" class="btn btn-light-primary fw-bold w-100 mb-10">
-        <img
-          alt="Logo"
-          src="/media/svg/brand-logos/google-icon.svg"
-          class="h-20px me-3"
-        />
-        Sign in with Google
-      </button>
-      <!--end::Action-->
-
       <!--begin::Separator-->
       <div class="d-flex align-items-center mb-10">
         <div class="border-bottom border-gray-300 mw-50 w-100"></div>
-        <span class="fw-semobold text-gray-400 fs-7 mx-2">OR</span>
+        <span class="fw-semobold text-gray-400 fs-7 mx-2">или</span>
         <div class="border-bottom border-gray-300 mw-50 w-100"></div>
       </div>
       <!--end::Separator-->
@@ -50,7 +38,7 @@
       <div class="row fv-row mb-7">
         <!--begin::Col-->
         <div class="col-xl-6">
-          <label class="form-label fw-bold text-dark fs-6">First Name</label>
+          <label class="form-label fw-bold text-dark fs-6">Имя</label>
           <Field
             class="form-control form-control-lg form-control-solid"
             type="text"
@@ -68,7 +56,7 @@
 
         <!--begin::Col-->
         <div class="col-xl-6">
-          <label class="form-label fw-bold text-dark fs-6">Last Name</label>
+          <label class="form-label fw-bold text-dark fs-6">Фамилия</label>
           <Field
             class="form-control form-control-lg form-control-solid"
             type="text"
@@ -88,7 +76,7 @@
 
       <!--begin::Input group-->
       <div class="fv-row mb-7">
-        <label class="form-label fw-bold text-dark fs-6">Email</label>
+        <label class="form-label fw-bold text-dark fs-6">E-mail</label>
         <Field
           class="form-control form-control-lg form-control-solid"
           type="email"
@@ -109,7 +97,7 @@
         <!--begin::Wrapper-->
         <div class="mb-1">
           <!--begin::Label-->
-          <label class="form-label fw-bold text-dark fs-6"> Password </label>
+          <label class="form-label fw-bold text-dark fs-6"> Пароль </label>
           <!--end::Label-->
 
           <!--begin::Input wrapper-->
@@ -151,7 +139,7 @@
         <!--end::Wrapper-->
         <!--begin::Hint-->
         <div class="text-muted">
-          Use 8 or more characters with a mix of letters, numbers & symbols.
+          Используйте 4 или больше букв с набором слов, цифр и символов.
         </div>
         <!--end::Hint-->
       </div>
@@ -160,7 +148,7 @@
       <!--begin::Input group-->
       <div class="fv-row mb-5">
         <label class="form-label fw-bold text-dark fs-6"
-          >Confirm Password</label
+          >Повторите пароль</label
         >
         <Field
           class="form-control form-control-lg form-control-solid"
@@ -177,22 +165,6 @@
       </div>
       <!--end::Input group-->
 
-      <!--begin::Input group-->
-      <div class="fv-row mb-10">
-        <label class="form-check form-check-custom form-check-solid">
-          <Field
-            class="form-check-input"
-            type="checkbox"
-            name="toc"
-            value="1"
-          />
-          <span class="form-check-label fw-semobold text-gray-700 fs-6">
-            I Agree &
-            <a href="#" class="ms-1 link-primary">Terms and conditions</a>.
-          </span>
-        </label>
-      </div>
-      <!--end::Input group-->
 
       <!--begin::Actions-->
       <div class="text-center">
@@ -202,9 +174,9 @@
           type="submit"
           class="btn btn-lg btn-primary"
         >
-          <span class="indicator-label"> Submit </span>
+          <span class="indicator-label"> Подтвердить </span>
           <span class="indicator-progress">
-            Please wait...
+            Подождите ...
             <span
               class="spinner-border spinner-border-sm align-middle ms-2"
             ></span>
@@ -228,29 +200,27 @@ import { PasswordMeterComponent } from "@/assets/ts/components";
 import Swal from "sweetalert2";
 import {usePermissionStore} from "@/stores/permission";
 
-export default defineComponent({
-  name: "sign-up",
+export default {
+  name: "SignUp",
   components: {
     Field,
     VForm,
     ErrorMessage,
   },
+    data() {
+      return {
+          errors: {
+
+          }
+      }
+    },
   setup() {
     const store = useAuthStore();
     const router = useRouter();
 
+      let errors;
     const submitButton = ref<HTMLButtonElement | null>(null);
 
-    const registration = Yup.object().shape({
-      name: Yup.string().required().label("Name"),
-      surname: Yup.string().required().label("Surname"),
-      email: Yup.string().min(4).required().email().label("Email"),
-      password: Yup.string().required().label("Password"),
-      password_confirmation: Yup.string()
-        .required()
-        .oneOf([Yup.ref("password"), null], "Passwords must match")
-        .label("Password Confirmation"),
-    });
 
     onMounted(() => {
       nextTick(() => {
@@ -276,13 +246,14 @@ export default defineComponent({
 
       const error = store.errors;
       const message = store.messages;
+      errors = error;
       console.log(error);
       if (!message) {
         Swal.fire({
-          text: "You have successfully logged in!",
+          text: "Вы успешно авторизовались!",
           icon: "success",
           buttonsStyling: false,
-          confirmButtonText: "Ok, got it!",
+          confirmButtonText: "Ок!",
           heightAuto: false,
           customClass: {
             confirmButton: "btn fw-semobold btn-light-primary",
@@ -310,10 +281,10 @@ export default defineComponent({
     };
 
     return {
-      registration,
       onSubmitRegister,
       submitButton,
+        errors
     };
   },
-});
+};
 </script>

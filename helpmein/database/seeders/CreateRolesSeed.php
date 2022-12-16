@@ -28,5 +28,8 @@ class CreateRolesSeed extends Seeder
         $role = Role::findOrCreate('Client');
         $permission1 = Permission::findOrCreate('view task');
         $role->syncPermissions([$permission1]);
+
+        /** @var Role $role */
+        $role = Role::findOrCreate('Guest');
     }
 }

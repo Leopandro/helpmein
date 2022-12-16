@@ -7,9 +7,11 @@ export const usePermissionStore = defineStore("permissions", () => {
             return {
                 'Teacher': '/user/list',
                 'Client': '/task/list',
+                'Guest':'/greetings',
+                '':'/greetings',
             }[role[0]];
         } else {
-            return '/dashboard';
+            return '/greetings';
         }
     }
     return {

@@ -76,7 +76,7 @@ class AuthController extends Controller
 
         $userData = $user->attributesToArray();
         if ($user->save()) {
-            $user->assignRole(Role::findByName('Teacher', 'sanctum'));
+            $user->assignRole(Role::findByName('Guest'));
             $token = $service->createUserToken($user);
             $userData['token'] = $token;
             $userData['permissions'] = $user->getPermissionsViaRoles();
@@ -110,7 +110,7 @@ class AuthController extends Controller
     {
         $token = $request->get('token');
 
-        $password_reset = \App\Domain\Auth\Model\PasswordReset::query()->where('token',$token)->firstOrFail();
+        $password_reset = PasswordReset::query()->where('token','=',$token)->firstOrFail();
         /** @var User $user */
         $user = User::query()->where('email','=',$password_reset->email)->firstOrFail();
         $user->password =  bcrypt($request->get('password'));

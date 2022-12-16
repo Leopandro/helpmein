@@ -10,17 +10,17 @@ import {usePermissionStore} from "@/stores/permission";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-  redirect: to => {
-      // the function receives the target route as the argument
-      // a relative location doesn't start with `/`
-      // or { path: 'profile'}
-      const auth = useAuthStore();
-      const permission = usePermissionStore();
-      console.log(auth.roles)
-      console.log(permission)
-      console.log(permission.getUrlByRole(auth.roles))
-      return permission.getUrlByRole(auth.roles);
-  },
+      redirect: to => {
+          // the function receives the target route as the argument
+          // a relative location doesn't start with `/`
+          // or { path: 'profile'}
+          const auth = useAuthStore();
+          const permission = usePermissionStore();
+          console.log(auth.roles)
+          console.log(permission)
+          console.log(permission.getUrlByRole(auth.roles))
+          return permission.getUrlByRole(auth.roles);
+      },
     component: () => import("@/layouts/main-layout/MainLayout.vue"),
     meta: {
       middleware: "auth",
@@ -33,6 +33,15 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           pageTitle: "Dashboard",
           breadcrumbs: ["Dashboards"],
+        },
+      },
+      {
+        path: "/greetings",
+        name: "greetings",
+        component: () => import("@/views/guest/Greetings.vue"),
+        meta: {
+          pageTitle: "Добро пожаловать",
+          breadcrumbs: ["Стартовая страница"],
         },
       },
       {

@@ -17,13 +17,9 @@
         <div class="d-flex flex-column">
           <div class="fw-bold d-flex align-items-center fs-5">
               {{ username }}
-            <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2"
-              >Pro</span
-            >
           </div>
           <a href="#" class="fw-semobold text-muted text-hover-primary fs-7"
-            >max@kt.com</a
-          >
+            >{{email }}</a>
         </div>
         <!--end::Username-->
       </div>
@@ -37,7 +33,7 @@
     <!--begin::Menu item-->
     <div class="menu-item px-5">
       <router-link to="/pages/profile/overview" class="menu-link px-5">
-        My Profile
+        Профиль
       </router-link>
     </div>
     <!--end::Menu item-->
@@ -59,7 +55,7 @@
     >
       <router-link to="/pages/profile/overview" class="menu-link px-5">
         <span class="menu-title position-relative">
-          Language
+          Язык
           <span
             class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0"
           >
@@ -181,7 +177,7 @@
 
     <!--begin::Menu item-->
     <div class="menu-item px-5">
-      <a @click="signOut()" class="menu-link px-5"> Sign Out </a>
+      <a @click="signOut()" class="menu-link px-5"> Выход </a>
     </div>
     <!--end::Menu item-->
   </div>
@@ -250,10 +246,16 @@ export default defineComponent({
           const user = store.user;
           return user.name + ' ' + user.surname;
       });
+      const email = computed(() => {
+          const store = useAuthStore();
+          const user = store.user;
+          return user.email;
+      });
     return {
       signOut,
       setLang,
         username,
+        email,
       currentLanguage,
       currentLangugeLocale,
       countries,

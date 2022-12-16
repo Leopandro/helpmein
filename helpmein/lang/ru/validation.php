@@ -12,7 +12,6 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
-
     'accepted'             => 'Вы должны принять :attribute.',
     'active_url'           => 'Поле :attribute is not a valid URL.',
     'after'                => 'Поле :attribute должно быть датой после :date.',

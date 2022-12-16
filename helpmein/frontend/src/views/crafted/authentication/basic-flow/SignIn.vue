@@ -12,15 +12,15 @@
       <!--begin::Heading-->
       <div class="text-center mb-10">
         <!--begin::Title-->
-        <h1 class="text-dark mb-3">Sign In</h1>
+        <h1 class="text-dark mb-3">Войти</h1>
         <!--end::Title-->
 
         <!--begin::Link-->
         <div class="text-gray-400 fw-semobold fs-4">
-          New Here?
+          Не зарегистрированы?
 
           <router-link to="/sign-up" class="link-primary fw-bold">
-            Create an Account
+            Создать аккаунт
           </router-link>
         </div>
         <!--end::Link-->
@@ -30,7 +30,7 @@
       <!--begin::Input group-->
       <div class="fv-row mb-10">
         <!--begin::Label-->
-        <label class="form-label fs-6 fw-bold text-dark">Email</label>
+        <label class="form-label fs-6 fw-bold text-dark">Почта</label>
         <!--end::Label-->
 
         <!--begin::Input-->
@@ -55,12 +55,12 @@
         <!--begin::Wrapper-->
         <div class="d-flex flex-stack mb-2">
           <!--begin::Label-->
-          <label class="form-label fw-bold text-dark fs-6 mb-0">Password</label>
+          <label class="form-label fw-bold text-dark fs-6 mb-0">Пароль</label>
           <!--end::Label-->
 
           <!--begin::Link-->
           <router-link to="/password-reset" class="link-primary fs-6 fw-bold">
-            Forgot Password ?
+            Забыли пароль ?
           </router-link>
           <!--end::Link-->
         </div>
@@ -93,10 +93,10 @@
           id="kt_sign_in_submit"
           class="btn btn-lg btn-primary w-100 mb-5"
         >
-          <span class="indicator-label"> Continue </span>
+          <span class="indicator-label"> Продолжить </span>
 
           <span class="indicator-progress">
-            Please wait...
+            Подождите ...
             <span
               class="spinner-border spinner-border-sm align-middle ms-2"
             ></span>
@@ -104,48 +104,6 @@
         </button>
         <!--end::Submit button-->
 
-        <!--begin::Separator-->
-        <div class="text-center text-muted text-uppercase fw-bold mb-5">or</div>
-        <!--end::Separator-->
-
-        <!--begin::Google link-->
-        <a
-          href="#"
-          class="btn btn-flex flex-center btn-light btn-lg w-100 mb-5"
-        >
-          <img
-            alt="Logo"
-            src="/media/svg/brand-logos/google-icon.svg"
-            class="h-20px me-3"
-          />
-          Continue with Google
-        </a>
-        <!--end::Google link-->
-
-        <!--begin::Google link-->
-        <a
-          href="#"
-          class="btn btn-flex flex-center btn-light btn-lg w-100 mb-5"
-        >
-          <img
-            alt="Logo"
-            src="/media/svg/brand-logos/facebook-4.svg"
-            class="h-20px me-3"
-          />
-          Continue with Facebook
-        </a>
-        <!--end::Google link-->
-
-        <!--begin::Google link-->
-        <a href="#" class="btn btn-flex flex-center btn-light btn-lg w-100">
-          <img
-            alt="Logo"
-            src="/media/svg/brand-logos/apple-black.svg"
-            class="h-20px me-3"
-          />
-          Continue with Apple
-        </a>
-        <!--end::Google link-->
       </div>
       <!--end::Actions-->
     </VForm>
@@ -202,10 +160,10 @@ export default defineComponent({
       console.log(permissions);
       if (error.length === 0) {
         Swal.fire({
-          text: "You have successfully logged in!",
+          text: "Вы успешно авторизовались!",
           icon: "success",
           buttonsStyling: false,
-          confirmButtonText: "Ok, got it!",
+          confirmButtonText: "Ок!",
           heightAuto: false,
           customClass: {
             confirmButton: "btn fw-semobold btn-light-primary",

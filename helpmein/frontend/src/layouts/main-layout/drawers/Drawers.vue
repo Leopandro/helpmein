@@ -1,9 +1,4 @@
 <template>
-  <KTMessengerDrawer />
-  <KTActivityDrawer />
-  <KTToolButtons />
-  <KTDemosDrawer />
-  <KTHelpDrawer />
 </template>
 
 <script lang="ts">

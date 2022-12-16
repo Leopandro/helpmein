@@ -106,7 +106,7 @@ export default {
                         text: "Клиент успешно изменен",
                         icon: "success",
                         buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
+                        confirmButtonText: "Ок!",
                         heightAuto: false,
                         customClass: {
                             confirmButton: "btn fw-semobold btn-light-primary",

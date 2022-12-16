@@ -332,7 +332,7 @@ export default defineComponent({
     return {
       hasActiveChildren,
       headerMenuIcons,
-      MainMenuConfig,
+      // MainMenuConfig,
       translate,
     };
   },

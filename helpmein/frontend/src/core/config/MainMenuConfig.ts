@@ -8,21 +8,48 @@ export interface MenuItem {
   sub?: Array<MenuItem>;
 }
 
-const MainMenuConfig: Array<MenuItem> = [
+const MainMenuConfig: Array<any> = [
   {
-    pages: [
-      {
-        heading: "Клиенты",
-        route: "/user/list",
-        svgIcon: "/media/icons/duotune/communication/com006.svg",
-        fontIcon: "bi-person",
-      },{
-        heading: "Задачи",
-        route: "/task-category/list",
-        svgIcon: "/media/icons/duotune/communication/com006.svg",
-        fontIcon: "default",
+      'Teacher': {
+          pages: [
+              {
+                  heading: "Клиенты",
+                  route: "/user/list",
+                  svgIcon: "/media/icons/duotune/communication/com006.svg",
+                  fontIcon: "bi-person",
+              },{
+                  heading: "Задачи",
+                  route: "/task-category/list",
+                  svgIcon: "/media/icons/duotune/communication/com006.svg",
+                  fontIcon: "default",
+              },
+          ],
       },
-    ],
+      'Client': {
+          pages: [
+              {
+                  heading: "Клиенты",
+                  route: "/user/list",
+                  svgIcon: "/media/icons/duotune/communication/com006.svg",
+                  fontIcon: "bi-person",
+              },{
+                  heading: "Задачи",
+                  route: "/task-category/list",
+                  svgIcon: "/media/icons/duotune/communication/com006.svg",
+                  fontIcon: "default",
+              },
+          ],
+      },
+      'Guest': {
+          pages: [
+              {
+                  heading: "Стартовая страница",
+                  route: "/greetings",
+                  svgIcon: "/media/icons/duotune/communication/com006.svg",
+                  fontIcon: "default",
+              },
+          ],
+      }
   },
 ];
 
