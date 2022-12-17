@@ -21,11 +21,14 @@ class ApiService {
     ApiService.vueInstance.use(VueAxios, axios);
     ApiService.vueInstance.axios.defaults.baseURL =
       import.meta.env.VITE_APP_API_URL;
-    ApiService.vueInstance.axios.interceptors.response.use(function (config) {
+    ApiService.vueInstance.axios.interceptors.response.use((config) => {
         // Do something before request is sent
         return config;
-    }, function (error) {
-        // Do something with request error
+    }, (error) => {
+        if (error.response.status == 401) {
+            this.vueInstance._instance.ctx.router.push({path:'/sign-in'});
+        }
+        console.log(this.vueInstance)
         return Promise.reject(error);
     });
   }

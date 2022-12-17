@@ -23,11 +23,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/info/{user}', [Controller\UserController::class, 'info'])->name('info');
         Route::post('/create', [Controller\UserController::class, 'create'])->name('create');
         Route::post('/edit/{user}', [Controller\UserController::class, 'edit'])->name('edit');
+        Route::post('/delete/{user}', [Controller\UserController::class, 'delete'])->name('delete');
         Route::get('/list', [Controller\UserController::class, 'list'])->name('list');
     });
 
     Route::group(['prefix' => 'category-tree'], function () {
         Route::get('/list', [Controller\CategoryTreeController::class, 'list'])->name('list');
+        Route::post('/add', [Controller\CategoryTreeController::class, 'add'])->name('add');
+        Route::post('/edit', [Controller\CategoryTreeController::class, 'edit'])->name('edit');
+        Route::post('/delete', [Controller\CategoryTreeController::class, 'delete'])->name('delete');
     });
 });
 Route::group(['prefix' => 'auth'], function () {

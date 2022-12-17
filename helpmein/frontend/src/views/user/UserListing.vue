@@ -61,7 +61,7 @@
                         <router-link :to="'edit/'+user.id">
                             <a href="javascript:;" class="btn btn-icon-primary btn-text-primary p-0"><i class="bi bi-pencil-square fs-4 me-2"></i></a>
                         </router-link>
-                        <a href="javascript:;" class="btn btn-icon-danger btn-text-danger p-0"><i class="bi bi-backspace fs-4 me-2"></i></a>
+                        <a v-on:click="deleteUser(user)" href="javascript:;" class="btn btn-icon-danger btn-text-danger p-0"><i class="bi bi-backspace fs-4 me-2"></i></a>
                     </td>
                 </tr>
                 </tbody>
@@ -96,6 +96,13 @@ export default defineComponent({
             await ApiService.get('/user/list','?search=' + this.search).then((data: any) => {
                 this.users = data.data;
             })
+        },
+        async deleteUser(user) {
+            if (confirm("Вы уверены")) {
+                await ApiService.post('/user/delete/'+user.id).then((data: any) => {
+                    this.searchItems();
+                })
+            }
         }
     },
     data() {

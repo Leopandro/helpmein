@@ -19,6 +19,20 @@ export default defineComponent({
     errorCaptured(error, vm, info) {
         console.log(error,vm,info);
     },
+    data() {
+        return {
+            router: ''
+        }
+    },
+    mounted() {
+        this.router = this.$router;
+    },
+    methods: {
+
+        self() {
+            console.log(this);
+        },
+    },
     setup() {
         const configStore = useConfigStore();
         const themeStore = useThemeStore();

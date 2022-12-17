@@ -33,4 +33,43 @@ class CategoryTreeController extends Controller
         $tree = TaskCategory::descendantsAndSelf($categoryParent->id)->toTree()->first();;
         return $tree->toArray();
     }
+
+    public function add(Request $request) {
+        /** @var User $user */
+        $user = auth('sanctum')->user();
+        /** @var TaskCategory $categoryParent */
+        $categoryParent = TaskCategory::query()
+            ->where('id','=',$request->get('id'))
+            ->firstOrFail();
+        $children = new TaskCategory([
+            'name' => 'Новая папка',
+            'user_id' => $user->id
+        ]);
+        $categoryParent->prependNode($children);
+        return $children->toArray();
+    }
+
+    public function edit(Request $request) {
+        /** @var User $user */
+        $user = auth('sanctum')->user();
+        /** @var TaskCategory $categoryParent */
+        $categoryParent = TaskCategory::query()
+            ->where('id','=',$request->get('id'))
+            ->firstOrFail();
+        $categoryParent->update([
+            'name' => $request->get('name')
+        ]);
+        return $categoryParent->toArray();
+    }
+
+    public function delete(Request $request) {
+        /** @var User $user */
+        $user = auth('sanctum')->user();
+        /** @var TaskCategory $categoryParent */
+        $categoryParent = TaskCategory::query()
+            ->where('id','=',$request->get('id'))
+            ->firstOrFail()
+            ->delete();
+        return $this->getSuccessResponse([]);
+    }
 }

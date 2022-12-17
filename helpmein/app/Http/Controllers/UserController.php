@@ -66,7 +66,17 @@ class UserController extends Controller
                     'name' => $request->get('name'),
                     'surname' => $request->get('surname')
                 ]]);
-        if ($result = $user->save()) {
+        if ($user->save()) {
+            return $this->getSuccessResponse([]);
+        } else {
+            return $this->getSingleErrorResponse("Ошибка");
+        }
+    }
+
+    public function delete(Request $request, User $user): JsonResponse
+    {
+        Gate::authorize(UserEditGate::getCode(), $user->id);
+        if ($user->delete()) {
             return $this->getSuccessResponse([]);
         } else {
             return $this->getSingleErrorResponse("Ошибка");
