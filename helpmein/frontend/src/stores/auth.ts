@@ -79,6 +79,7 @@ export const useAuthStore = defineStore("auth", () => {
                 setPermissions(data.permissions);
             })
             .catch(({response}) => {
+                console.log(response);
                 setMessage(response.data.message);
                 setStatus(response.status);
             });
