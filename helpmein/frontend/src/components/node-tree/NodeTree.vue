@@ -20,7 +20,7 @@
                         <path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z" fill="currentColor"/>
                         <path d="M9.2 3H3C2.4 3 2 3.4 2 4V19C2 19.6 2.4 20 3 20H21C21.6 20 22 19.6 22 19V7C22 6.4 21.6 6 21 6H12L10.4 3.60001C10.2 3.20001 9.7 3 9.2 3Z" fill="currentColor"/>
                     </svg>
-                    <div v-if="item.children && item.children.length > 0 " v-on:click="hideChildren()">
+                    <div v-if="item.children && item.children.length > 0 " v-on:click="toggleChildren()">
                         <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Navigation/Angle-down.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <polygon points="0 0 24 0 24 24 0 24"/>
@@ -31,7 +31,7 @@
                     </div>
                     <div ref="div" :style="{display: showEditInput ? 'none' : 'block'}" :id="'node_item_'+item.id+'_input'">{{ item.name }} </div>
                     <input type="text" ref="input" :style="{display: showEditInput ? 'block' : 'none'}"
-                           @input="changePropertyValueEvent">
+                           @keydown.enter="saveNode" >
                     <svg v-on:click="addNode()" :style="{visibility: isHovering ? 'visible' : 'hidden'}" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z" fill="currentColor"/>
                         <path d="M10.4 3.60001L12 6H21C21.6 6 22 6.4 22 7V19C22 19.6 21.6 20 21 20H3C2.4 20 2 19.6 2 19V4C2 3.4 2.4 3 3 3H9.2C9.7 3 10.2 3.20001 10.4 3.60001ZM16 12H13V9C13 8.4 12.6 8 12 8C11.4 8 11 8.4 11 9V12H8C7.4 12 7 12.4 7 13C7 13.6 7.4 14 8 14H11V17C11 17.6 11.4 18 12 18C12.6 18 13 17.6 13 17V14H16C16.6 14 17 13.6 17 13C17 12.4 16.6 12 16 12Z" fill="currentColor"/>
@@ -50,7 +50,7 @@
                 </div>
             </h2>
         </div>
-        <template v-if="item.children && showChildren" v-for="(newItem, index) of item.children">
+        <template v-if="item.children && showChildrenFlag" v-for="(newItem, index) of item.children">
             <div :id="'kt_accordion_'+item.id+'_body_'+item.id"
                  class="accordion-collapse collapse show"
                  aria-labelledby="kt_accordion_1_header_1"
@@ -99,6 +99,15 @@ export default {
                     parent_id: response.data.parent_id
                 });
             });
+            this.showChildren();
+        },
+        async saveNode(event) {
+            await this.$emit('change-value', {
+                value: event.target.value,
+                id: this.item.id
+            });
+
+            this.showEditInput = false;
         },
         async updateNode(object) {
             const api = ApiService;
@@ -115,18 +124,14 @@ export default {
                 item.name = response.data.name;
             });
         },
-        changePropertyValueEvent(event) {
-            this.$emit('change-value', {
-                value: event.target.value,
-                id: this.item.id
-            })
-        },
         async editNode() {
             this.$refs.input.value = this.item.name;
             this.showEditInput = !this.showEditInput;
         },
         async deleteNode() {
-            await this.$parent.deleteChildren(this.index);
+            if (confirm('Удалить папку')) {
+                await this.$parent.deleteChildren(this.index);
+            }
         },
         async changeValue(data) {
             await this.updateNode({
@@ -147,13 +152,19 @@ export default {
                 this.item.children = arr;
             });
         },
+        showChildren() {
+            this.showChildrenFlag = true;
+        },
         hideChildren() {
-            this.showChildren = !this.showChildren;
+            this.showChildrenFlag = false;
+        },
+        toggleChildren() {
+            this.showChildrenFlag = !this.showChildrenFlag;
         }
     },
     data() {
         return {
-            showChildren: false,
+            showChildrenFlag: false,
             showEditInput: false,
             isHovering: false,
             task_categories: []
@@ -161,7 +172,7 @@ export default {
     },
     async mounted() {
         if (this.item.parent_id == null) {
-            this.showChildren = true;
+            this.showChildrenFlag = true;
         }
     },
 };
