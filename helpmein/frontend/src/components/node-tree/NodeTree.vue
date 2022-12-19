@@ -9,7 +9,7 @@
                         <path opacity="0.3" d="M11 14H8C7.4 14 7 13.6 7 13C7 12.4 7.4 12 8 12H11V14ZM16 12H13V14H16C16.6 14 17 13.6 17 13C17 12.4 16.6 12 16 12Z" fill="currentColor"/>
                     </svg>
                 </div>
-                <div class="node-tree-button-add-text pl-3">
+                <div class="node-tree-button-add-text p-1 px-3">
                     Добавить корневую папку
                 </div>
             </button>
@@ -23,7 +23,7 @@
                         <path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z" fill="currentColor"/>
                         <path d="M9.2 3H3C2.4 3 2 3.4 2 4V19C2 19.6 2.4 20 3 20H21C21.6 20 22 19.6 22 19V7C22 6.4 21.6 6 21 6H12L10.4 3.60001C10.2 3.20001 9.7 3 9.2 3Z" fill="currentColor"/>
                     </svg>
-                    <div class="px-1">
+                    <div class="min-w-10px">
                         <div style="width: 24px" v-if="item.children && item.children.length > 0" v-on:click="toggleChildren()">
                             <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Navigation/Angle-down.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div ref="div"
-                         class="node-tree-folder-name"
+                         class="node-tree-folder-name p-1"
                          :style="{display: showEditInput ? 'none' : 'block'}"
                          :id="'node_item_'+item.id+'_input'">
                         {{ item.name }}
