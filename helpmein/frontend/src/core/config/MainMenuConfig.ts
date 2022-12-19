@@ -26,15 +26,9 @@ const MainMenuConfig: Array<any> = [
           ],
       },
       'Client': {
-          pages: [
-              {
-                  heading: "Клиенты",
-                  route: "/user/list",
-                  svgIcon: "/media/icons/duotune/communication/com006.svg",
-                  fontIcon: "bi-person",
-              },{
+          pages: [{
                   heading: "Задачи",
-                  route: "/task-category/list",
+                  route: "/task/list",
                   svgIcon: "/media/icons/duotune/files/folder.svg",
                   fontIcon: "default",
               },

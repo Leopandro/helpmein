@@ -42,11 +42,6 @@
           autocomplete="off"
         />
         <!--end::Input-->
-        <div class="fv-plugins-message-container">
-          <div class="fv-help-block">
-            <ErrorMessage name="email" />
-          </div>
-        </div>
       </div>
       <!--end::Input group-->
 
@@ -75,11 +70,6 @@
           autocomplete="off"
         />
         <!--end::Input-->
-        <div class="fv-plugins-message-container">
-          <div class="fv-help-block">
-            <ErrorMessage name="password" />
-          </div>
-        </div>
       </div>
       <!--end::Input group-->
 
@@ -136,8 +126,6 @@ export default defineComponent({
 
     //Create form validation object
     const login = Yup.object().shape({
-      email: Yup.string().email().required().label("Email"),
-      password: Yup.string().min(4).required().label("Password"),
     });
 
     //Form submit function
@@ -155,10 +143,10 @@ export default defineComponent({
 
       // Send login request
       await store.login(values);
-      const error = store.errors;
+      const message = store.messages;
       const permissions = store.permissions;
-      console.log(permissions);
-      if (error.length === 0) {
+      console.log(message);
+      if (!message) {
         Swal.fire({
           text: "Вы успешно авторизовались!",
           icon: "success",
@@ -173,7 +161,7 @@ export default defineComponent({
         });
       } else {
         Swal.fire({
-          text: error as string,
+          text: message,
           icon: "error",
           buttonsStyling: false,
           confirmButtonText: "Try again!",

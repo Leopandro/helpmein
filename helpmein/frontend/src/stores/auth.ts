@@ -75,10 +75,11 @@ export const useAuthStore = defineStore("auth", () => {
             .then(({data}) => {
                 setAuth(data);
                 setRoles(data.roles);
+                setMessage('');
                 setPermissions(data.permissions);
             })
             .catch(({response}) => {
-                setError(response.data.message);
+                setMessage(response.data.message);
                 setStatus(response.status);
             });
     }
