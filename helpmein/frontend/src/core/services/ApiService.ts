@@ -26,9 +26,10 @@ class ApiService {
         return config;
     }, (error) => {
         if (error.response.status == 401) {
+            console.log("Unauthorized", error);
             this.vueInstance._instance.ctx.router.push({path:'/sign-in'});
         }
-        console.log(this.vueInstance)
+        console.log("error", this.vueInstance)
         return Promise.reject(error);
     });
   }
