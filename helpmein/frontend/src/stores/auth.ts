@@ -135,7 +135,8 @@ export const useAuthStore = defineStore("auth", () => {
                     setAuth(data.data);
                 })
                 .catch(({response}) => {
-                    setError(response.data.errors);
+                    console.log(response)
+                    setError(response.data ? response.data.errors : '');
                     setStatus(response.status);
                     window.location.href = '/#/sign-in';
                     window.location.reload();
