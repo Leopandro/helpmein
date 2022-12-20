@@ -122,6 +122,7 @@ export const useAuthStore = defineStore("auth", () => {
 
             })
             .catch(({response}) => {
+                setMessage(response.data.message);
                 setError(response.data.errors);
                 setStatus(response.status);
             });

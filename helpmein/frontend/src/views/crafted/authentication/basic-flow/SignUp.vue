@@ -46,10 +46,10 @@
             name="name"
             autocomplete="off"
           />
-          <div class="fv-plugins-message-container">
-            <div class="fv-help-block">
-              <ErrorMessage name="name" />
-            </div>
+          <div class="fv-plugins-message-container" v-if="errors.name">
+              <div class="fv-help-block">
+                  {{ errors.name[0] }}
+              </div>
           </div>
         </div>
         <!--end::Col-->
@@ -64,9 +64,9 @@
             name="surname"
             autocomplete="off"
           />
-          <div class="fv-plugins-message-container">
+          <div class="fv-plugins-message-container" v-if="errors.surname">
             <div class="fv-help-block">
-              <ErrorMessage name="surname" />
+                {{ errors.surname[0] }}
             </div>
           </div>
         </div>
@@ -84,9 +84,9 @@
           name="email"
           autocomplete="off"
         />
-        <div class="fv-plugins-message-container">
+        <div class="fv-plugins-message-container" v-if="errors.email">
           <div class="fv-help-block">
-            <ErrorMessage name="email" />
+              {{errors.email[0]}}
           </div>
         </div>
       </div>
@@ -109,9 +109,9 @@
               name="password"
               autocomplete="off"
             />
-            <div class="fv-plugins-message-container">
+            <div class="fv-plugins-message-container" v-if="errors.password">
               <div class="fv-help-block">
-                <ErrorMessage name="password" />
+                  {{errors.password[0]}}
               </div>
             </div>
           </div>
@@ -157,9 +157,9 @@
           name="password_confirmation"
           autocomplete="off"
         />
-        <div class="fv-plugins-message-container">
+        <div class="fv-plugins-message-container" v-if="errors.password_confirmation">
           <div class="fv-help-block">
-            <ErrorMessage name="password_confirmation" />
+              {{errors.password_confirmation[0]}}
           </div>
         </div>
       </div>
@@ -209,16 +209,19 @@ export default {
   },
     data() {
       return {
-          errors: {
-
-          }
       }
+    },
+    computed: {
+        errors() {
+            const store = useAuthStore();
+            let errors = store.errors;
+            return errors;
+        }
     },
   setup() {
     const store = useAuthStore();
     const router = useRouter();
-
-      let errors;
+    let errors = store.errors;
     const submitButton = ref<HTMLButtonElement | null>(null);
 
 
@@ -246,7 +249,6 @@ export default {
 
       const error = store.errors;
       const message = store.messages;
-      errors = error;
       console.log(error);
       if (!message) {
         Swal.fire({
@@ -283,7 +285,6 @@ export default {
     return {
       onSubmitRegister,
       submitButton,
-        errors
     };
   },
 };

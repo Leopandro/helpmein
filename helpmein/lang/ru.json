@@ -1,0 +1,9 @@
+{
+    "(and :count more errors)": "(И еще :count ошибок)",
+    "(and :count more error)": "(И еще одна ошибка)",
+    "first_name": "Имя",
+    "last_name": "Фамилия",
+    "email": "Почта",
+    "surname": "Фамилия",
+    "name": "Имя"
+}

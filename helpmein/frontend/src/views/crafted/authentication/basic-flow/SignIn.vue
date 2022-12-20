@@ -118,6 +118,13 @@ export default defineComponent({
     VForm,
     ErrorMessage,
   },
+    computed: {
+        errors() {
+            const store = useAuthStore();
+            let errors = store.errors;
+            return errors;
+        }
+    },
   setup() {
     const store = useAuthStore();
     const router = useRouter();

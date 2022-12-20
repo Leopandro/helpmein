@@ -119,8 +119,14 @@ return [
     'attributes' => [
         'address' => 'Адрес',
         'city' => 'Город',
-        'name' => 'Названия',
+        'name' => 'Название',
         'inn' => 'ИНН',
+        "first_name" => "Имя",
+        "last_name" => "Фамилия",
+        "email" => "Почта",
+        "surname" => "Фамилия",
+        "password" => "Пароль",
+        "password_confirmation" => "Подтверждение пароля",
     ],
 
 ];

@@ -2,7 +2,69 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/1b" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/1f" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/2a" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/02" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/3c" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/04" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/6b" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/06" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/7b" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/8f" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/9b" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/9c" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/18" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/24" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/28" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/30" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/33" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/35" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/44" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/48" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/50" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/52" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/53" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/60" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/62" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/65" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/68" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/69" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/70" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/71" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/74" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/78" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/79" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/82" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/85" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/99" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/a1" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/a9" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/aa" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/ad" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/ae" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/bb" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/bf" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/c1" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/c2" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/ca" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/cb" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/d3" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/d5" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/d8" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/dc" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/de" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/e3" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/e6" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/e9" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/ee" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/ef" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/f1" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/f5" />
+      <excludeFolder url="file://$MODULE_DIR$/helpmein/storage/framework/cache/data/fe" />
+      <excludeFolder url="file://$MODULE_DIR$/laradock/jenkins/jenkins_home" />
+    </content>
     <content url="file://$MODULE_DIR$/helpmein/frontend/dist" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

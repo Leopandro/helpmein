@@ -27,11 +27,11 @@
     <!--end::Menu item-->
 
     <!--begin::Menu separator-->
-    <div class="separator my-2"></div>
+    <div class="separator my-2" style="display: none"></div>
     <!--end::Menu separator-->
 
     <!--begin::Menu item-->
-    <div class="menu-item px-5">
+    <div class="menu-item px-5" style="display: none">
       <router-link to="/pages/profile/overview" class="menu-link px-5">
         Профиль
       </router-link>
@@ -51,6 +51,7 @@
       class="menu-item px-5"
       data-kt-menu-trigger="hover"
       data-kt-menu-placement="left-start"
+      style="display: none"
       data-kt-menu-flip="center, top"
     >
       <router-link to="/pages/profile/overview" class="menu-link px-5">

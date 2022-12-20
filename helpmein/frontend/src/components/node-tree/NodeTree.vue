@@ -196,10 +196,30 @@ export default {
     },
     data() {
         return {
-            showChildrenFlag: false,
+            showChildrenFlagProperty: false,
             showEditInput: false,
             isHovering: false,
             task_categories: []
+        }
+    },
+    computed: {
+        showChildrenFlag: {
+            get: function (value) {
+                if (this && this.item) {
+                    let item = localStorage.getItem('node-item-'+this.item.id);
+                    if (item) {
+                        console.log('local value', item)
+                        return item;
+                    }
+                    return this.showChildrenFlagProperty
+                }
+            },
+            set: function (value) {
+                if (this.item) {
+                    localStorage.setItem('node-item-' + this.item.id, value);
+                    return this.showChildrenFlagProperty = value
+                }
+            },
         }
     },
     updated() {
