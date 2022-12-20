@@ -19,7 +19,7 @@ class CategoryTreeController extends Controller
                 'name' => 'Эту папку не должно быть видно',
                 'user_id' => auth('sanctum')->id()
             ]);
-        $tree = TaskCategory::defaultOrder('desc')->descendantsAndSelf($categoryParent->id)->toTree()->first();;
+        $tree = TaskCategory::defaultOrder('asc')->descendantsAndSelf($categoryParent->id)->toTree()->first();;
         return $tree->toArray();
     }
 
@@ -49,6 +49,24 @@ class CategoryTreeController extends Controller
             'name' => $request->get('name')
         ]);
         return $categoryParent->toArray();
+    }
+
+    public function replace(Request $request) {
+        /** @var User $user */
+        $user = auth('sanctum')->user();
+        /** @var TaskCategory $categoryParent */
+        $categoryFrom = TaskCategory::query()
+            ->where('id','=',$request->get('from_id'))
+            ->firstOrFail();
+        $categoryTo = TaskCategory::query()
+            ->where('id','=',$request->get('to_id'))
+            ->firstOrFail();
+        if ($request->get('move_to') == 'after') {
+            $categoryFrom->afterNode($categoryTo)->save();
+        } else {
+            $categoryFrom->beforeNode($categoryTo)->save();
+        }
+        return $this->getSuccessResponse([]);
     }
 
     public function delete(Request $request) {

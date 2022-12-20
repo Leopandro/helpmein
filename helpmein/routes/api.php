@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/list', [Controller\CategoryTreeController::class, 'list'])->name('list');
         Route::post('/add', [Controller\CategoryTreeController::class, 'add'])->name('add');
         Route::post('/edit', [Controller\CategoryTreeController::class, 'edit'])->name('edit');
+        Route::post('/replace', [Controller\CategoryTreeController::class, 'replace'])->name('replace');
         Route::post('/delete', [Controller\CategoryTreeController::class, 'delete'])->name('delete');
     });
 });

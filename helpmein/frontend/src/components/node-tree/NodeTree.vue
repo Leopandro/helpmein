@@ -1,5 +1,5 @@
 <template>
-    <div class="accordion" :id="'kt_accordion_'+item.id">
+    <div class="accordion">
         <div v-if="!item.parent_id">
             <button class="node-tree-button px-0" v-on:click="addNode()">
                 <div class="">
@@ -14,7 +14,7 @@
                 </div>
             </button>
         </div>
-        <div ref="accordion-item" v-if="item && item.name && item.parent_id" class="accordion-item">
+        <div ref="accordion-item" :id="'kt_accordion_'+item.id" v-if="item && item.name && item.parent_id" class="accordion-item">
             <h2 class="accordion-header" :id="'kt_accordion_'+item.id+'_header_'+item.id"  @mouseover="isHovering = true"
                 @mouseout="isHovering = false" >
                 <div class="node-tree-button fs-4 fw-semibold p-0" type="button"
@@ -77,8 +77,7 @@
 <script>
 import ApiService from "@/core/services/ApiService";
 import {useAuthStore} from "@/stores/auth";
-import sortItem from "./sort-list";
-import cu from "../../../dist/assets/MainLayout.89303fee";
+
 export default {
     name: "NodeTree",
     props: [
@@ -181,7 +180,6 @@ export default {
         showChildren(id = null) {
             this.showChildrenFlag = true;
             if (id) {
-                console.log(this.$refs);
                 const nodeItem = this.$refs["node-tree-item-child"].find((nodeItem) => {
                     return nodeItem.item.id === id;
                 });
@@ -209,30 +207,6 @@ export default {
     async mounted() {
         if (this.item.parent_id == null) {
             this.showChildrenFlag = true;
-        }
-        const nodeItem = this.$refs['accordion-item'];
-        if (nodeItem) {
-            let currentItem = null;
-            nodeItem.draggable = true;
-            nodeItem.ondragstart = (ev) => {
-            };
-            nodeItem.ondragenter = (event) => {
-                console.log('drag_enter', event.target);
-                if (event.target.matches('.accordion-item')) {
-                    if (currentItem !== event.target) {
-                        currentItem.classList.remove('alert-danger');
-                    }
-                    currentItem = event.target;
-                    nodeItem.classList.add('alert-danger');
-                }
-            };
-            // nodeItem.ondragleave = (event) => {
-            //     console.log('drag_leave', event.target);
-            //     if (event.target.matches('.accordion-item')) {
-            //         nodeItem.classList.remove('alert-danger');
-            //     }
-            // };
-            nodeItem.ondragover = (evt) => { evt.preventDefault(); };
         }
     },
 };
