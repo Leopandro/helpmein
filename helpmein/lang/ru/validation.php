@@ -119,7 +119,7 @@ return [
     'attributes' => [
         'address' => 'Адрес',
         'city' => 'Город',
-        'name' => 'Название',
+        'name' => 'Имя',
         'inn' => 'ИНН',
         "first_name" => "Имя",
         "last_name" => "Фамилия",
