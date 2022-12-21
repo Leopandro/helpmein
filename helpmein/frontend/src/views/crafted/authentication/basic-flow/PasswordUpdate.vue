@@ -84,9 +84,6 @@ export default defineComponent({
   },
     data() {
         return {
-            errors: {
-
-            },
             model: {
                 password: '',
                 password_confirm: ''
@@ -104,8 +101,6 @@ export default defineComponent({
           await store.updatePassword(object);
           const error = store.errors;
           const message = store.messages;
-          this.errors = error;
-          console.log(error)
           if (!message) {
               Swal.fire({
                   text: "Пароль успешно изменен",
@@ -164,7 +159,6 @@ export default defineComponent({
       // Send login request
       await store.forgotPassword(values);
 
-      const error = store.errors;
 
 
 

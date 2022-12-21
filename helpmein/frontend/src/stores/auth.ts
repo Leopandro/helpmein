@@ -79,7 +79,7 @@ export const useAuthStore = defineStore("auth", () => {
                 setPermissions(data.permissions);
             })
             .catch(({response}) => {
-                console.log(response);
+                setError(response.data.errors);
                 setMessage(response.data.message);
                 setStatus(response.status);
             });
@@ -106,8 +106,10 @@ export const useAuthStore = defineStore("auth", () => {
 
     function updatePassword(object) {
         return ApiService.post("auth/update-password", object)
-            .then(() => {
-
+            .then((response) => {
+                setMessage('');
+                setError('');
+                setStatus(response.status);
             })
             .catch(({response}) => {
                 setMessage(response.data.message);
@@ -118,8 +120,10 @@ export const useAuthStore = defineStore("auth", () => {
 
     function forgotPassword(email: string) {
         return ApiService.post("auth/remind-password", email)
-            .then(() => {
-
+            .then((response) => {
+                setMessage('');
+                setError('');
+                setStatus(response.status);
             })
             .catch(({response}) => {
                 setMessage(response.data.message);

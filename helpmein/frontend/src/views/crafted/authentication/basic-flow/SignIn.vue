@@ -41,6 +41,11 @@
           name="email"
           autocomplete="off"
         />
+      <div class="fv-plugins-message-container" v-if="errors.email">
+          <div class="fv-help-block">
+              {{errors.email[0]}}
+          </div>
+      </div>
         <!--end::Input-->
       </div>
       <!--end::Input group-->
@@ -69,6 +74,11 @@
           name="password"
           autocomplete="off"
         />
+          <div class="fv-plugins-message-container" v-if="errors.password">
+              <div class="fv-help-block">
+                  {{errors.password[0]}}
+              </div>
+          </div>
         <!--end::Input-->
       </div>
       <!--end::Input group-->
@@ -152,6 +162,7 @@ export default defineComponent({
       await store.login(values);
       const message = store.messages;
       const permissions = store.permissions;
+        const error = store.errors;
       console.log(message);
       if (!message) {
         Swal.fire({
