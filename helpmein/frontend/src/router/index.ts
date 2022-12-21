@@ -36,6 +36,15 @@ const routes: Array<RouteRecordRaw> = [
                 },
             },
             {
+                path: "/how-to-node",
+                name: "how-to-node",
+                component: () => import("@/views/faq/NodeEdit.vue"),
+                meta: {
+                    pageTitle: "Инструкция к дереву папок",
+                    breadcrumbs: ["Инструкция к дереву папок"],
+                },
+            },
+            {
                 path: "/greetings",
                 name: "greetings",
                 component: () => import("@/views/guest/Greetings.vue"),

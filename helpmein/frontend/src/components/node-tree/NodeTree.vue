@@ -1,6 +1,6 @@
 <template>
     <div class="accordion">
-        <div v-if="!item.parent_id">
+        <div v-if="!item.parent_id" class="box">
             <button class="node-tree-button px-0" v-on:click="addNode()">
                 <div class="">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -10,9 +10,14 @@
                     </svg>
                 </div>
                 <div class="node-tree-button-add-text p-1 px-3">
-                    Добавить корневую папку
+                        Добавить корневую папку
                 </div>
             </button>
+            <div class="how-to p-1">
+                <router-link to="/how-to-node">
+                 Как перемещать создавать и редактировать папки
+                </router-link>
+            </div>
         </div>
         <div ref="accordion-item" :id="'kt_accordion_'+item.id" v-if="item && item.name && item.parent_id" class="accordion-item">
             <h2 class="accordion-header" :id="'kt_accordion_'+item.id+'_header_'+item.id"  @mouseover="isHovering = true"
@@ -276,5 +281,12 @@ export default {
 }
 .pl-1 {
     padding-left: 1rem;
+}
+.box {
+    display: flex;
+}
+.how-to {
+    float: right;
+    margin-left: auto;
 }
 </style>
