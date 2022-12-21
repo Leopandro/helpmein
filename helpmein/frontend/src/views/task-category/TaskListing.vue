@@ -76,14 +76,16 @@ export default {
                         }
                     }
                     nodeItem.ondragend = async () => {
+                        currentItem.classList.remove('line-top');
+                        fromItem.classList.remove('line-top');
+                        currentItem.classList.remove('line-bottom');
+                        fromItem.classList.remove('line-bottom');
                         let object = {
                             from_id: parseInt(fromItem.id.replace(/[^\d.]/g, '')),
                             to_id: parseInt(currentItem.id.replace(/[^\d.]/g, '')),
                             move_to: moveTo
                         };
                         await this.moveElement(object);
-                        currentItem.classList.remove('line-top');
-                        currentItem.classList.remove('line-bottom');
                         this.loadNodes();
                     };
                     nodeItem.ondragenter = function(event) {
