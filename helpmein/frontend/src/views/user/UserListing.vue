@@ -5,16 +5,30 @@
             <div class="card-title">
                 <!--begin::Search-->
                 <div class="d-flex align-items-center position-relative my-1">
-                  <span class="svg-icon svg-icon-1 position-absolute ms-6">
-                    <inline-svg src="/media/icons/duotune/general/gen021.svg"/>
-                  </span>
-                    <input
-                        type="text"
-                        v-model="search"
-                        v-debounce:400="searchItems"
-                        class="form-control form-control-solid w-250px ps-15"
-                        placeholder="Поиск клиентов"
-                    />
+                    <div class="form-check p-0">
+                        <input
+                            id="filter_active"
+                            type="checkbox"
+                            v-debounce:400="searchItems"
+                            v-on:change="searchItems"
+                            v-model="filter.active">
+                        <label class="form-check-label p-1" for="filter_active">
+                            Показывать неактивных клиентов
+                        </label>
+                    </div>
+                    <div>
+
+<!--                      <span class="svg-icon svg-icon-1 ms-6">-->
+<!--                        <inline-svg src="/media/icons/duotune/general/gen021.svg"/>-->
+<!--                      </span>-->
+<!--                        <input-->
+<!--                            type="text"-->
+<!--                            v-model="filter.search"-->
+<!--                            v-debounce:400="searchItems"-->
+<!--                            class="form-control form-control-solid w-250px ps-15"-->
+<!--                            placeholder="Поиск клиентов"-->
+<!--                        />-->
+                    </div>
                 </div>
                 <!--end::Search-->
             </div>
@@ -107,7 +121,7 @@ export default defineComponent({
 
     methods: {
         async searchItems() {
-            await ApiService.get('/user/list','?search=' + this.search).then((data: any) => {
+            await ApiService.get('/user/list?',new URLSearchParams(this.filter).toString()).then((data: any) => {
                 this.users = data.data;
             })
         },
@@ -122,7 +136,10 @@ export default defineComponent({
     data() {
         return {
             tableData: [],
-            search: [],
+            filter: {
+                search: '',
+                active: ''
+            },
             selectedIds: [],
             deleteFewCustomers: [],
             sort: [],
@@ -137,3 +154,10 @@ export default defineComponent({
     },
 });
 </script>
+<style>
+.form-check-label {
+    font-weight: 300;
+    font-size: 1rem;
+
+}
+</style>

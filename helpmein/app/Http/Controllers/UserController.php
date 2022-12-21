@@ -112,10 +112,15 @@ class UserController extends Controller
         $search = $request->get('search');
         $query
             ->with('teachers')
-            ->whereHas('teachers', function (Builder $query) use ($search) {
+            ->whereHas('teachers', function (Builder $query) use ($request) {
                 $query->where('user_clients.user_id', '=', auth('sanctum')->id());
 
-                if ($search) {
+                if (($active = $request->get('active')) == 'true') {
+
+                } else {
+                    $query->where('user_clients.active', '=', 'true');
+                }
+                if ($search = $request->get('search')) {
                     $query->where('user_clients.name','ILIKE', "%$search%")
                         ->orWhere('user_clients.surname','ILIKE', "%$search%")
                         ->orWhere('email','ILIKE', "%$search%");;
