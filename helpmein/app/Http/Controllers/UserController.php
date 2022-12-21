@@ -60,6 +60,7 @@ class UserController extends Controller
             $user->teachers()->attach($id, [
                 'token' => $token,
                 'name' => $user->name,
+                'active' => false,
                 'surname' => $user->surname
             ]);
             $passwordReset = PasswordReset::query()->updateOrCreate([

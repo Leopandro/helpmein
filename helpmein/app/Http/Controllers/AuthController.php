@@ -115,6 +115,10 @@ class AuthController extends Controller
         $user = User::query()->where('email','=',$password_reset->email)->firstOrFail();
         $user->password =  bcrypt($request->get('password'));
         if ($result = $user->save()) {
+            foreach ($user->teachers as $teacher) {
+                $teacher->pivot->active = true;
+                $teacher->pivot->save();
+            }
             $token = $service->createUserToken($user);
             $userData = $user->attributesToArray();
             $userData['token'] = $token;
