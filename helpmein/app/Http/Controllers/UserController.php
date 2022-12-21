@@ -8,6 +8,8 @@ use App\Domain\User\Gates\UserEditGate;
 use App\Domain\User\Model\User;
 use App\Domain\User\Request\UserCreateRequest;
 use App\Domain\User\Request\UserEditRequest;
+use App\Domain\User\Request\UserProfileEditRequest;
+use App\Domain\User\Resource\ProfileResource;
 use App\Domain\User\Resource\UserInfoResource;
 use App\Domain\User\UseCase\UserInvation\UserInvationEmail;
 use Illuminate\Database\Eloquent\Builder;
@@ -24,6 +26,24 @@ class UserController extends Controller
     {
         Gate::authorize(UserEditGate::getCode(), $user->id);
         return $this->getSuccessResponse((new UserInfoResource($user))->toArray($request));
+    }
+
+    public function profileInfo(Request $request): JsonResponse
+    {
+        return $this->getSuccessResponse((new ProfileResource(auth('sanctum')->user()))->toArray($request));
+    }
+
+    public function profileEdit(UserProfileEditRequest $request): JsonResponse
+    {
+        $user = auth('sanctum')->user();
+        $user->name = $request->get('name');
+        $user->surname = $request->get('surname');
+
+        if ($user->save()) {
+            return $this->getSuccessResponse([]);
+        } else {
+            return $this->getSingleErrorResponse("Ошибка");
+        }
     }
     public function create(UserCreateRequest $request): JsonResponse
     {

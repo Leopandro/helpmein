@@ -31,8 +31,8 @@
     <!--end::Menu separator-->
 
     <!--begin::Menu item-->
-    <div class="menu-item px-5" style="display: none">
-      <router-link to="/pages/profile/overview" class="menu-link px-5">
+    <div class="menu-item px-5" style="display: block">
+      <router-link to="/profile" class="menu-link px-5">
         Профиль
       </router-link>
     </div>

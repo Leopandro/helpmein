@@ -22,8 +22,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::group(['prefix' => 'user'], function () {
         Route::get('/info/{user}', [Controller\UserController::class, 'info'])->name('info');
+        Route::get('/profile/info/', [Controller\UserController::class, 'profileInfo'])->name('profile-info');
         Route::post('/create', [Controller\UserController::class, 'create'])->name('create');
         Route::post('/edit/{user}', [Controller\UserController::class, 'edit'])->name('edit');
+        Route::post('/profile/edit/', [Controller\UserController::class, 'profileEdit'])->name('profile-edit');
         Route::post('/delete/{user}', [Controller\UserController::class, 'delete'])->name('delete');
         Route::get('/list', [Controller\UserController::class, 'list'])->name('list');
     });

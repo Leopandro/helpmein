@@ -8,7 +8,7 @@
       <!--begin::Form-->
       <div class="d-flex flex-center flex-column flex-lg-row-fluid">
         <!--begin::Wrapper-->
-        <div class="<?php echo $params['wrapperClass']?> p-10">
+        <div>
           <router-view></router-view>
         </div>
         <!--end::Wrapper-->
