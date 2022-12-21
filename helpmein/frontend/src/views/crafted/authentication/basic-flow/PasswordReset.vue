@@ -15,7 +15,7 @@
 
         <!--begin::Link-->
         <div class="text-gray-400 fw-semobold fs-4">
-          Введите e-mail чтобы получить ссылку
+          Введите e-mail, чтобы получить ссылку
         </div>
         <!--end::Link-->
       </div>
