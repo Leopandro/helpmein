@@ -26,7 +26,7 @@
                             data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
                             <i class="bi bi-x fs-2"></i>
                         </span></div>
-                    <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                    <div class="form-text">Разрешены расширения: png, jpg, jpeg.</div>
 
                     <div v-if="errors.avatar" class="fv-plugins-message-container invalid-feedback">
                         <div data-field="daterangepicker_input" data-validator="notEmpty">{{ errors.avatar[0] }}</div>

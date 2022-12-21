@@ -2,7 +2,8 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { Tooltip } from "bootstrap";
 import App from "./App.vue";
-
+import mitt from 'mitt';
+const emitter = mitt();
 /*
 TIP: To get started with clean router change path to @/router/clean.ts.
  */
@@ -19,6 +20,7 @@ import "@/core/plugins/prismjs";
 import {vue3Debounce} from "vue-debounce";
 const app = createApp(App);
 
+app.config.globalProperties.emitter = emitter;
 app.use(createPinia());
 app.use(router);
 app.use(ElementPlus);

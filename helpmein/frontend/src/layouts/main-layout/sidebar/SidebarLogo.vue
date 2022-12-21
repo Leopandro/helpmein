@@ -2,28 +2,28 @@
   <!--begin::Logo-->
   <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
     <!--begin::Logo image-->
-    <router-link to="/">
-      <img
-        v-if="
-          layout === 'dark-sidebar' ||
-          (themeMode === 'dark' && layout === 'light-sidebar')
-        "
-        alt="Logo"
-        src="/media/logos/default-dark.svg"
-        class="h-25px app-sidebar-logo-default"
-      />
-      <img
-        v-if="themeMode === 'light' && layout === 'light-sidebar'"
-        alt="Logo"
-        src="/media/logos/default.svg"
-        class="h-25px app-sidebar-logo-default"
-      />
-      <img
-        alt="Logo"
-        src="/media/logos/default-small.svg"
-        class="h-20px app-sidebar-logo-minimize"
-      />
-    </router-link>
+<!--    <router-link to="/">-->
+<!--      <img-->
+<!--        v-if="-->
+<!--          layout === 'dark-sidebar' ||-->
+<!--          (themeMode === 'dark' && layout === 'light-sidebar')-->
+<!--        "-->
+<!--        alt="Logo"-->
+<!--        src="/media/logos/default-dark.svg"-->
+<!--        class="h-25px app-sidebar-logo-default"-->
+<!--      />-->
+<!--      <img-->
+<!--        v-if="themeMode === 'light' && layout === 'light-sidebar'"-->
+<!--        alt="Logo"-->
+<!--        src="/media/logos/default.svg"-->
+<!--        class="h-25px app-sidebar-logo-default"-->
+<!--      />-->
+<!--      <img-->
+<!--        alt="Logo"-->
+<!--        src="/media/logos/default-small.svg"-->
+<!--        class="h-20px app-sidebar-logo-minimize"-->
+<!--      />-->
+<!--    </router-link>-->
     <!--end::Logo image-->
     <!--begin::Sidebar toggle-->
     <div

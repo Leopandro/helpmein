@@ -9,6 +9,7 @@
 <script>
 import ApiService from "@/core/services/ApiService";
 import NodeTree from "@/components/node-tree/NodeTree.vue";
+
 export default {
     name: "TaskListing",
     components: {
@@ -16,7 +17,6 @@ export default {
     },
     init() {
     },
-
     data() {
         return {
             tableData: [],
@@ -97,6 +97,10 @@ export default {
             this.task_categories = data.data;
         });
         this.loadNodes();
+
+        this.emitter.on("toggle-sidebar", () => {
+            this.loadNodes();
+        });
     },
 };
 </script>

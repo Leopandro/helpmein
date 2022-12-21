@@ -84,7 +84,7 @@
               <!--end::Image input-->
 
               <!--begin::Hint-->
-              <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+              <div class="form-text">Разрешены расширения: png, jpg, jpeg.</div>
               <!--end::Hint-->
             </div>
             <!--end::Col-->
