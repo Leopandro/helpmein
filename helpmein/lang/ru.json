@@ -5,5 +5,6 @@
     "last_name": "Фамилия",
     "email": "Почта",
     "surname": "Фамилия",
-    "name": "Имя"
+    "name": "Имя",
+    "The given data was invalid.": "Данные введены неверно"
 }

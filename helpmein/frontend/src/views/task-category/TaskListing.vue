@@ -53,16 +53,23 @@ export default {
                         currentItem = event.target;
                     };
                     nodeItem.ondragover = (event) => {
-                        if (event.target.matches('.accordion-item')) {
-                            let height = event.target.offsetHeight;
-                            let number = event.pageY - event.target.offsetTop;
+                        let folderTarget = event.target.closest('.add-to-folder');
+                        let eventTarget = event.target.closest('.accordion-item');
+                        if (folderTarget) {
+                            currentItem.classList.remove('line-top');
+                            currentItem.classList.remove('line-bottom');
+                            moveTo = 'inner';
+                        } else if (eventTarget) {
+
+                            let height = eventTarget.offsetHeight;
+                            let number = event.pageY - eventTarget.offsetTop;
 
                             if (currentItem.id !== event.target.id) {
                                 currentItem.classList.remove('line-top');
                                 currentItem.classList.remove('line-bottom');
-                                console.log(currentItem.id, event.target.id);
+                                console.log(currentItem.id, eventTarget.id);
                             }
-                            currentItem = event.target;
+                            currentItem = eventTarget;
                             // nodeItem.classList.add('alert-danger');
                             if (height / 2 > number) {
                                 moveTo = 'before';
@@ -73,6 +80,9 @@ export default {
                                 currentItem.classList.add('line-bottom');
                                 currentItem.classList.remove('line-top');
                             }
+                            console.log(height, number)
+                        } else {
+                            console.log('doesnt match', eventTarget);
                         }
                     }
                     nodeItem.ondragend = async () => {
@@ -109,8 +119,10 @@ export default {
 <style>
 .line-top{
     border-top: 1px solid red;
+    padding-top: 20px;
 }
 .line-bottom{
     border-bottom: 1px solid red;
+    padding-bottom: 20px;
 }
 </style>

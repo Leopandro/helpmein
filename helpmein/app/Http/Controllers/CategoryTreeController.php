@@ -61,9 +61,11 @@ class CategoryTreeController extends Controller
         $categoryTo = TaskCategory::query()
             ->where('id','=',$request->get('to_id'))
             ->firstOrFail();
-        if ($request->get('move_to') == 'after') {
+        if ($request->get('move_to') == 'inner') {
+            $categoryFrom->prependToNode($categoryTo)->save();
+        } elseif ($request->get('move_to') == 'after') {
             $categoryFrom->afterNode($categoryTo)->save();
-        } else {
+        } elseif ($request->get('move_to') == 'before') {
             $categoryFrom->beforeNode($categoryTo)->save();
         }
         return $this->getSuccessResponse([]);
