@@ -17,6 +17,7 @@ class Client extends User
             ->belongsToMany(User::class, 'user_clients','client_id','user_id')
             ->withPivot([
                 'name',
+                'active',
                 'surname'
             ]);
     }

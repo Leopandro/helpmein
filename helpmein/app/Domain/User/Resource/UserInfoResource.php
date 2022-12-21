@@ -17,6 +17,7 @@ class UserInfoResource extends JsonResource
         return [
             'id' => $user->id,
             'name' => $user->teachers->first()->pivot->name,
+            'active' => $user->teachers->first()->pivot->active,
             'surname' => $user->teachers->first()->pivot->surname,
             'email' => $user->email,
         ];
