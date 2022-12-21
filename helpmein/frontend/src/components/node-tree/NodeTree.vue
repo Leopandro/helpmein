@@ -65,7 +65,7 @@
             </h2>
         </div>
         <template v-for="(newItem, index) of item.children">
-            <div :style="{display: showChildrenFlag ? 'block' : 'none'}"  :id="'kt_accordion_'+item.id+'_body_'+item.id"
+            <div v-if="showChildrenFlag" :style="{display: showChildrenFlag ? 'block' : 'none'}"  :id="'kt_accordion_'+item.id+'_body_'+item.id"
                  class="accordion-collapse collapse show"
                  aria-labelledby="kt_accordion_1_header_1"
                  :data-bs-parent="'#kt_accordion_'+item.id">
@@ -214,18 +214,34 @@ export default {
                 if (this.item) {
                     localStorage.setItem('node-item-' + this.item.id, value);
                     console.log('node-item-' + this.item.id, value)
-                    this.showChildrenFlagProperty = value
+                    this.showChildrenFlagProperty = Boolean(value);
                 }
             },
+        }
+    },
+    watch: {
+        property() {
+            localStorage.getItem('node-item-' + this.item.id)
         }
     },
     created() {
 
     },
-    async mounted() {
+    mounted() {
         if (this.item.parent_id == null) {
             this.showChildrenFlagProperty = true;
+        } else {
+            if (localStorage.getItem('node-item-' + this.item.id) === 'false') {
+                this.showChildrenFlagProperty = false;
+                this.showChildrenFlag = false;
+            } else {
+
+                this.showChildrenFlagProperty = true;
+                this.showChildrenFlag = true;
+            }
+            console.log('node-item-' + this.item.id, this.showChildrenFlagProperty)
         }
+
     },
 };
 </script>
