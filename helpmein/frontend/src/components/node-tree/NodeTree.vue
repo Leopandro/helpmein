@@ -70,7 +70,7 @@
             </h2>
         </div>
         <template v-for="(newItem, index) of item.children">
-            <div v-if="showChildrenFlag" :style="{display: showChildrenFlag ? 'block' : 'none'}"  :id="'kt_accordion_'+item.id+'_body_'+item.id"
+            <div :style="{display: showChildrenFlag ? 'block' : 'none'}"  :id="'kt_accordion_'+item.id+'_body_'+item.id"
                  class="accordion-collapse collapse show"
                  aria-labelledby="kt_accordion_1_header_1"
                  :data-bs-parent="'#kt_accordion_'+item.id">
@@ -122,7 +122,6 @@ export default {
                 openId = response.data.id;
             });
             this.showChildren(openId);
-            this.emitter.emit("toggle-sidebar");
         },
         async saveNode(event) {
             await this.$emit('change-value', {
@@ -161,6 +160,8 @@ export default {
             setTimeout(() => {
                 this.$refs.input.focus();
             }, 1);
+
+            this.emitter.emit("reload-tree");
         },
         async deleteNode() {
             if (confirm('Удалить папку')) {

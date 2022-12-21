@@ -28,10 +28,11 @@ export default {
         }
     },
     methods: {
-        async searchItems() {
+        async getItems() {
             await ApiService.get('/category-tree/list').then((data) => {
                 this.task_categories = data.data;
             })
+            this.loadNodes();
         },
         async moveElement(object) {
             await ApiService.post('/category-tree/replace', object).then(() => {
@@ -50,6 +51,7 @@ export default {
                     nodeItem.draggable = true;
                     nodeItem.ondragstart = (event) => {
                         fromItem = event.target;
+                        // fromItem.style.display = "none";
                         currentItem = event.target;
                     };
                     nodeItem.ondragover = (event) => {
@@ -67,7 +69,6 @@ export default {
                             if (currentItem.id !== event.target.id) {
                                 currentItem.classList.remove('line-top');
                                 currentItem.classList.remove('line-bottom');
-                                console.log(currentItem.id, eventTarget.id);
                             }
                             currentItem = eventTarget;
                             // nodeItem.classList.add('alert-danger');
@@ -80,12 +81,11 @@ export default {
                                 currentItem.classList.add('line-bottom');
                                 currentItem.classList.remove('line-top');
                             }
-                            console.log(height, number)
                         } else {
-                            console.log('doesnt match', eventTarget);
                         }
                     }
                     nodeItem.ondragend = async () => {
+                        fromItem.style.display = "block";
                         currentItem.classList.remove('line-top');
                         fromItem.classList.remove('line-top');
                         currentItem.classList.remove('line-bottom');
@@ -96,7 +96,7 @@ export default {
                             move_to: moveTo
                         };
                         await this.moveElement(object);
-                        this.loadNodes();
+                        await this.getItems();
                     };
                     nodeItem.ondragenter = function(event) {
                     };
@@ -105,12 +105,10 @@ export default {
         }
     },
     async mounted() {
-        await ApiService.get('/category-tree/list').then((data) => {
-            this.task_categories = data.data;
-        });
-        this.loadNodes();
+        await this.getItems();
 
-        this.emitter.on("toggle-sidebar", () => {
+        this.emitter.on("reload-tree", () => {
+            console.log(123)
             this.loadNodes();
         });
     },

@@ -50,7 +50,6 @@ export const useAuthStore = defineStore("auth", () => {
 
     function setPermissions(permissionData: any) {
         const permissionList: any = [];
-        console.log(permissionData)
         if (!permissionData)
             return;
         permissionData.forEach((item: { name: string}) => {
