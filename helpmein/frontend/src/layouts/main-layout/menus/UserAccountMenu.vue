@@ -18,7 +18,7 @@
           <div class="fw-bold d-flex align-items-center fs-5">
               {{ username }}
           </div>
-          <a href="#" class="fw-semobold text-muted text-hover-primary fs-7"
+          <a :href="'mailto:'+email" class="fw-semobold text-muted text-hover-primary fs-7"
             >{{email }}</a>
         </div>
         <!--end::Username-->

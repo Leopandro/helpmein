@@ -128,7 +128,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () =>
           import("@/views/crafted/authentication/basic-flow/PasswordUpdate.vue"),
         meta: {
-          pageTitle: "Password update",
+          pageTitle: "Восстановление пароля",
         },
       },
     ],

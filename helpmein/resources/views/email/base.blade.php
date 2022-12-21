@@ -56,7 +56,7 @@
                                 <table border="0" cellpadding="0" cellspacing="0" style="margin:0; padding: 30px 20px 30px 20px; max-width: 580px;" width="100%">
                                     <tr>
                                         <td>
-                                            <a href="{{ \App\Infrastructure\Http\Routing\FrontendRouterFacade::route('frontend.main-page') }}" style="-webkit-text-size-adjust:none; display: block; text-decoration: none" target="_blank" title="logo">
+                                            <a href="{{ request()->getScheme().'://'.request()->getHost() }}" style="-webkit-text-size-adjust:none; display: block; text-decoration: none" target="_blank" title="logo">
                                                 <div class="" style="background-color:#3699FF;text-align: center;color:white;width:80px;height:30px;display: table-cell;vertical-align: middle;">Helpmein</div>
                                             </a>
                                         </td>
@@ -64,9 +64,6 @@
                                             <font style='font-family: Arial,serif;font-size:12px;line-height:16px;color:#8D8D8D;-webkit-text-size-adjust:none;display:block'>
                                                 Пн-Пт 8:00 - 18:00
                                             </font>
-                                            <a  href="tel:88006005767" title="phone" style='font-family: Arial,serif;font-size:16px;line-height:20px;color:#161616;text-decoration:none;-webkit-text-size-adjust:none;display:block'>
-                                                8 999 999 99 99
-                                            </a>
                                         </td>
                                     </tr>
                                 </table>
@@ -105,7 +102,7 @@
                                         <td>
                                             <font style='font-family: Arial,serif;font-size:14px;line-height:20px;color:#8D8D8D;-webkit-text-size-adjust:none;display:block'>
                                                 Не отвечайте на него, мы не сможем получить ваше сообщение. Если вам нужна помощь, то напишите нам в
-                                                <a href="{{ \App\Infrastructure\Http\Routing\FrontendRouterFacade::route('frontend.support', []) }}" style="color:#6977D2;font-size: 14px;font-family:Arial,sans-serif;line-height: 20px;-webkit-text-size-adjust:none;" target="_blank" title="helpmein">
+                                                <a href="mailto:help@helpmein.ru" style="color:#6977D2;font-size: 14px;font-family:Arial,sans-serif;line-height: 20px;-webkit-text-size-adjust:none;" target="_blank" title="helpmein">
                                                     техподдержку
                                                 </a>
                                             </font>

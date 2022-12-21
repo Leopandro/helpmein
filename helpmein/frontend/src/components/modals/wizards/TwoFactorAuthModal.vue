@@ -337,7 +337,7 @@ export default defineComponent({
             text: "Form has been successfully submitted!",
             icon: "success",
             buttonsStyling: false,
-            confirmButtonText: "Ok, got it!",
+            confirmButtonText: "Ок!",
             heightAuto: false,
             customClass: {
               confirmButton: "btn btn-primary",
@@ -370,7 +370,7 @@ export default defineComponent({
           text: "Form has been successfully submitted!",
           icon: "success",
           buttonsStyling: false,
-          confirmButtonText: "Ok, got it!",
+          confirmButtonText: "Ок!",
           heightAuto: false,
           customClass: {
             confirmButton: "btn btn-primary",

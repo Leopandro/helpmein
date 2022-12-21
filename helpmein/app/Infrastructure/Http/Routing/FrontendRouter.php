@@ -11,6 +11,6 @@ class FrontendRouter
 {
     public function route(string $name, array $parameters = []): string
     {
-        return env('SPA_URL') . route($name, $parameters, false);
+        return route($name, $parameters, false);
     }
 }

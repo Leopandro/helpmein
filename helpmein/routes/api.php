@@ -1,6 +1,7 @@
 <?php
 
 use App\Domain\User\Model\User;
+use App\Infrastructure\Http\Routing\FrontendRouterFacade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +18,7 @@ use App\Http\Controllers as Controller;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/verify_token', [Controller\AuthController::class, 'verifyToken']);
+    Route::post('/verify_token', [Controller\AuthController::class, 'verifyToken'])->name('verify_token');
 
     Route::group(['prefix' => 'user'], function () {
         Route::get('/info/{user}', [Controller\UserController::class, 'info'])->name('info');

@@ -171,7 +171,7 @@ export default defineComponent({
           text: message,
           icon: "error",
           buttonsStyling: false,
-          confirmButtonText: "Try again!",
+          confirmButtonText: "Ок!",
           heightAuto: false,
           customClass: {
             confirmButton: "btn fw-semobold btn-light-danger",

@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="card-body pt-0">
-            Здесь будут задачи
+            Пока задач нет, их скоро назначит преподаватель
 <!--            <table id="kt_datatable_zero_configuration" class="table table-row-bordered gy-5">-->
 <!--                <thead>-->
 <!--                <tr class="fw-semibold fs-6 text-muted">-->

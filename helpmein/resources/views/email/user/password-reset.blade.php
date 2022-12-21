@@ -22,4 +22,7 @@
             </td>
         </tr>
     </table>
+
+
+    если кнопка не работает: <a href="<?= $resetPasswordLink ?>" >ссылка</a>
 @endsection

@@ -26,34 +26,20 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
         $this->configureRateLimiting();
-
-
-        Route::prefix('frontend')
-            ->group(base_path('routes/frontend.php'));
 
         Route::middleware('api')
             ->prefix('api')
+            ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
 
+        Route::prefix('frontend')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/frontend.php'));
+
         Route::middleware('web')
+            ->namespace($this->namespace)
             ->group(base_path('routes/web.php'));
-    }
-    /**
-     * Define the routes for the application.
-     *
-     * @return void
-     */
-    public function map()
-    {
-    }
-    /**
-     * Фронтовые роуты
-     * @see routes/frontend.php
-     */
-    protected function mapFrontendRoutes(): void
-    {
     }
 
     /**
