@@ -10,7 +10,7 @@ use App\Infrastructure\Access\Gates\BaseGate;
 /**
  * Гейт для редактирования пользователя
  */
-class UserEditGate extends BaseGate
+class ClientEditByUserGate extends BaseGate
 {
     public static function getCode(): string
     {

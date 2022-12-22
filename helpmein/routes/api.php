@@ -30,6 +30,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/list', [Controller\UserController::class, 'list'])->name('list');
     });
 
+    Route::group(['prefix' => 'task'], function () {
+        Route::get('/info/{task}', [Controller\TaskController::class, 'info'])->name('info');
+        Route::post('/create', [Controller\TaskController::class, 'create'])->name('create');
+        Route::post('/edit', [Controller\TaskController::class, 'edit'])->name('edit');
+        Route::post('/delete', [Controller\TaskController::class, 'delete'])->name('delete');
+        Route::get('/list', [Controller\TaskController::class, 'list'])->name('list');
+    });
+
     Route::group(['prefix' => 'category-tree'], function () {
         Route::get('/list', [Controller\CategoryTreeController::class, 'list'])->name('list');
         Route::post('/add', [Controller\CategoryTreeController::class, 'add'])->name('add');
@@ -45,3 +53,5 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('/remind-password', [Controller\AuthController::class, 'remindPassword']);
     Route::post('/change-password', [Controller\AuthController::class, 'changePassword']);
 });
+
+Route::get('/test', [Controller\TestController::class, 'list']);

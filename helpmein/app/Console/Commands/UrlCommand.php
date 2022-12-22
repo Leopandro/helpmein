@@ -16,7 +16,7 @@ class UrlCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:url';
+    protected $signature = 'command:create_nodes';
 
     /**
      * The console command description.
@@ -32,7 +32,26 @@ class UrlCommand extends Command
      */
     public function handle()
     {
-        $url = route('frontend.support');
-        echo $url;
+        /** @var User $user */
+        $user = User::query()->firstOrFail();
+        $node = new TaskCategory([
+            'name' => 'Koren2',
+            'user_id' => $user->id
+        ]);
+        $node->makeRoot()->save();
+        $node->children()->create([
+            'name' => 'Children3',
+            'user_id' => $user->id
+        ]);
+        /** @var TaskCategory $children */
+        $children = $node->children()->create([
+            'name' => 'Test2',
+            'user_id' => $user->id
+        ]);
+        $children->children()->create([
+            'name' => 'Children children',
+            'user_id' => $user->id
+        ]);
+        $pause = 1;
     }
 }

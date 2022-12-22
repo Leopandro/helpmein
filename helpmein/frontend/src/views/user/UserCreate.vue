@@ -64,7 +64,7 @@
 
                 <span class="indicator-label"> Сохранить </span>
                         <span class="indicator-progress">
-                    Please wait...
+                    Пожалуйста подождите...
                     <span
                 class="spinner-border spinner-border-sm align-middle ms-2"
             ></span>

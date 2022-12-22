@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Domain\Task\Model\Task;
 use App\Domain\TaskCategory\Model\TaskCategory;
 use App\Domain\User\Model\User;
 use Illuminate\Auth\Events\PasswordReset;
@@ -32,26 +33,35 @@ class TestCommand extends Command
      */
     public function handle()
     {
-        /** @var User $user */
-        $user = User::query()->firstOrFail();
-        $node = new TaskCategory([
-            'name' => 'Koren2',
-            'user_id' => $user->id
-        ]);
-        $node->makeRoot()->save();
-        $node->children()->create([
-            'name' => 'Children3',
-            'user_id' => $user->id
-        ]);
-        /** @var TaskCategory $children */
-        $children = $node->children()->create([
-            'name' => 'Test2',
-            'user_id' => $user->id
-        ]);
-        $children->children()->create([
-            'name' => 'Children children',
-            'user_id' => $user->id
-        ]);
-        $pause = 1;
+        $task = new Task();
+        $task->name = '123';
+        $task->description = '123';
+        $task->comment = '123';
+        $task->type = 'essay';
+        $task->questions = [
+            [
+                'title' => 'Where is it',
+                'type' => 'radio',
+                'options' => [
+                    [
+                        'id' => 1,
+                        'text' => 'Here',
+                    ],
+                    [
+                        'id' => 2,
+                        'text' => 'There',
+                    ],
+                    [
+                        'id' => 3,
+                        'text' => 'Nowhere',
+                    ],
+                ],
+                'answer' => 2
+            ]
+        ];
+        $task->difficult_level = 'A1';
+        $task->folder_id = TaskCategory::query()->first()->id;
+        $task->user_id = User::query()->first()->id;
+        $task->save();
     }
 }

@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Domain\User\Gates\UserEditGate;
+use App\Domain\Task\Gates\TaskEditByUserGate;
+use App\Domain\User\Gates\ClientEditByUserGate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -32,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
 
     public function registerGates()
     {
-        Gate::define(UserEditGate::getCode(), UserEditGate::class);
+        Gate::define(ClientEditByUserGate::getCode(), ClientEditByUserGate::class);
+        Gate::define(TaskEditByUserGate::getCode(), TaskEditByUserGate::class);
     }
 }

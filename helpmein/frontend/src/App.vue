@@ -86,4 +86,10 @@ export default defineComponent({
 #app {
     display: contents;
 }
+.box {
+    display: flex;
+}
+.form-check .form-check-label {
+    cursor: pointer;
+}
 </style>

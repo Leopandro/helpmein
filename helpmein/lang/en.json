@@ -1,4 +1,11 @@
 {
-    "(and :count more errors)": "(И еще :count ошибок)",
-    "(and :count more error)": "(И еще одна ошибка)"
+    "(and :count more errors)": "(and :count more errors)",
+    "(and :count more error)": "(and one more error)",
+    "first_name": "Имя",
+    "last_name": "Фамилия",
+    "email": "Почта",
+    "surname": "Фамилия",
+    "name": "Имя",
+    "The given data was invalid.": "Данные введены неверно",
+    "description": "description"
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Auth\Model\PasswordReset;
 use App\Domain\Client\Model\Client;
-use App\Domain\User\Gates\UserEditGate;
+use App\Domain\User\Gates\ClientEditByUserGate;
 use App\Domain\User\Model\User;
 use App\Domain\User\Request\UserCreateRequest;
 use App\Domain\User\Request\UserEditRequest;
@@ -24,7 +24,7 @@ class UserController extends Controller
 {
     public function info(Request $request, User $user): JsonResponse
     {
-        Gate::authorize(UserEditGate::getCode(), $user->id);
+        Gate::authorize(ClientEditByUserGate::getCode(), $user->id);
         return $this->getSuccessResponse((new UserInfoResource($user))->toArray($request));
     }
 
@@ -77,7 +77,7 @@ class UserController extends Controller
 
     public function edit(UserEditRequest $request, User $user): JsonResponse
     {
-        Gate::authorize(UserEditGate::getCode(), $user->id);
+        Gate::authorize(ClientEditByUserGate::getCode(), $user->id);
         $user->login = $request->get('login');
         $user->email = $request->get('email');
 
@@ -96,7 +96,7 @@ class UserController extends Controller
 
     public function delete(Request $request, User $user): JsonResponse
     {
-        Gate::authorize(UserEditGate::getCode(), $user->id);
+        Gate::authorize(ClientEditByUserGate::getCode(), $user->id);
         if ($user->delete()) {
             return $this->getSuccessResponse([]);
         } else {
