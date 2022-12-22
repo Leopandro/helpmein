@@ -57,11 +57,7 @@ export default {
                     nodeItem.ondragover = (event) => {
                         let folderTarget = event.target.closest('.add-to-folder');
                         let eventTarget = event.target.closest('.accordion-item');
-                        if (folderTarget) {
-                            currentItem.classList.remove('line-top');
-                            currentItem.classList.remove('line-bottom');
-                            moveTo = 'inner';
-                        } else if (eventTarget) {
+                        if (eventTarget) {
 
                             let height = eventTarget.offsetHeight;
                             let number = event.pageY - eventTarget.offsetTop;
@@ -72,15 +68,23 @@ export default {
                             }
                             currentItem = eventTarget;
                             // nodeItem.classList.add('alert-danger');
-                            if (height / 2 > number) {
+                            if (number < 5) {
                                 moveTo = 'before';
                                 currentItem.classList.add('line-top');
                                 currentItem.classList.remove('line-bottom');
-                            } else {
+                                currentItem.classList.remove('border-primary');
+                            } else if (number > 25) {
                                 moveTo = 'after';
                                 currentItem.classList.add('line-bottom');
                                 currentItem.classList.remove('line-top');
+                                currentItem.classList.remove('border-primary');
+                            } else {
+                                moveTo = 'inner';
+                                currentItem.classList.add('border-primary');
+                                currentItem.classList.remove('line-top');
+                                currentItem.classList.remove('line-bottom');
                             }
+                            console.log(height, number)
                         } else {
                         }
                     }
@@ -90,6 +94,7 @@ export default {
                         fromItem.classList.remove('line-top');
                         currentItem.classList.remove('line-bottom');
                         fromItem.classList.remove('line-bottom');
+                        currentItem.classList.remove('border-primary');
                         let object = {
                             from_id: parseInt(fromItem.id.replace(/[^\d.]/g, '')),
                             to_id: parseInt(currentItem.id.replace(/[^\d.]/g, '')),

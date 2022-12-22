@@ -34,7 +34,7 @@ class CategoryTreeController extends Controller
             'name' => 'Новая папка',
             'user_id' => $user->id
         ]);
-        $categoryParent->prependNode($children);
+        $categoryParent->appendNode($children);
         return $children->toArray();
     }
 

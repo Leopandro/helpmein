@@ -225,14 +225,6 @@ export default {
             },
         }
     },
-    watch: {
-        property() {
-            localStorage.getItem('node-item-' + this.item.id)
-        }
-    },
-    created() {
-
-    },
     mounted() {
         if (this.item.parent_id == null) {
             this.showChildrenFlagProperty = true;
