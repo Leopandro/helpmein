@@ -65,6 +65,7 @@ export default {
                             if (currentItem.id !== event.target.id) {
                                 currentItem.classList.remove('line-top');
                                 currentItem.classList.remove('line-bottom');
+                                currentItem.classList.remove('border-primary');
                             }
                             currentItem = eventTarget;
                             // nodeItem.classList.add('alert-danger');
@@ -94,6 +95,7 @@ export default {
                         fromItem.classList.remove('line-top');
                         currentItem.classList.remove('line-bottom');
                         fromItem.classList.remove('line-bottom');
+                        fromItem.classList.remove('border-primary');
                         currentItem.classList.remove('border-primary');
                         let object = {
                             from_id: parseInt(fromItem.id.replace(/[^\d.]/g, '')),
