@@ -16,9 +16,6 @@ const routes: Array<RouteRecordRaw> = [
             // or { path: 'profile'}
             const auth = useAuthStore();
             const permission = usePermissionStore();
-            console.log(auth.roles)
-            console.log(permission)
-            console.log(permission.getUrlByRole(auth.roles))
             return permission.getUrlByRole(auth.roles);
         },
         component: () => import("@/layouts/main-layout/MainLayout.vue"),
@@ -78,6 +75,50 @@ const routes: Array<RouteRecordRaw> = [
                 meta: {
                     pageTitle: "Список задач",
                     breadcrumbs: ["Задачи"],
+                },
+            },
+            {
+                path: "/task/edit/:id",
+                name: "task-edit-id",
+                component: () => import("@/views/task-category/TaskCreate.vue"),
+                meta: {
+                    pageTitle: "Редактирование задачи",
+                    breadcrumbs: [{
+                        "name": "Задачи",
+                        "path": "/task/list"
+                    }, {
+                        "name": "Редактировать задачу",
+                        "path": "task/create"
+                    }],
+                },
+            },
+            {
+                path: "/task/edit",
+                name: "task-edit",
+                component: () => import("@/views/task-category/TaskCreate.vue"),
+                meta: {
+                    pageTitle: "Создание задачи",
+                    breadcrumbs: [{
+                        "name": "Задачи",
+                        "path": "/task/list"
+                    }, {
+                        "name": "Создать задачу",
+                        "path": "task/create"
+                    }],
+                },
+            },
+            {
+                path: "/task/list",
+                name: "task-list",
+                component: () => import("@/views/task-category/TaskList.vue"),
+                meta: {
+                    pageTitle: "Список задач",
+                    breadcrumbs: [
+                        {
+                            "name": "Задачи",
+                            "path": "task/list"
+                        }
+                        ],
                 },
             },
             {
