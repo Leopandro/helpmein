@@ -3,6 +3,7 @@ namespace App\Domain\Task\Model;
 
 use App\Domain\TaskCategory\Model\TaskCategory;
 use App\Domain\User\Model\User;
+use App\Infrastructure\Model\Cast\TaskTypeCast;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string name
  * @property string description
  * @property string comment
+ * @property string comment_client
  * @property array questions
  * @property string difficult_level
  * @property string type
@@ -28,6 +30,10 @@ class Task extends Model
     protected $table = 'task';
 
     protected $guarded = [];
+
+    protected $casts = [
+        'type' => TaskTypeCast::class,
+    ];
 
     protected function questions(): Attribute
     {

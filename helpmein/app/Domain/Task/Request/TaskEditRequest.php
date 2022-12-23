@@ -16,6 +16,7 @@ class TaskEditRequest extends FormRequest
             'name' => 'required|string|max:127',
             'description' => 'required|string|max:127',
             'comment' => 'sometimes|string|max:255',
+            'comment_client' => 'sometimes|string|max:255',
             'questions' => 'sometimes|array|max:2048',
             'type' => 'required|string|max:255',
             'task_category_id' => 'sometimes|integer',

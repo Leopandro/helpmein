@@ -3,6 +3,7 @@ import { createPinia } from "pinia";
 import { Tooltip } from "bootstrap";
 import App from "./App.vue";
 import mitt from 'mitt';
+import VueTranslate from 'vue-translate-plugin';
 const emitter = mitt();
 /*
 TIP: To get started with clean router change path to @/router/clean.ts.

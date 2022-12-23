@@ -53,7 +53,7 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: "/task/list",
                 name: "task-list",
-                component: () => import("@/views/task/TaskListing.vue"),
+                component: () => import("@/views/userTask/TaskListing.vue"),
                 meta: {
                     pageTitle: "Список задач",
                     breadcrumbs: ["Задачи"],
@@ -71,7 +71,7 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: "/task-category/list",
                 name: "task-category-list",
-                component: () => import("@/views/task-category/TaskListing.vue"),
+                component: () => import("@/views/task-category/TaskCategoryTree.vue"),
                 meta: {
                     pageTitle: "Список задач",
                     breadcrumbs: ["Задачи"],

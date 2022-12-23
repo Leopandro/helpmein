@@ -351,11 +351,17 @@ const messages = {
     addSubscription: "Ajouter Un Abonnement",
     viewSubscription: "Voir L'Abonnement",
   },
+    ru: {
+        task: {
+            createTitle: 'Создать задачу',
+            editTitle: 'Редактировать задачу',
+        }
+    }
 };
 
 const i18n = createI18n({
   legacy: false,
-  locale: "en",
+  locale: "ru",
   globalInjection: true,
   messages,
 });

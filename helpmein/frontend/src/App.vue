@@ -2,7 +2,7 @@
     <RouterView/>
 </template>
 
-<script lang="ts">
+<script>
 import {defineComponent, nextTick, onBeforeMount, onMounted} from "vue";
 import {RouterView} from "vue-router";
 import {useConfigStore} from "@/stores/config";

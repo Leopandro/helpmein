@@ -1,7 +1,10 @@
 <template>
-    <div class="container-fluid">
-        <div>
+    <div class="container-fluid row">
+        <div class="col-6">
             <node-tree ref="node-tree" :item="this.task_categories" :value="this.task_categories.name"></node-tree>
+        </div>
+        <div class="col-6">
+            <TaskList></TaskList>
         </div>
     </div>
 </template>
@@ -9,16 +12,19 @@
 <script>
 import ApiService from "@/core/services/ApiService";
 import NodeTree from "@/components/node-tree/NodeTree.vue";
+import TaskList from "./TaskList.vue";
 
 export default {
-    name: "TaskListing",
+    name: "TaskCategoryTree",
     components: {
-        NodeTree
+        NodeTree,
+        TaskList
     },
     init() {
     },
     data() {
         return {
+            folder_id: '',
             tableData: [],
             search: [],
             selectedIds: [],
@@ -115,7 +121,6 @@ export default {
         await this.getItems();
 
         this.emitter.on("reload-tree", () => {
-            console.log(123)
             this.loadNodes();
         });
     },

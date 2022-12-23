@@ -2,17 +2,27 @@
     <div class="card col-6">
         <div class="card-header">
             <div class="card-title">
-                {{  title }}
+                {{ title }}
             </div>
         </div>
         <div class="card-body" v-if="isVisible">
             <div class="row mb-6" v-for="(value, name, index) in form">
-                <template v-if="value.type === 'text' || value.type === 'select' ">
+                <template
+                    v-if="value.type === 'text' || value.type === 'select'  || value.type === 'textarea' || value.type === 'datetime' ">
                     <label class="col-lg-2 col-form-label fw-semobold fs-6">{{ value.title }}</label>
                     <div v-if="value.type === 'text'" class="col-lg-10 fv-row">
                         <input v-model="model[value.name]" type="text" class="form-control">
                         <div v-if="errors[value.name]" class="fv-plugins-message-container invalid-feedback">
-                            <div data-field="daterangepicker_input" data-validator="notEmpty">{{
+                            <div data-validator="notEmpty">{{
+                                    errors[value.name][0]
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                    <div v-if="value.type === 'textarea'" class="col-lg-10 fv-row">
+                        <textarea v-model="model[value.name]" class="form-control"></textarea>
+                        <div v-if="errors[value.name]" class="fv-plugins-message-container invalid-feedback">
+                            <div data-validator="notEmpty">{{
                                     errors[value.name][0]
                                 }}
                             </div>
@@ -24,7 +34,7 @@
                             <option v-for="option in value.options" :value="option.value">{{ option.title }}</option>
                         </select>
                         <div v-if="errors[value.name]" class="fv-plugins-message-container invalid-feedback">
-                            <div data-field="daterangepicker_input" data-validator="notEmpty">{{
+                            <div data-validator="notEmpty">{{
                                     errors[value.name][0]
                                 }}
                             </div>
@@ -32,7 +42,7 @@
                     </div>
                 </template>
             </div>
-            <div class="">
+            <div :class="{'disabled': model.type === 'essay'}">
                 <div class="card">
                     <div class="card-header">
                         <div>
@@ -49,8 +59,17 @@
                                     </label>
                                     <div class="col-lg-8 fv-row">
                                         <input type="text" v-model="model.questions[index].title"
+                                               placeholder="Введите название вопроса"
                                                class="form-control form-control-lg form-control-solid">
                                         <span class="form-text text-muted">Название вопроса</span>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <span class="svg-icon svg-icon-muted svg-icon-2hx"><svg width="24" height="24" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="#E7505A"/>
+                                            <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="#E7505A"/>
+                                            <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="#E7505A"/>
+                                            </svg>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -79,7 +98,8 @@
                                     <div class="radio-inline radio-box col-9 row">
                                         <template v-for="(answerItem, answerIndex) of model.questions[index].answers">
                                             <div class="row">
-                                                <div class="form-check form-check-inline form-check-solid me-5 form-flex">
+                                                <div
+                                                    class="form-check-custom form-check-inline form-check-solid me-5 form-flex p-1">
                                                     <input
                                                         v-if="model.questions[index].type === 'radio'"
                                                         class="form-check-input"
@@ -95,16 +115,27 @@
                                                         v-model="model.questions[index].answers[answerIndex].checkBoxValue"
                                                         v-bind:value="true">
                                                     <input type="text"
-                                                           class="form-control"
-                                                           placeholder="Введите название вопроса"
+                                                           class="form-control form-control-sm form-control-solid"
+                                                           placeholder="название ответа"
                                                            v-model="model.questions[index].answers[answerIndex].title"
                                                     >
-                                                    <label class="form-check-label" :for="'model_question_answer_'+index+'_'+answerIndex">
-                                                    </label>
+                                                    <span class="svg-icon svg-icon-muted svg-icon-2hx"
+                                                          v-on:click="removeAnswer(index, answerIndex)">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                             xmlns="http://www.w3.org/2000/svg">
+                                                            <rect opacity="0.8" x="6" y="17.3137" width="16" height="2"
+                                                                  rx="1" transform="rotate(-45 6 17.3137)"
+                                                                  fill="#E7505A"/>
+                                                            <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                                                  transform="rotate(45 7.41422 6)" fill="#E7505A"/>
+                                                        </svg>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </template>
-                                        <button class="btn btn-primary btn-sm col-3" type="button" v-on:click="addAnswer(index)">Добавить ответ</button>
+                                        <button class="btn btn-primary btn-sm col-5" type="button"
+                                                v-on:click="addAnswer(index)">Добавить ответ
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -112,17 +143,19 @@
                     </div>
                 </div>
             </div>
-            <button type="button" v-on:click="addQuestion" class="btn btn-success">Добавить вопрос</button>
+            <button :class="{'disabled': model.type === 'essay'}" type="button" v-on:click="addQuestion" class="btn btn-primary">Добавить вопрос</button>
             <br>
-            <button ref="submitButton" href="javascript:;" v-on:click="submitForm" type="submit"
+        </div>
+        <div class="box">
+            <button ref="submitButton"
+                    href="javascript:;"
+                    v-on:click="submitForm"
+                    type="submit"
                     class="btn btn-success">
-
                 <span class="indicator-label"> Сохранить </span>
                 <span class="indicator-progress">
                     Пожалуйста подождите...
-                    <span
-                        class="spinner-border spinner-border-sm align-middle ms-2"
-                    ></span>
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
           </span>
             </button>
         </div>
@@ -137,7 +170,6 @@ export default {
     name: "TaskCreate",
     data() {
         return {
-            title: '',
             errors: {},
             form: [
                 {
@@ -163,13 +195,18 @@ export default {
                 },
                 {
                     name: 'description',
-                    type: 'text',
-                    title: 'Описание'
+                    type: 'textarea',
+                    title: 'Описание задачи'
+                },
+                {
+                    name: 'comment_client',
+                    type: 'textarea',
+                    title: 'Комментарий (для клиента)'
                 },
                 {
                     name: 'comment',
-                    type: 'text',
-                    title: 'Комментарий'
+                    type: 'textarea',
+                    title: 'Комментарий (для преподавателя)'
                 },
                 {
                     name: 'questions',
@@ -206,12 +243,24 @@ export default {
                 name: '',
                 description: '',
                 comment: '',
+                comment_client: '',
                 questions: [],
                 difficult_level: '',
             }
         }
     },
     methods: {
+        mappingFieldsFromTask(task) {
+            return {
+                type: task.type?.id,
+                name: task.name,
+                description: task.description,
+                comment: task.comment,
+                questions: task.questions,
+                difficult_level: task.difficult_level,
+                comment_client: task.comment_client,
+            };
+        },
         async submitForm() {
             this.$refs.submitButton.disabled = true;
             // Activate indicator
@@ -262,11 +311,17 @@ export default {
             this.model.questions[index].answers.push(this.getQuestion());
         },
         async getTask() {
-            await ApiService.get("task/info/"+this.$route.params.id).then((response) => {
+            await ApiService.get("task/info/" + this.$route.params.id).then((response) => {
                 console.log(response.data.data);
-                this.model = response.data.data;
+                this.model = this.mappingFieldsFromTask(response.data.data);
                 console.log(this.model);
             })
+        },
+        async removeAnswer(questionIndex, answerIndex) {
+            console.log(questionIndex, answerIndex);
+            console.log(this.model.questions[questionIndex]);
+            this.model.questions[questionIndex].answers.splice(answerIndex, 1);
+            console.log(this.model.questions[questionIndex]);
         },
         async addQuestion() {
             this.model.questions.push({
@@ -281,24 +336,27 @@ export default {
     },
     computed: {
         isVisible() {
-            console.log(this.$route.params.id);
             if (this.$route.params.id) {
-                if (this.model.id) {
                     return true;
-                }
                 return false;
             }
             return true;
         },
+        title() {
+            if (this.$route.params.id) {
+                return this.$t("task.editTitle");
+            } else {
+                return this.$t("task.createTitle");
+            }
+        }
     },
     mounted() {
         if (this.$route.params.id) {
-            this.title = "Редактировать задачу";
             this.getTask();
         } else {
-            this.title = "Создать задачу";
+            this.addQuestion();
         }
-        this.addQuestion();
+
     }
 }
 </script>
@@ -317,6 +375,22 @@ export default {
 .form-flex {
     display: flex;
     align-items: center;
+}
+
+.disabled {
+    position: relative;
+}
+
+.disabled:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: inherit;
+    background-color: rgba(0, 0, 0, 0.1);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 </style>
 

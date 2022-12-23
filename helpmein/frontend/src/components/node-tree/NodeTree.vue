@@ -22,7 +22,8 @@
         <div ref="accordion-item" :id="'kt_accordion_'+item.id" v-if="item && item.name && item.parent_id" class="accordion-item">
             <h2 class="accordion-header" :id="'kt_accordion_'+item.id+'_header_'+item.id"  @mouseover="isHovering = true"
                 @mouseout="isHovering = false" >
-                <div class="node-tree-button fs-4 fw-semibold p-0" type="button"
+                <div class="node-item-wrapper notice d-flex bg-light-primary rounded border p-2" type="button"
+                     v-on:click="folderClick(item.id)"
                         :data-bs-target="'#kt_accordion_'+item.id+'_body_'+item.id">
                     <svg class="add-to-folder" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z" fill="currentColor"/>
@@ -204,6 +205,9 @@ export default {
         },
         toggleChildren() {
             this.showChildrenFlag = !this.showChildrenFlag;
+        },
+        folderClick(id) {
+            this.emitter.emit("pick-folder", id);
         }
     },
     data() {
@@ -282,5 +286,13 @@ export default {
 .how-to {
     float: right;
     margin-left: auto;
+}
+.node-tree-child {
+}
+.node-item-wrapper:hover {
+    --bs-border-opacity: 1 !important;
+    padding: 5.5px !important;
+    border: 2px dashed #eff2f5!important;
+    border-color: var(--kt-border-dashed-color) !important;
 }
 </style>
