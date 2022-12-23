@@ -22,7 +22,7 @@
     </div>
 </template>
 
-<script type="ts">
+<script>
 
 import Datatable from "@/components/kt-datatable/KTDataTable.vue";
 import ExportCustomerModal from "@/components/modals/forms/ExportCustomerModal.vue";
@@ -41,9 +41,6 @@ export default{
 
     methods: {
         async searchItems() {
-            await ApiService.get('/user/list','?search=' + this.search).then((data: any) => {
-                this.users = data.data;
-            })
         }
     },
     data() {
@@ -57,10 +54,6 @@ export default{
         }
     },
     async mounted() {
-        console.log('mounted');
-        await ApiService.get('/user/list').then((data: any) => {
-            this.users = data.data;
-        })
     },
 };
 </script>
