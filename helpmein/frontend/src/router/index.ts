@@ -53,7 +53,7 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: "/task/list",
                 name: "task-list",
-                component: () => import("@/views/userTask/TaskListing.vue"),
+                component: () => import("@/views/userTask/UserTaskList.vue"),
                 meta: {
                     pageTitle: "Список задач",
                     breadcrumbs: ["Задачи"],
