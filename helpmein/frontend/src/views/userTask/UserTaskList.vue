@@ -22,7 +22,7 @@
     </div>
 </template>
 
-<script>
+<script type="ts">
 
 import Datatable from "@/components/kt-datatable/KTDataTable.vue";
 import ExportCustomerModal from "@/components/modals/forms/ExportCustomerModal.vue";
