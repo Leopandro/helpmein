@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Guard;
 use Spatie\Permission\Models\Role;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class UserController extends Controller
 {
@@ -108,9 +110,7 @@ class UserController extends Controller
         /** @var User $user */
         $user = auth('sanctum')->user();
         /** @var Builder $query */
-        $query = Client::query();
-        $search = $request->get('search');
-        $query
+        $clients = QueryBuilder::for(Client::class)
             ->with('teachers')
             ->whereHas('teachers', function (Builder $query) use ($request) {
                 $query->where('user_clients.user_id', '=', auth('sanctum')->id());
@@ -125,7 +125,8 @@ class UserController extends Controller
                         ->orWhere('user_clients.surname','ILIKE', "%$search%")
                         ->orWhere('email','ILIKE', "%$search%");;
                 }
-            });
-        return UserInfoResource::collection($query->get())->toArray($request);
+            })
+            ->paginate($request->get('count'));
+        return $this->getListItemsResponse($clients, UserInfoResource::class, $request);
     }
 }

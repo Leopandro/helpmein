@@ -18,9 +18,14 @@ const MainMenuConfig: Array<any> = [
                   svgIcon: "/media/icons/duotune/communication/com006.svg",
                   fontIcon: "bi-person",
               },{
-                  heading: "Задачи",
+                  heading: "Категории и задачи",
                   route: "/task-category/list",
                   svgIcon: "/media/icons/duotune/files/folder.svg",
+                  fontIcon: "default",
+              },{
+                  heading: "Назначение задач",
+                  route: "/task-category/assignment",
+                  svgIcon: "/media/icons/duotune/communication/com005.svg",
                   fontIcon: "default",
               },
           ],

@@ -1,13 +1,15 @@
 <?php
 namespace App\Domain\Task\Model;
 
+use App\Domain\Task\Model\Pivot\UserTask;
+use App\Domain\Task\Model\Trait\TeacherClientTaskLoaderTrait;
 use App\Domain\TaskCategory\Model\TaskCategory;
 use App\Domain\User\Model\User;
 use App\Infrastructure\Model\Cast\TaskTypeCast;
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * class Task
@@ -27,6 +29,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Task extends Model
 {
+    use TeacherClientTaskLoaderTrait;
     protected $table = 'task';
 
     protected $guarded = [];
@@ -41,6 +44,13 @@ class Task extends Model
             get: fn ($value) => json_decode($value, true),
             set: fn ($value) => json_encode($value),
         );
+    }
+
+    public function clients(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_task', 'task_id', 'user_id')->using(UserTask::class)->withPivot([
+            'answer_id',
+        ]);
     }
 
     public function user(): BelongsTo

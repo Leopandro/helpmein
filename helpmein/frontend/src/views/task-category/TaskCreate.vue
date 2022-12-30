@@ -30,7 +30,7 @@
                     </div>
                     <div v-if="value.type === 'select'" class="col-lg-10 fv-row">
                         <select class="form-select" v-model="model[value.name]">
-                            <option>{{ value.placeholder }}</option>
+                            <option value="">{{ value.placeholder }}</option>
                             <option v-for="option in value.options" :value="option.value">{{ option.title }}</option>
                         </select>
                         <div v-if="errors[value.name]" class="fv-plugins-message-container invalid-feedback">
@@ -63,11 +63,12 @@
                                                class="form-control form-control-lg form-control-solid">
                                         <span class="form-text text-muted">Название вопроса</span>
                                     </div>
-                                    <div class="col-lg-2">
-                                        <span class="svg-icon svg-icon-muted svg-icon-2hx"><svg width="24" height="24" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="#E7505A"/>
-                                            <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="#E7505A"/>
-                                            <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="#E7505A"/>
+                                    <div class="col-lg-2" v-on:click="removeQuestion(index)">
+                                        <span class="svg-icon svg-icon-muted svg-icon-2hx" role="button">
+                                            <svg width="24" height="24" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="#E7505A"/>
+                                                <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="#E7505A"/>
+                                                <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="#E7505A"/>
                                             </svg>
                                         </span>
                                     </div>
@@ -120,7 +121,8 @@
                                                            v-model="model.questions[index].answers[answerIndex].title"
                                                     >
                                                     <span class="svg-icon svg-icon-muted svg-icon-2hx"
-                                                          v-on:click="removeAnswer(index, answerIndex)">
+                                                          v-on:click="removeAnswer(index, answerIndex)"
+                                                          role="button">
                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                              xmlns="http://www.w3.org/2000/svg">
                                                             <rect opacity="0.8" x="6" y="17.3137" width="16" height="2"
@@ -133,7 +135,7 @@
                                                 </div>
                                             </div>
                                         </template>
-                                        <button class="btn btn-primary btn-sm col-5" type="button"
+                                        <button class="btn btn-secondary btn-sm col-5" type="button"
                                                 v-on:click="addAnswer(index)">Добавить ответ
                                         </button>
                                     </div>
@@ -156,8 +158,20 @@
                 <span class="indicator-progress">
                     Пожалуйста подождите...
                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-          </span>
+                </span>
             </button>
+            <router-link to="/task-category/list">
+                <button
+                    href="javascript:;"
+                    type="submit"
+                    class="btn btn-danger">
+                    <span class="indicator-label"> Отмена </span>
+                    <span class="indicator-progress">
+                    Пожалуйста подождите...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+                </button>
+            </router-link>
         </div>
     </div>
 </template>
@@ -239,7 +253,9 @@ export default {
                 },
             ],
             model: {
+                id: '',
                 type: '',
+                task_category_id: '',
                 name: '',
                 description: '',
                 comment: '',
@@ -252,6 +268,7 @@ export default {
     methods: {
         mappingFieldsFromTask(task) {
             return {
+                id: task.id,
                 type: task.type?.id,
                 name: task.name,
                 description: task.description,
@@ -259,17 +276,16 @@ export default {
                 questions: task.questions,
                 difficult_level: task.difficult_level,
                 comment_client: task.comment_client,
+                task_category_id: task.task_category_id,
             };
         },
         async submitForm() {
             this.$refs.submitButton.disabled = true;
-            // Activate indicator
             this.$refs.submitButton.setAttribute("data-kt-indicator", "on");
-            console.log(this.$refs.submitButton)
-            await ApiService.post("task/create", this.model)
+            await ApiService.post(this.model.id ? "task/edit/"+this.model.id : "task/create", this.model)
                 .then(() => {
                     Swal.fire({
-                        text: "Задача успешно создана",
+                        text: this.model.id ? "Задача успешно обновлена" : "Задача успешно создана",
                         icon: "success",
                         buttonsStyling: false,
                         confirmButtonText: "Ок!",
@@ -279,11 +295,10 @@ export default {
                         },
                     }).then(() => {
                         // Go to page after successfully login
-                        this.$router.push({name: "task-list"});
+                        this.$router.push({name: "task-category-list"});
                     });
                 })
                 .catch(({response}) => {
-                    console.log(response)
                     this.errors = response.data.errors;
                     Swal.fire({
                         text: response.data.message,
@@ -312,16 +327,12 @@ export default {
         },
         async getTask() {
             await ApiService.get("task/info/" + this.$route.params.id).then((response) => {
-                console.log(response.data.data);
                 this.model = this.mappingFieldsFromTask(response.data.data);
                 console.log(this.model);
             })
         },
         async removeAnswer(questionIndex, answerIndex) {
-            console.log(questionIndex, answerIndex);
-            console.log(this.model.questions[questionIndex]);
             this.model.questions[questionIndex].answers.splice(answerIndex, 1);
-            console.log(this.model.questions[questionIndex]);
         },
         async addQuestion() {
             this.model.questions.push({
@@ -332,6 +343,9 @@ export default {
                     this.getQuestion()
                 ]
             });
+        },
+        async removeQuestion(index) {
+            this.model.questions.splice(index, 1);
         }
     },
     computed: {
@@ -354,6 +368,7 @@ export default {
         if (this.$route.params.id) {
             this.getTask();
         } else {
+            this.model.task_category_id = this.$route.query.task_category_id;
             this.addQuestion();
         }
 
@@ -378,6 +393,7 @@ export default {
 }
 
 .disabled {
+    display: none;
     position: relative;
 }
 

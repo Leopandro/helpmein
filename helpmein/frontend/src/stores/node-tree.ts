@@ -3,25 +3,11 @@ import {defineStore} from "pinia";
 
 
 export const useNodeStore = defineStore("node", () => {
-    const nodes = ref("");
-
-    function setStatus(nodeId: string, status: boolean) {
-        nodes[nodeId] = {};
-        nodes[nodeId].status = status;
-        console.log(nodes);
+    const selectedNode = ref("");
+    function setNode(node) {
+        selectedNode.value = Object.assign({}, node);
     }
-
-    function getStatus(nodeId: string) {
-        if (nodes[nodeId]) {
-            return nodes[nodeId].status
-        }
-        return true;
-    }
-
-
     return {
-        nodes,
-        getStatus,
-        setStatus
+        selectedNode,
     };
 });

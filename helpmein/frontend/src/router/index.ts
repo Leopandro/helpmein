@@ -53,7 +53,16 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: "/task/list",
                 name: "task-list",
-                component: () => import("@/views/userTask/UserTaskList.vue"),
+                component: () => import("@/views/client-task/ClientTaskList.vue"),
+                meta: {
+                    pageTitle: "Список задач",
+                    breadcrumbs: ["Задачи"],
+                },
+            },
+            {
+                path: "/task/solve/:id",
+                name: "task-solve",
+                component: () => import("@/views/client-task/ClientTaskSolve.vue"),
                 meta: {
                     pageTitle: "Список задач",
                     breadcrumbs: ["Задачи"],
@@ -73,8 +82,17 @@ const routes: Array<RouteRecordRaw> = [
                 name: "task-category-list",
                 component: () => import("@/views/task-category/TaskCategoryTree.vue"),
                 meta: {
-                    pageTitle: "Список задач",
-                    breadcrumbs: ["Задачи"],
+                    pageTitle: "Категории и задачи",
+                    breadcrumbs: ["Категории и задачи"],
+                },
+            },
+            {
+                path: "/task-category/assignment",
+                name: "task-category-assignment",
+                component: () => import("@/views/task-category/TaskCategoryAssign.vue"),
+                meta: {
+                    pageTitle: "Назначение задач",
+                    breadcrumbs: ["Назначение задач"],
                 },
             },
             {
@@ -108,8 +126,8 @@ const routes: Array<RouteRecordRaw> = [
                 },
             },
             {
-                path: "/task/list",
-                name: "task-list",
+                path: "/admin/task/list",
+                name: "admin-task-list",
                 component: () => import("@/views/task-category/TaskList.vue"),
                 meta: {
                     pageTitle: "Список задач",
@@ -139,13 +157,23 @@ const routes: Array<RouteRecordRaw> = [
                 },
             },
             {
-                path: "/user/edit/:id",
-                name: "user-edit",
-                component: () => import("@/views/user/UserEdit.vue"),
-                meta: {
-                    pageTitle: "Редактировать клиента",
-                    breadcrumbs: ["User"],
-                },
+                path: "/user/edit/:id/",
+                name: "user",
+                children: [
+                    {
+                        path: "",
+                        component: () => import("@/views/user/UserEdit.vue"),
+                        meta: {
+                            pageTitle: "Редактировать клиента",
+                            breadcrumbs: ["Редактирование клиента"],
+                        },
+                    },
+                    {
+                        name: "user-task-list",
+                        path: "task",
+                        component: () => import("@/views/user/UserTaskList.vue"),
+                    }
+                ],
             },
         ],
     },

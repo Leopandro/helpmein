@@ -51,7 +51,7 @@ class TaskController extends Controller
         $task->description = $request->get('description');
         $task->comment_client = $request->get('comment_client');
         $task->comment = $request->get('comment');
-        $task->type = $request->get('type');
+        $task->type = new TaskType($request->get('type'));
         $task->questions = $request->get('questions');
         $task->difficult_level = $request->get('difficult_level');
         $task->user_id = auth('sanctum')->id();
@@ -79,14 +79,12 @@ class TaskController extends Controller
         /** @var Builder $query */
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters([
-                'name',
-                'description',
                 AllowedFilter::callback('task_category_id', static function (Builder $query, $value) {
                     return $query->where('task_category_id', '=',$value);
                 }),
             ])
+            ->orderBy('id')
             ->paginate($request->get('count'));
-//        $var = TaskInfoResource::collection($tasks)->toArray($request);
         return $this->getListItemsResponse($tasks, TaskInfoResource::class, $request);
     }
 }

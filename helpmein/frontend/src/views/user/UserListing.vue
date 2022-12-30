@@ -17,17 +17,6 @@
                         </label>
                     </div>
                     <div>
-
-<!--                      <span class="svg-icon svg-icon-1 ms-6">-->
-<!--                        <inline-svg src="/media/icons/duotune/general/gen021.svg"/>-->
-<!--                      </span>-->
-<!--                        <input-->
-<!--                            type="text"-->
-<!--                            v-model="filter.search"-->
-<!--                            v-debounce:400="searchItems"-->
-<!--                            class="form-control form-control-solid w-250px ps-15"-->
-<!--                            placeholder="Поиск клиентов"-->
-<!--                        />-->
                     </div>
                 </div>
                 <!--end::Search-->
@@ -80,7 +69,11 @@
                             </g>
                         </svg><!--end::Svg Icon--></span>
                     </td>
-                    <td>{{ user.surname + ' ' + user.name }}</td>
+                    <td>
+                        <router-link :to="'/user/edit/'+user.id+'/task/'">
+                            {{ user.surname + ' ' + user.name }}
+                        </router-link>
+                    </td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
@@ -121,8 +114,8 @@ export default defineComponent({
 
     methods: {
         async searchItems() {
-            await ApiService.get('/user/list?',new URLSearchParams(this.filter).toString()).then((data: any) => {
-                this.users = data.data;
+            await ApiService.get('/user/list?',new URLSearchParams(this.filter).toString()).then((response) => {
+                this.users = response.data.data.items;
             })
         },
         async deleteUser(user) {
@@ -147,10 +140,7 @@ export default defineComponent({
         }
     },
     async mounted() {
-        console.log('mounted');
-        await ApiService.get('/user/list').then((data: any) => {
-            this.users = data.data;
-        })
+        await this.searchItems();
     },
 });
 </script>

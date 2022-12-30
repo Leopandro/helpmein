@@ -30,13 +30,27 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/list', [Controller\UserController::class, 'list'])->name('list');
     });
 
-    Route::group(['prefix' => 'task'], function () {
-        Route::get('/info/{task}', [Controller\TaskController::class, 'info'])->name('info');
-        Route::post('/create', [Controller\TaskController::class, 'create'])->name('create');
-        Route::post('/edit', [Controller\TaskController::class, 'edit'])->name('edit');
-        Route::post('/delete', [Controller\TaskController::class, 'delete'])->name('delete');
-        Route::get('/list', [Controller\TaskController::class, 'list'])->name('list');
+    Route::group(['prefix' => 'admin'], function () {
+        Route::group(['prefix' => 'task'], function () {
+            Route::get('/info/{task}', [Controller\TaskController::class, 'info'])->name('info');
+            Route::post('/create', [Controller\TaskController::class, 'create'])->name('create');
+            Route::post('/edit/{task}', [Controller\TaskController::class, 'edit'])->name('edit');
+            Route::post('/delete/{task}', [Controller\TaskController::class, 'delete'])->name('delete');
+            Route::get('/list', [Controller\TaskController::class, 'list'])->name('list');
+        });
+        Route::group(['prefix' => 'user-task'], function () {
+            Route::get('/list', [Controller\TeacherClientTaskController::class, 'list'])->name('list');
+            Route::post('/mass-assign', [Controller\TeacherClientTaskController::class, 'massAssign'])->name('mass-assign');
+        });
     });
+
+    Route::group(['prefix' => 'client'], function() {
+        Route::group(['prefix' => 'task'], function () {
+            Route::get('/list', [Controller\ClientTaskController::class, 'list'])->name('list');
+            Route::get('/info/{task}', [Controller\ClientTaskController::class, 'info'])->name('info');
+        });
+    });
+
 
     Route::group(['prefix' => 'category-tree'], function () {
         Route::get('/list', [Controller\CategoryTreeController::class, 'list'])->name('list');
