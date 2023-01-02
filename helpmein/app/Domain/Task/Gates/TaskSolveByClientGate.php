@@ -27,7 +27,7 @@ class TaskSolveByClientGate extends BaseGate
 //            return true;
 //        }
         $task = Client::query()
-            ->with(['answers' => function($query){
+            ->with(['tasks' => function($query){
                 $query->where('user_task.user_id','=',auth('sanctum')->id());
 //                    ->whereIn('status', [UserTaskStatus::ASSIGNED,UserTaskStatus::WORK_IN_PROGRESS]);
             }])

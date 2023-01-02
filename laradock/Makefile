@@ -17,6 +17,9 @@ docker-prune:
 docker-up:
 	docker-compose up --build -d php-fpm postgres nginx redis workspace laravel-horizon frontend-server swagger-ui
 
+docker-up-no-build:
+	docker-compose up -d php-fpm postgres nginx redis workspace laravel-horizon frontend-server swagger-ui
+
 docker-up-local:
 	docker-compose up -d frontend-server
 	docker-compose up --build -d php-fpm postgres nginx redis workspace laravel-horizon swagger-ui

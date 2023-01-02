@@ -36,6 +36,7 @@ class TaskController extends Controller
         $task->type = new TaskType($request->get('type'));
         $task->questions = $request->get('questions');
         $task->difficult_level = $request->get('difficult_level');
+        $task->task_category_id = $request->get('task_category_id');
         $task->user_id = auth('sanctum')->id();
         if ($result = $task->save()) {
             return $this->getSuccessResponse([]);
@@ -54,6 +55,7 @@ class TaskController extends Controller
         $task->type = new TaskType($request->get('type'));
         $task->questions = $request->get('questions');
         $task->difficult_level = $request->get('difficult_level');
+        $task->task_category_id = $request->get('task_category_id');
         $task->user_id = auth('sanctum')->id();
 
         if ($task->save()) {

@@ -24,15 +24,6 @@ const routes: Array<RouteRecordRaw> = [
         },
         children: [
             {
-                path: "/dashboard",
-                name: "dashboard",
-                component: () => import("@/views/Dashboard.vue"),
-                meta: {
-                    pageTitle: "Dashboard",
-                    breadcrumbs: ["Dashboards"],
-                },
-            },
-            {
                 path: "/how-to-node",
                 name: "how-to-node",
                 component: () => import("@/views/faq/NodeEdit.vue"),
@@ -172,6 +163,13 @@ const routes: Array<RouteRecordRaw> = [
                         name: "user-task-list",
                         path: "task",
                         component: () => import("@/views/user/UserTaskList.vue"),
+                        meta: {
+                            pageTitle: "Список задач клиента",
+                            breadcrumbs: [{
+                                "name": "Клиенты",
+                                "path": "/user/list"
+                            }],
+                        },
                     }
                 ],
             },
@@ -239,9 +237,6 @@ router.beforeEach((to, from, next) => {
 
     // reset config to initial state
     configStore.resetLayoutConfig();
-
-    // verify auth token before each page change
-    authStore.verifyAuth();
 
     // before page access check if page requires authentication
     if (to.meta.middleware == "auth") {

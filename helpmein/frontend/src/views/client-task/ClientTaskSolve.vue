@@ -22,7 +22,9 @@
                         </div>
                     </div>
                     <div v-if="value.type === 'textarea'" class="col-lg-10 fv-row">
-                        <textarea v-model="model[value.name]" class="form-control"></textarea>
+                        <div type="text">
+                            {{model[value.name]}}
+                        </div>
                         <div v-if="errors[value.name]" class="fv-plugins-message-container invalid-feedback">
                             <div data-validator="notEmpty">{{
                                     errors[value.name][0]
@@ -31,10 +33,9 @@
                         </div>
                     </div>
                     <div v-if="value.type === 'select'" class="col-lg-10 fv-row">
-                        <select class="form-select" v-model="model[value.name]">
-                            <option value="">{{ value.placeholder }}</option>
-                            <option v-for="option in value.options" :value="option.value">{{ option.title }}</option>
-                        </select>
+                        <div type="text">
+                            {{model[value.name]}}
+                        </div>
                         <div v-if="errors[value.name]" class="fv-plugins-message-container invalid-feedback">
                             <div data-validator="notEmpty">{{
                                     errors[value.name][0]
@@ -57,7 +58,7 @@
                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                 </span>
             </button>
-            <router-link to="/task-category/list">
+            <router-link to="/task/list">
                 <button
                     href="javascript:;"
                     type="submit"
@@ -157,7 +158,7 @@ export default {
         async submitForm() {
             this.$refs.submitButton.disabled = true;
             this.$refs.submitButton.setAttribute("data-kt-indicator", "on");
-            await ApiService.post(this.model.id ? "task/edit/"+this.model.id : "task/create", this.model)
+            await ApiService.post("client/task/solve/"+this.model.id, this.model)
                 .then(() => {
                     Swal.fire({
                         text: this.model.id ? "Задача успешно обновлена" : "Задача успешно создана",
@@ -170,7 +171,7 @@ export default {
                         },
                     }).then(() => {
                         // Go to page after successfully login
-                        this.$router.push({name: "task-category-list"});
+                        this.$router.push({name: "task-list"});
                     });
                 })
                 .catch(({response}) => {

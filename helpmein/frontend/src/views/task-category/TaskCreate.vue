@@ -282,7 +282,7 @@ export default {
         async submitForm() {
             this.$refs.submitButton.disabled = true;
             this.$refs.submitButton.setAttribute("data-kt-indicator", "on");
-            await ApiService.post(this.model.id ? "task/edit/"+this.model.id : "task/create", this.model)
+            await ApiService.post(this.model.id ? "admin/task/edit/"+this.model.id : "admin/task/create", this.model)
                 .then(() => {
                     Swal.fire({
                         text: this.model.id ? "Задача успешно обновлена" : "Задача успешно создана",

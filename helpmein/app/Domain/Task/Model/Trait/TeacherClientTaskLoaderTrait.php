@@ -17,12 +17,12 @@ trait TeacherClientTaskLoaderTrait {
                     return $query->where('task_category_id', '=',$value);
                 }),
                 AllowedFilter::callback('user_id', static function (Builder $query, $value) {
-                    return $query
-                        ->with('clients')
-                        ->whereHas(
-                            'clients', function($query) use ($value) {
-                                $query->where('user_task.user_id', '=', $value);
-                            });
+//                    return $query
+//                        ->with('clients')
+//                        ->whereHas(
+//                            'clients', function($query) use ($value) {
+//                                $query->where('user_task.user_id', '=', $value);
+//                            });
                 }),
                 AllowedFilter::callback('difficult_level', static function (Builder $query, $value) {
                     return $query->where('difficult_level', '=',$value);

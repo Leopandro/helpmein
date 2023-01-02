@@ -22,6 +22,12 @@ class ClientTaskController extends Controller
         return $this->getSuccessResponse((new TaskInfoResource($task))->toArray($request));
     }
 
+    public function solve(Request $request, Task $task): JsonResponse
+    {
+        Gate::authorize(TaskSolveByClientGate::getCode(), $task->id);
+        return $this->getSuccessResponse((new TaskInfoResource($task))->toArray($request));
+    }
+
     public function list(Request $request) {
         /** @var User $user */
         $user = auth('sanctum')->user();

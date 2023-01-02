@@ -45,8 +45,8 @@
                                         class="form-check-input"
                                         :id="'task_assign_'+task.id"
                                         type="checkbox"
-                                        :checked="task.clients.id != 'not_assigned'"
-                                        :disabled="task.clients.id == 'in_progress'"
+                                        :checked="task.status.id != 'not_assigned'"
+                                        :disabled="task.status.id == 'in_progress'"
                                         v-model="selectedItems[task.id]"/>
                                 </div>
                             </div>

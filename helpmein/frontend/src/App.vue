@@ -10,6 +10,7 @@ import {useThemeStore} from "@/stores/theme";
 import {useBodyStore} from "@/stores/body";
 import {themeMode} from "@/core/helpers/config";
 import {initializeComponents} from "@/core/plugins/keenthemes";
+import {useAuthStore} from "@/stores/auth";
 
 export default defineComponent({
     name: "app",
@@ -37,6 +38,12 @@ export default defineComponent({
         const configStore = useConfigStore();
         const themeStore = useThemeStore();
         const bodyStore = useBodyStore();
+
+
+        // verify auth token before each page change
+        const authStore = useAuthStore();
+
+        authStore.verifyAuth();
 
         onBeforeMount(() => {
             /**
