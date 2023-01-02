@@ -45,6 +45,17 @@
                     </div>
                 </template>
             </div>
+
+            <div class="row mb-6">
+                <label class="col-lg-2 col-form-label fw-semobold fs-6">Решение задачи</label>
+
+                <div class="col-lg-10 fv-row">
+                    <textarea v-model="model.answer" type="text" class="form-control" placeholder="Решение задачи"></textarea>
+                    <div v-if="errors.answer" class="fv-plugins-message-container invalid-feedback">
+                        <div >{{ errors.answer[0] }}</div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="box">
             <button ref="submitButton"
@@ -138,6 +149,7 @@ export default {
                 comment_client: '',
                 questions: [],
                 difficult_level: '',
+                answer: '',
             }
         }
     },
