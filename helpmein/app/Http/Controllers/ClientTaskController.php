@@ -16,7 +16,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\ValidationException;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class ClientTaskController extends Controller
 {
@@ -26,6 +28,9 @@ class ClientTaskController extends Controller
         return $this->getSuccessResponse((new TaskInfoResource($task))->toArray($request));
     }
 
+    /**
+     * Решает задачу клиентом
+     */
     public function solve(TaskSolveByClientRequest $request, Task $task): JsonResponse
     {
         Gate::authorize(TaskSolveByClientGate::getCode(), $task->id);
@@ -40,7 +45,7 @@ class ClientTaskController extends Controller
                 UserTaskStatus::IN_REVIEW,
                 UserTaskStatus::REASSIGNED,
             ])) {
-                throw
+                throw new UnprocessableEntityHttpException('Нельзя ответить на задачу');
             }
             $userAnswer->status = UserTaskStatus::IN_REVIEW;
             $userAnswer->answer = $request->get('answer');
