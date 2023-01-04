@@ -1,7 +1,7 @@
 <?php
 namespace App\Domain\Task\Model\Pivot;
 
-use App\Domain\UserAnswer\Model\UserAnswer;
+use App\Domain\UserAnswer\Model\Answer;
 use App\Enum\UserTaskStatus;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
@@ -17,6 +17,6 @@ class UserTask extends Pivot
 
     public function answer()
     {
-        return $this->belongsTo(UserAnswer::class, 'answer_id', 'id');
+        return $this->belongsTo(Answer::class, 'answer_id', 'id');
     }
 }

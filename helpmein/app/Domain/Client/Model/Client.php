@@ -4,7 +4,7 @@ namespace App\Domain\Client\Model;
 use App\Domain\Task\Model\Pivot\UserTask;
 use App\Domain\Task\Model\Task;
 use App\Domain\User\Model\User;
-use App\Domain\UserAnswer\Model\UserAnswer;
+use App\Domain\UserAnswer\Model\Answer;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
@@ -33,7 +33,7 @@ class Client extends User
 
     public function answers(): BelongsToMany
     {
-        return $this->belongsToMany(UserAnswer::class, 'user_task', 'user_id', 'answer_id')
+        return $this->belongsToMany(Answer::class, 'user_task', 'user_id', 'answer_id')
             ->using(UserTask::class);
     }
 }

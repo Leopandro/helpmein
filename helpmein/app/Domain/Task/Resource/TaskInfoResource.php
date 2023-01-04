@@ -18,6 +18,7 @@ class TaskInfoResource extends JsonResource
         return [
             'id' => $task->id,
             'name' => $task->name,
+            'answer' => $task->clients()?->first()?->pivot?->answer()->first(),
             'description' => $task->description,
             'task_category_id' => $task->task_category_id,
             'comment' => $task->comment,

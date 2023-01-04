@@ -8,13 +8,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property string status
  * @property string answer
  */
-class UserAnswer extends Model
+class Answer extends Model
 {
-    protected $table = 'user_answer';
+    protected $table = 'answer';
 
     protected $casts = [
         'status' => UserTaskStatus::class
     ];
+
+    protected $guarded = [];
 
     protected $primaryKey = 'id';
 }

@@ -117,6 +117,7 @@ return [
     */
 
     'attributes' => [
+        'answer' => 'Ответ',
         'address' => 'Адрес',
         'city' => 'Город',
         'name' => 'Название',

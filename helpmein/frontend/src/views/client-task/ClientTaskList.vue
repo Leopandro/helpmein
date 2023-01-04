@@ -1,21 +1,5 @@
 <template>
     <div class="card">
-        <div class="card-header border-0 pt-6">
-            <div class="card-title">
-                <div class="d-flex align-items-center position-relative my-1">
-                  <span class="svg-icon svg-icon-1 position-absolute ms-6">
-                    <inline-svg src="/media/icons/duotune/general/gen021.svg"/>
-                  </span>
-                </div>
-            </div>
-            <div class="card-toolbar">
-                <div
-                    class="d-flex justify-content-end"
-                    data-kt-customer-table-toolbar="base"
-                >
-                </div>
-            </div>
-        </div>
         <div class="card-body pt-0">
             <table class="table table-row-dashed fs-6 gy-5 my-0" v-if="tasks?.length > 0">
                 <thead>
@@ -29,16 +13,16 @@
                 </thead>
                 <tbody>
                     <tr v-for="task in tasks">
-                        <td>
+                        <td class="text-dark text-gray-800 align-middle">
                             <GetSvgByStatus :status="task.status.id"></GetSvgByStatus>
                         </td>
-                        <td>
-                            <router-link :to="'/task/solve/' + task.id" class="text-gray-800 text-hover-primary mb-1">
+                        <td class="text-dark text-gray-800 align-middle">
+                            <router-link :to="'/task/view/' + task.id" class="text-gray-800 text-hover-primary mb-1">
                                 {{task.name}}
                             </router-link>
                         </td>
-                        <td class="text-dark text-gray-800">{{task.description}}</td>
-                        <td class="text-dark text-gray-800">{{task.type.title}}</td>
+                        <td class="text-dark text-gray-800 align-middle">{{task.description}}</td>
+                        <td class="text-dark text-gray-800 align-middle">{{task.type.title}}</td>
                         <td class="text-end">
 
                             <div class="dropdown">
@@ -47,8 +31,11 @@
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li>
-                                        <router-link :to="'/task/solve/'+task.id" class="dropdown-item">
-                                            Просмотр
+                                        <router-link :to="'/task/view/'+task.id" class="dropdown-item">
+                                            Просмотр ответа
+                                        </router-link>
+                                        <router-link v-if="['assigned','reassigned'].includes(task.status.id)" :to="'/task/solve/'+task.id" class="dropdown-item">
+                                            Отправить решение
                                         </router-link>
                                     </li>
                                 </ul>

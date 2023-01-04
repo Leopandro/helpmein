@@ -45,6 +45,7 @@
     "sweetalert2": "11.4.8",
     "vee-validate": "^4.5.11",
     "vue": "^3.2.45",
+    "vue-auto-routing": "^1.0.1",
     "vue-axios": "^3.5.0",
     "vue-currency-input": "^2.1.0",
     "vue-debounce": "^4.0.0",

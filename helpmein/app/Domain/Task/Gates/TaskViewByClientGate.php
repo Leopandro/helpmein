@@ -12,11 +12,11 @@ use Illuminate\Database\Eloquent\Builder;
 /**
  * Гейт для решения задачи
  */
-class TaskSolveByClientGate extends BaseGate
+class TaskViewByClientGate extends BaseGate
 {
     public static function getCode(): string
     {
-        return 'task-solve';
+        return 'task-view';
     }
 
     public function __invoke(User $user, string $taskId): bool
@@ -27,15 +27,6 @@ class TaskSolveByClientGate extends BaseGate
                 $query
                     ->where('user_task.user_id', '=', auth('sanctum')->id())
                     ->where('user_task.task_id', '=', $taskId);
-            })
-            ->with('answers')
-            ->whereHas('answers', function (Builder $query) use ($taskId){
-                $query
-                    ->where('user_task.task_id', '=', $taskId)
-                    ->whereIn('answer.status', [
-                        'assigned',
-                        'reassigned',
-                    ]);
             })
             ->first();
         return (bool) $task;

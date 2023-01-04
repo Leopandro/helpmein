@@ -21,38 +21,7 @@
             </div>
 
             <div class="row p-5">
-                <textarea
-                    v-model="model.answer"
-                    type="text"
-                    rows="8"
-                    class="form-control"
-                    placeholder="Решение задачи"></textarea>
-            </div>
-
-            <div class="box justify-content-center pt-8">
-                <button ref="submitButton"
-                        href="javascript:;"
-                        v-on:click="submitForm"
-                        type="submit"
-                        class="btn btn-success">
-                    <span class="indicator-label"> Отправить решение </span>
-                    <span class="indicator-progress">
-                    Пожалуйста подождите...
-                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                </span>
-                </button>
-                <router-link to="/task/list">
-                    <button
-                        href="javascript:;"
-                        type="submit"
-                        class="btn btn-danger">
-                        <span class="indicator-label"> Отмена </span>
-                        <span class="indicator-progress">
-                    Пожалуйста подождите...
-                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                </span>
-                    </button>
-                </router-link>
+                <div class="p-0">{{model.answer}}</div>
             </div>
         </div>
     </div>

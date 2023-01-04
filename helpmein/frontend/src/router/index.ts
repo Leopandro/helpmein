@@ -55,8 +55,23 @@ const routes: Array<RouteRecordRaw> = [
                 name: "task-solve",
                 component: () => import("@/views/client-task/ClientTaskSolve.vue"),
                 meta: {
-                    pageTitle: "Список задач",
-                    breadcrumbs: ["Задачи"],
+                    pageTitle: "Решение задачи",
+                    breadcrumbs: [{
+                        "name": "Задачи",
+                        "path": "/task/list"
+                    }, "Решить задачу"],
+                },
+            },
+            {
+                path: "/task/view/:id",
+                name: "task-view",
+                component: () => import("@/views/client-task/ClientTaskView.vue"),
+                meta: {
+                    pageTitle: "Решение задачи",
+                    breadcrumbs: [{
+                        "name": "Задачи",
+                        "path": "/task/list"
+                    }, "Просмотреть решение задачи"],
                 },
             },
             {

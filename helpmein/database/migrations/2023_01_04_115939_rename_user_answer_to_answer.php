@@ -13,9 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('user_answer', function (Blueprint $table) {
-            $table->string('answer', 2048)->nullable();
-        });
+        Schema::rename('user_answer', 'answer');
     }
 
     /**
@@ -25,8 +23,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('user_answer', function (Blueprint $table) {
-            $table->dropColumn('answer');
-        });
+        Schema::rename('answer', 'user_answer');
     }
 };
