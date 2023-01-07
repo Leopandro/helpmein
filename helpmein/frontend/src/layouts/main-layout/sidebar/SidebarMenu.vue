@@ -185,7 +185,6 @@ export default defineComponent({
         } else {
             menuConfig = [MainMenuConfig[0]['Guest']];
         }
-        console.log(menuConfig)
         onMounted(() => {
             console.log(store.roles);
             if (scrollElRef.value) {

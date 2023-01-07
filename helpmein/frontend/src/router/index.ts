@@ -51,9 +51,23 @@ const routes: Array<RouteRecordRaw> = [
                 },
             },
             {
-                path: "/task/solve/:id",
-                name: "task-solve",
-                component: () => import("@/views/client-task/ClientTaskSolve.vue"),
+                path: "/task/solve-task/:id",
+                name: "task-solve-task",
+                component: () => {
+                    return import("@/views/client-task/task-types/ClientTaskSolveTypeTask.vue")
+                },
+                meta: {
+                    pageTitle: "Решение задачи",
+                    breadcrumbs: [{
+                        "name": "Задачи",
+                        "path": "/task/list"
+                    }, "Решить задачу"],
+                },
+            },
+            {
+                path: "/task/solve-essay/:id",
+                name: "task-solve-essay",
+                component: () => import("@/views/client-task/task-types/ClientTaskSolveTypeEssay.vue"),
                 meta: {
                     pageTitle: "Решение задачи",
                     breadcrumbs: [{

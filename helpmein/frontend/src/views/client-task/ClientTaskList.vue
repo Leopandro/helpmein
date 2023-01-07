@@ -34,7 +34,7 @@
                                         <router-link :to="'/task/view/'+task.id" class="dropdown-item">
                                             Просмотр ответа
                                         </router-link>
-                                        <router-link v-if="['assigned','reassigned'].includes(task.status.id)" :to="'/task/solve/'+task.id" class="dropdown-item">
+                                        <router-link v-if="['assigned','reassigned'].includes(task.status.id)" :to="getEditLink(task)" class="dropdown-item">
                                             Отправить решение
                                         </router-link>
                                     </li>
@@ -69,6 +69,9 @@ export default{
     },
 
     methods: {
+        getEditLink(task) {
+            return '/task/solve-' + task.type.id + '/'+ task.id;
+        },
         async searchItems() {
             await ApiService.query('/client/task/list', {
                 params: {

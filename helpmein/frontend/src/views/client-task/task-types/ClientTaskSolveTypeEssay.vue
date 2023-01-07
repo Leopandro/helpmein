@@ -29,66 +29,6 @@
                     placeholder="Решение задачи"></textarea>
             </div>
 
-            <div :class="{'disabled': model.type === 'essay'}">
-                <div class="card">
-                    <div class="card-header">
-                        <div>
-                            <h1>Вопросы</h1>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div v-for="(item, index) of model.questions">
-
-                            <div class="card-body">
-                                <div class="row">
-                                    <label class="col-3 col-form-label fw-semobold fs-6">
-                                        Вопрос №{{ index + 1 }}
-                                    </label>
-                                    <div class="col-8">
-                                        <div class="d-flex align-items-center h-100 fw-bold">
-                                            {{model.questions[index].title}}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-
-                                    <div class="col-3">Варианты ответов</div>
-                                    <div class="radio-inline radio-box col-9 row">
-                                        <template v-for="(answerItem, answerIndex) of model.questions[index].answers">
-                                            <div class="row">
-                                                <div
-                                                    class="form-check-custom form-check-solid me-5 form-flex p-1">
-                                                    <input
-                                                        v-if="model.questions[index].type === 'radio'"
-                                                        class="form-check-input"
-                                                        type="radio"
-                                                        :id="'model_question_answer_'+index+'_'+answerIndex"
-                                                        v-model="model.questions[index].radioValue"
-                                                        v-bind:value="answerIndex">
-                                                    <input
-                                                        v-if="model.questions[index].type === 'checkbox'"
-                                                        class="form-check-input"
-                                                        type="checkbox"
-                                                        :id="'model_question_answer_'+index+'_'+answerIndex"
-                                                        v-model="model.questions[index].answers[answerIndex].checkBoxValue"
-                                                        v-bind:value="true">
-                                                    <div class="p-2">
-                                                        <label :for="'model_question_answer_'+index+'_'+answerIndex">
-                                                            {{model.questions[index].answers[answerIndex].title}}
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="box justify-content-center pt-8">
                 <button ref="submitButton"
                         href="javascript:;"
@@ -118,11 +58,11 @@
     </div>
 </template>
 <script>
-import ApiService from "../../core/services/ApiService";
+import ApiService from "@/core/services/ApiService";
 import Swal from "sweetalert2";
 
 export default {
-    name: 'ClientTaskSolve',
+    name: 'ClientTaskSolveTypeTask',
     data() {
         return {
             errors: {},

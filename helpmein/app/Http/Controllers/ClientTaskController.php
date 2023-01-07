@@ -21,10 +21,27 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class ClientTaskController extends Controller
 {
+    /** Информация о задаче */
     public function info(Request $request, Task $task): JsonResponse
     {
         Gate::authorize(TaskViewByClientGate::getCode(), $task->id);
         return $this->getSuccessResponse((new TaskInfoResource($task))->toArray($request));
+    }
+
+    /** Проверить решение 1 вопроса из задачи */
+    public function checkAnswer(Request $request, Task $task, int $index): JsonResponse
+    {
+        Gate::authorize(TaskViewByClientGate::getCode(), $task->id);
+        $result = $task->questions[$index] === $request->all();
+        if ($result) {
+            return $this->getSuccessResponse([
+                'message' => 'Успешно',
+            ]);
+        } else {
+            return $this->getSingleErrorResponse(
+                'Ошибка)))',
+            );
+        }
     }
 
     /**
