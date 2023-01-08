@@ -37,4 +37,11 @@ class TeacherClientTaskController extends Controller
         $tasks = Task::buildQueryForTeacherClientTaskList($request);
         return $this->getListItemsResponse($tasks, UserTaskInfoResource::class, $request);
     }
+
+    public function delete(Request $request) {
+        /** @var Client $client */
+        $client = Client::query()->find($request->get('user_id'));
+        $client->tasks()->detach($request->get('task_id'));
+        return $this->getSuccessResponse([]);
+    }
 }

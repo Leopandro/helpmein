@@ -17,13 +17,35 @@ trait TeacherClientTaskLoaderTrait {
                     return $query->where('task_category_id', '=',$value);
                 }),
                 AllowedFilter::callback('user_id', static function (Builder $query, $value) {
-//                    return $query
-//                        ->with('clients')
-//                        ->whereHas(
-//                            'clients', function($query) use ($value) {
-//                                $query->where('user_task.user_id', '=', $value);
-//                            });
+                    return $query
+                        ->with('answers')
+                        ->whereHas(
+                            'answers', function($query) use ($value) {
+                                $query->where('user_task.user_id', '=', $value);
+                            });
                 }),
+                AllowedFilter::callback('assigned', fn(Builder $query, $value) =>
+                    $query
+                        ->with('answers', fn($query) =>
+                            $query->where('user_task.user_id','=',auth('sanctum')->id())
+                        )
+                        ->whereHas('answers', fn($query) =>
+                            $query->whereIn('answer.status', ['assigned', 'reassigned'])
+                        )
+                ),
+                AllowedFilter::callback('in_review', fn(Builder $query, $value) =>
+                    $query->with('answers')
+                        ->whereHas('answers', fn($query) =>
+                            $query->where('answer.status', '=', 'in_review')
+                        )
+                ),
+                AllowedFilter::callback('all', fn(Builder $query, $value) =>
+                    $query
+//                    $query->with('answers')
+//                        ->whereHas('answers', fn($query) =>
+//                            $query->where('user_task.user_id','=',auth('sanctum')->id())
+//                        )
+                ),
                 AllowedFilter::callback('difficult_level', static function (Builder $query, $value) {
                     return $query->where('difficult_level', '=',$value);
                 }),

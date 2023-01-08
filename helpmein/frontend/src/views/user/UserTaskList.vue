@@ -2,8 +2,8 @@
     <div class="card">
         <div class="card-header border-0 pt-6">
             <div class="card-title">
-                <button :class="{'btn-default': taskStatus === null}" v-on:click="setStatus(null)" type="button" class="btn btn-sm btn-light">Все задачи</button>
-                <button :class="{'btn-default': taskStatus === 'in_progress'}" v-on:click="setStatus('in_progress')" type="button" class="btn btn-sm btn-light">В работе</button>
+                <button :class="{'btn-default': taskStatus === 'all'}" v-on:click="setStatus('all')" type="button" class="btn btn-sm btn-light">Все задачи</button>
+                <button :class="{'btn-default': taskStatus === 'assigned'}" v-on:click="setStatus('assigned')" type="button" class="btn btn-sm btn-light">В работе</button>
                 <button :class="{'btn-default': taskStatus === 'in_review'}" v-on:click="setStatus('in_review')" type="button" class="btn btn-sm btn-light">На проверку</button>
             </div>
             <div class="card-toolbar">
@@ -19,9 +19,11 @@
                 <thead>
                 <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-125px">Статус</th>
-                    <th class="min-w-125px">Название</th>
-                    <th class="min-w-125px">Описание</th>
-                    <th class="min-w-125px">Тип задачи</th>
+                    <th class="min-w-125px">Номер задачи</th>
+                    <th class="min-w-125px">Уровень</th>
+                    <th class="min-w-125px">Тема</th>
+                    <th class="min-w-125px">Комментарий</th>
+                    <th class="min-w-125px">Назначена</th>
                     <th class="min-w-125px text-end">Действия</th>
                 </tr>
                 </thead>
@@ -30,13 +32,17 @@
                     <td>
                         <GetSvgByStatus :status="task.status.id"></GetSvgByStatus>
                     </td>
+                    <th class="min-w-125px">{{task.id}}</th>
+                    <th class="min-w-125px">{{task.difficult_level}}</th>
                     <td>
                         <router-link :to="'/task/solve/' + task.id" class="text-gray-800 text-hover-primary mb-1">
                             {{task.name}}
                         </router-link>
                     </td>
-                    <td class="text-dark text-gray-800">{{task.description}}</td>
-                    <td class="text-dark text-gray-800">{{task.type.title}}</td>
+                    <th class="min-w-125px">{{task.comment}}</th>
+                    <th class="min-w-125px">{{
+                            getFormattedDate(task.answer.created_at)
+                        }}</th>
                     <td class="text-end">
 
                         <div class="dropdown">
@@ -44,10 +50,10 @@
                                 Действия
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li>
-                                    <router-link :to="'/task/solve/'+task.id" class="dropdown-item">
-                                        Просмотр
-                                    </router-link>
+                                <li v-on:click="removeTask(task.id)">
+                                    <a class="dropdown-item" href="javascript:;">
+                                        Удалить
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -55,6 +61,9 @@
                 </tr>
                 </tbody>
             </table>
+            <div class="col-12">
+                <PaginationTemplate v-if="tasks?.length > 0" :count="pagesCount" :current-page="currentPage" :per-page="perPage"></PaginationTemplate>
+            </div>
             <div v-if="tasks?.length == 0" class="alert alert-primary">Пока задачи не назначены</div>
         </div>
     </div>
@@ -66,10 +75,13 @@ import ExportCustomerModal from "@/components/modals/forms/ExportCustomerModal.v
 import AddCustomerModal from "@/components/modals/forms/AddCustomerModal.vue";
 import ApiService from "@/core/services/ApiService";
 import GetSvgByStatus from "@/views/client-task/_helpers/GetSvgByStatus.vue";
+import PaginationTemplate from "@/components/table/PaginationTemplate.vue";
+import moment from 'moment';
 
 export default {
     name: "UserTaskList",
     components: {
+        PaginationTemplate,
         Datatable,
         ExportCustomerModal,
         AddCustomerModal,
@@ -77,43 +89,72 @@ export default {
     },
     data() {
         return {
+            currentPage: 1,
+            perPage: 10,
+            pagesCount: null,
             tableData: [],
             search: [],
             selectedIds: [],
             deleteFewCustomers: [],
             sort: [],
             tasks: null,
-            taskStatus: null,
+            taskStatus: 'all',
         }
     },
     init() {
     },
 
     methods: {
-        async searchItems() {
+        async removeTask(id) {
+            await ApiService.post('/admin/user-task/delete', {
+                user_id: this.$route.params.id,
+                task_id: id
+            }).then((response) => {
+                this.loadData()
+            })
+        },
+        getFormattedDate(date) {
+            return moment(date).format('DD.MM.Y')
+        },
+        async loadData() {
+            let filter  = {
+                user_id: this.$route.params.id
+            };
+            this.taskStatus ? filter[this.taskStatus] = true : filter[this.taskStatus];
             await ApiService.query('/admin/user-task/list', {
                 params: {
-                    filter: {
-                        task_status: this.taskStatus,
-                        user_id: this.$route.params.id
-                    },
+                    filter: filter,
                     page: this.currentPage,
-                    count: 10
-                }
+                    count: this.perPage
+                },
             }).then((response) => {
                 this.tasks = response.data.data.items;
                 this.pagesCount = response.data.data.meta.pages_count;
             })
         },
-        setStatus(status) {
+        async setStatus(status) {
             this.taskStatus = status;
+            await this.loadData();
         },
     },
     beforeMount() {
-        this.searchItems();
+        this.loadData();
     },
     async mounted() {
+        this.emitter.on("change-page", (index) => {
+            this.currentPage = index;
+            this.loadData();
+        });
+        this.emitter.on("change-count", (count) => {
+            this.currentPage = 1;
+            this.perPage = count;
+            this.loadData();
+        });
     },
+    unmounted() {
+        this.emitter.off("change-count");
+        this.emitter.off("change-page");
+    }
 };
 </script>
 <style>

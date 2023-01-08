@@ -18,11 +18,12 @@ class UserTaskInfoResource extends JsonResource
         $type = new EnumResource($task->type);
         $trash = $task->clients?->first()?->pivot;
         $status = ($trash) ?
-            ( $trash->answer_id ? new EnumResource(new UserTaskStatus(UserTaskStatus::IN_REVIEW)) : new EnumResource(new UserTaskStatus(UserTaskStatus::ASSIGNED)))
-            : new EnumResource(new UserTaskStatus(UserTaskStatus::NOT_ASSIGNED));
+            ( $trash->answer_id ? new EnumResource($trash->answer->status) : new EnumResource(new UserTaskStatus(UserTaskStatus::ASSIGNED)))
+            : new EnumResource(new UserTaskStatus(UserTaskStatus::ASSIGNED));
         return [
             'id' => $task->id,
             'name' => $task->name,
+            'answer' => $task->answers->first(),
             'status' => $status,
             'description' => $task->description,
             'task_category_id' => $task->task_category_id,

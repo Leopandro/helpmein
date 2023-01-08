@@ -1,10 +1,12 @@
 <?php
 namespace App\Domain\Task\Model;
 
+use App\Domain\Client\Model\Client;
 use App\Domain\Task\Model\Pivot\UserTask;
 use App\Domain\Task\Model\Trait\TeacherClientTaskLoaderTrait;
 use App\Domain\TaskCategory\Model\TaskCategory;
 use App\Domain\User\Model\User;
+use App\Domain\UserAnswer\Model\Answer;
 use App\Infrastructure\Model\Cast\TaskTypeCast;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -48,9 +50,14 @@ class Task extends Model
 
     public function clients(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'user_task', 'task_id', 'user_id')->using(UserTask::class)->withPivot([
+        return $this->belongsToMany(Client::class, 'user_task', 'task_id', 'user_id')->using(UserTask::class)->withPivot([
             'answer_id',
         ]);
+    }
+
+    public function answers(): BelongsToMany
+    {
+        return $this->belongsToMany(Answer::class, 'user_task', 'task_id', 'answer_id')->using(UserTask::class);
     }
 
     public function user(): BelongsTo

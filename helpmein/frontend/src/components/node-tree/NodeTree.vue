@@ -282,7 +282,7 @@ export default {
     border: 0;
     border-radius: 0;
     overflow-anchor: none;
-    height:30px;
+    height: 100%;
 }
 .create-folder-body {
     width:300px;
