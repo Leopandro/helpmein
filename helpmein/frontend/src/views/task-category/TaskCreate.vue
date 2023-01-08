@@ -1,5 +1,5 @@
 <template>
-    <div class="card col-6">
+    <div class="card row">
         <div class="card-header">
             <div class="card-title">
                 {{ title }}
