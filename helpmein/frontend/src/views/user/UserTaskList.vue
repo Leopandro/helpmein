@@ -18,13 +18,13 @@
             <table class="table table-row-dashed fs-6 gy-5 my-0" v-if="tasks?.length > 0">
                 <thead>
                 <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                    <th class="min-w-125px">Статус</th>
-                    <th class="min-w-125px">Номер задачи</th>
-                    <th class="min-w-125px">Уровень</th>
+                    <th class="min-w-25px">Статус</th>
+                    <th class="min-w-65px">Номер задачи</th>
+                    <th class="min-w-25px">Уровень</th>
                     <th class="min-w-125px">Тема</th>
                     <th class="min-w-125px">Комментарий</th>
-                    <th class="min-w-125px">Назначена</th>
-                    <th class="min-w-125px text-end">Действия</th>
+                    <th class="min-w-75px">Назначена</th>
+                    <th class="min-w-25px text-end">Действия</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -32,15 +32,18 @@
                     <td>
                         <GetSvgByStatus :status="task.status.id"></GetSvgByStatus>
                     </td>
-                    <th class="min-w-125px">{{task.id}}</th>
-                    <th class="min-w-125px">{{task.difficult_level}}</th>
+                    <th>{{task.id}}</th>
+                    <th>{{task.difficult_level}}</th>
                     <td>
-                        <router-link :to="'/task/solve/' + task.id" class="text-gray-800 text-hover-primary mb-1">
-                            {{task.name}}
-                        </router-link>
+                        {{task.task_category}}
                     </td>
-                    <th class="min-w-125px">{{task.comment}}</th>
-                    <th class="min-w-125px">{{
+                    <th class="text-break">
+                        <p class="">
+                            <b>Для себя:</b>{{task.comment}}<br>
+                            <b>Для клиента:</b>{{task.comment_client}}
+                        </p>
+                    </th>
+                    <th>{{
                             getFormattedDate(task.answer.created_at)
                         }}</th>
                     <td class="text-end">
@@ -64,7 +67,7 @@
             <div class="col-12">
                 <PaginationTemplate v-if="tasks?.length > 0" :count="pagesCount" :current-page="currentPage" :per-page="perPage"></PaginationTemplate>
             </div>
-            <div v-if="tasks?.length == 0" class="alert alert-primary">Пока задачи не назначены</div>
+            <div v-if="tasks?.length == 0" class="alert alert-primary">{{getErrorMessage()}}</div>
         </div>
     </div>
 </template>
@@ -99,19 +102,44 @@ export default {
             sort: [],
             tasks: null,
             taskStatus: 'all',
+            loading: null,
+            taskStatuses: {
+                'all': {
+                    title: 'Все задачи',
+                    errorMessage: 'Нет назначенных задач',
+                },
+                'assigned': {
+                    title: 'В работе',
+                    errorMessage: 'Нет задач в работе',
+                },
+                'in_review': {
+                    title: 'На проверку',
+                    errorMessage: 'Нет задач на проверку',
+                },
+            },
         }
     },
     init() {
     },
 
     methods: {
+        getErrorMessage() {
+            if (this.loading === true) {
+                return "Загрузка...";
+            }
+            if (this.tasks.length === 0) {
+                return this.taskStatuses[this.taskStatus].errorMessage;
+            }
+        },
         async removeTask(id) {
-            await ApiService.post('/admin/user-task/delete', {
-                user_id: this.$route.params.id,
-                task_id: id
-            }).then((response) => {
-                this.loadData()
-            })
+            if (confirm('Вы уверены?')) {
+                await ApiService.post('/admin/user-task/delete', {
+                    user_id: this.$route.params.id,
+                    task_id: id
+                }).then((response) => {
+                    this.loadData()
+                })
+            }
         },
         getFormattedDate(date) {
             return moment(date).format('DD.MM.Y')
@@ -121,6 +149,7 @@ export default {
                 user_id: this.$route.params.id
             };
             this.taskStatus ? filter[this.taskStatus] = true : filter[this.taskStatus];
+            this.loading = true;
             await ApiService.query('/admin/user-task/list', {
                 params: {
                     filter: filter,
@@ -130,10 +159,12 @@ export default {
             }).then((response) => {
                 this.tasks = response.data.data.items;
                 this.pagesCount = response.data.data.meta.pages_count;
-            })
+            });
+            this.loading = false;
         },
         async setStatus(status) {
             this.taskStatus = status;
+            this.currentPage = 1;
             await this.loadData();
         },
     },

@@ -10,7 +10,7 @@ use App\Enum\UserTaskStatus;
 use App\Infrastructure\Http\Resource\EnumResource;
 use App\Infrastructure\Http\Resource\JsonResource;
 
-class UserTaskInfoResource extends JsonResource
+class UserTaskAllInfoResource extends JsonResource
 {
     public function toArray($request): array
     {
@@ -20,7 +20,7 @@ class UserTaskInfoResource extends JsonResource
         $trash = $task->clients?->first()?->pivot;
         $status = ($trash) ?
             ( $trash->answer_id ? new EnumResource($trash->answer->status) : new EnumResource(new UserTaskStatus(UserTaskStatus::ASSIGNED)))
-            : new EnumResource(new UserTaskStatus(UserTaskStatus::ASSIGNED));
+            : new EnumResource(new UserTaskStatus(UserTaskStatus::NOT_ASSIGNED));
         $taskCategory = TaskCategory::query()->find($task->task_category_id);
         $categories = $this->getTaskCategoriesRecursively($taskCategory);
         $categoriesText = $this->parseTaskCategoriesArray($categories);

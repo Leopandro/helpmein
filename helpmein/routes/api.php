@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
         });
         Route::group(['prefix' => 'user-task'], function () {
             Route::get('/list', [Controller\TeacherClientTaskController::class, 'list'])->name('list');
+            Route::get('/list-with-assign', [Controller\TeacherClientTaskController::class, 'listAllWithAssign'])->name('listAllWithAssign');
             Route::post('/delete', [Controller\TeacherClientTaskController::class, 'delete'])->name('delete');
             Route::post('/mass-assign', [Controller\TeacherClientTaskController::class, 'massAssign'])->name('mass-assign');
         });

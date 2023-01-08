@@ -180,7 +180,7 @@ export default {
             this.uploadMassAssignment();
         },
         async loadData() {
-            await ApiService.query('/admin/user-task/list', {
+            await ApiService.query('/admin/user-task/list-with-assign', {
                 params: {
                     filter: {
                         user_id: this.selectedUser,
