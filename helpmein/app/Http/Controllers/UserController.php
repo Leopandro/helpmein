@@ -111,15 +111,18 @@ class UserController extends Controller
         $user = auth('sanctum')->user();
         /** @var Builder $query */
         $clients = QueryBuilder::for(Client::class)
+            ->allowedFilters([
+                AllowedFilter::callback('active', static function (Builder $query, $value) {
+                    $query->whereHas('teachers', fn(Builder $query) =>
+                        $query->where('user_clients.active', '=', $value)
+                    );
+//                    return $query->where('user_clients.active', '=', 'true');
+                }),
+            ])
             ->with('teachers')
             ->whereHas('teachers', function (Builder $query) use ($request) {
                 $query->where('user_clients.user_id', '=', auth('sanctum')->id());
 
-                if (($active = $request->get('active')) == 'true') {
-
-                } else {
-                    $query->where('user_clients.active', '=', 'true');
-                }
                 if ($search = $request->get('search')) {
                     $query->where('user_clients.name','ILIKE', "%$search%")
                         ->orWhere('user_clients.surname','ILIKE', "%$search%")

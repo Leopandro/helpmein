@@ -30,7 +30,7 @@
                     </div>
                     <div v-if="value.type === 'select'" class="col-lg-10 fv-row">
                         <select class="form-select" v-model="model[value.name]">
-                            <option value="">{{ value.placeholder }}</option>
+                            <option v-if="value.placeholder" value="">{{ value.placeholder }}</option>
                             <option v-for="option in value.options" :value="option.value">{{ option.title }}</option>
                         </select>
                         <div v-if="errors[value.name]" class="fv-plugins-message-container invalid-feedback">
@@ -189,7 +189,6 @@ export default {
                 {
                     name: 'type',
                     type: 'select',
-                    placeholder: '-- Выберите тип --',
                     title: 'Тип задачи',
                     options: [
                         {
@@ -230,7 +229,6 @@ export default {
                 {
                     name: 'difficult_level',
                     type: 'select',
-                    placeholder: '-- Выберите сложность --',
                     options: [
                         {
                             value: 'A1',
@@ -254,7 +252,7 @@ export default {
             ],
             model: {
                 id: '',
-                type: '',
+                type: 'essay',
                 task_category_id: '',
                 name: '',
                 description: '',
@@ -326,9 +324,8 @@ export default {
             this.model.questions[index].answers.push(this.getQuestion());
         },
         async getTask() {
-            await ApiService.get("task/info/" + this.$route.params.id).then((response) => {
+            await ApiService.get("admin/task/info/" + this.$route.params.id).then((response) => {
                 this.model = this.mappingFieldsFromTask(response.data.data);
-                console.log(this.model);
             })
         },
         async removeAnswer(questionIndex, answerIndex) {

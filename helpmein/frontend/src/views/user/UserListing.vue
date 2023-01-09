@@ -13,7 +13,7 @@
                             v-on:change="searchItems"
                             v-model="filter.active">
                         <label class="form-check-label p-1" for="filter_active">
-                            Показывать неактивных клиентов
+                            Показывать только активных клиентов
                         </label>
                     </div>
                     <div>
@@ -114,7 +114,17 @@ export default defineComponent({
 
     methods: {
         async searchItems() {
-            await ApiService.get('/user/list?',new URLSearchParams(this.filter).toString()).then((response) => {
+            await ApiService.query('/user/list',
+                {
+                    params: {
+                        filter: {
+                            active: this.filter.active
+                        },
+                        search: this.filter.search,
+                        page: this.currentPage,
+                        count: 10
+                    }
+                }).then((response) => {
                 this.users = response.data.data.items;
             })
         },
@@ -128,10 +138,13 @@ export default defineComponent({
     },
     data() {
         return {
+            currentPage: 1,
+            perPage: 2,
+            pagesCount: null,
             tableData: [],
             filter: {
+                active: true,
                 search: '',
-                active: ''
             },
             selectedIds: [],
             deleteFewCustomers: [],

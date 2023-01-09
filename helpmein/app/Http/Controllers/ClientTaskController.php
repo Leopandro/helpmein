@@ -86,7 +86,9 @@ class ClientTaskController extends Controller
 //                }),
             ])
             ->with('clients')
-            ->whereRelation( 'clients', 'user_id', '=', auth('sanctum')->id())
+            ->whereHas( 'clients',function ($query) {
+                $query->where('user_task.user_id', '=', auth('sanctum')->id());
+            })
             ->orderBy('id')
             ->paginate($request->get('count'));
         return $this->getListItemsResponse($tasks, ClientTaskInfoResource::class, $request);
