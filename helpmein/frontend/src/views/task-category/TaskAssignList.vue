@@ -28,7 +28,9 @@
                     </select>
                 </div>
                 <div class="col-auto ms-auto">
-                    <button type="button" class="btn btn-secondary" v-on:click="acceptAssignments">Применить назначение</button>
+                    <button type="button"  :disabled="this.count === 0" class="btn btn-secondary" v-on:click="acceptAssignments">
+                        {{getButtonText()}}
+                    </button>
                 </div>
             </div>
         </div>
@@ -131,10 +133,32 @@ export default {
                 },
             ],
             clients: [],
-            selectedItems: {},
+            selectedItemsCount: 0,
+            selectedItems: [],
         };
     },
+    computed: {
+        count() {
+            var len = 0;
+
+            for (var i = 0; i <= this.selectedItems.length; i++) {
+                if (this.selectedItems[i] === true || this.selectedItems[i] === false) {
+                    len++;
+                }
+            }
+            return len;
+        }
+    },
     methods: {
+        getButtonText() {
+            let message = "";
+            if (this.count === 0) {
+                message = "Не выбраны задачи для назначения"
+            } else {
+                message = "Применить изменение ("+this.count+")"
+            }
+            return message;
+        },
         async loadUsers() {
             await ApiService.query('/user/list').then((response) => {
                 this.clients = response.data.data.items
@@ -158,7 +182,7 @@ export default {
                     },
                 }).then(() => {
                     this.loadData();
-                    this.selectedItems = {};
+                    this.selectedItems = [];
                 });
             }).catch((response) => {
                 Swal.fire({
@@ -172,7 +196,7 @@ export default {
                     },
                 }).then(async () => {
                     await this.loadData();
-                    this.selectedItems = {};
+                    this.selectedItems = [];
                 });
             })
         },
@@ -215,11 +239,11 @@ export default {
     unmounted() {
         this.emitter.off("pick-folder");
         this.emitter.off("change-page");
+    },
+    updated() {
+        console.log(this.selectedItems);
     }
 }
 </script>
 <style>
-.ml-auto {
-    margin-left: auto;
-}
 </style>

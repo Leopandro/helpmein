@@ -68,7 +68,7 @@
             <div class="card h-100"></div>
         </div>
         <div class="col-8 p-0" v-if="task_categories.length > 0">
-            <PaginationTemplate :count="pagesCount" :current-page="currentPage"></PaginationTemplate>
+            <PaginationTemplate :per-page="perPage" :count="pagesCount" :current-page="currentPage"></PaginationTemplate>
         </div>
     </div>
 </template>
@@ -83,6 +83,7 @@ export default {
     data() {
         return {
             currentPage: 1,
+            perPage: 2,
             pagesCount: null,
             task_category: '',
             task_categories: []
@@ -96,7 +97,7 @@ export default {
                         task_category_id: this.task_category.id
                     },
                     page: this.currentPage,
-                    count: 2
+                    count: this.perPage
                 }
             }).then((response) => {
                 this.task_categories = response.data.data.items;
@@ -124,8 +125,12 @@ export default {
             this.task_category = item;
             this.loadData();
         });
-        this.emitter.on("change-page", (id) => {
-            this.currentPage = id;
+        this.emitter.on("change-page", (page) => {
+            this.currentPage = page;
+            this.loadData();
+        });
+        this.emitter.on("change-count", (count) => {
+            this.perPage = count;
             this.loadData();
         });
     },

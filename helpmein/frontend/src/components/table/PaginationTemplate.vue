@@ -40,6 +40,9 @@ export default {
         setCurrentCount(event) {
             this.emitter.emit("change-count", event.target.value);
         }
+    },
+    updated() {
+        console.log(this);
     }
 }
 </script>

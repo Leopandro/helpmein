@@ -202,6 +202,29 @@ export default {
                     ]
                 },
                 {
+                    name: 'difficult_level',
+                    type: 'select',
+                    options: [
+                        {
+                            value: 'A1',
+                            title: 'A1'
+                        },
+                        {
+                            value: 'A2',
+                            title: 'A2'
+                        },
+                        {
+                            value: 'B1',
+                            title: 'B1'
+                        },
+                        {
+                            value: 'B2',
+                            title: 'B2'
+                        },
+                    ],
+                    title: 'Уровень сложности'
+                },
+                {
                     name: 'name',
                     type: 'text',
                     title: 'Название'
@@ -225,29 +248,6 @@ export default {
                     name: 'questions',
                     type: 'questions',
                     title: 'Вопросы'
-                },
-                {
-                    name: 'difficult_level',
-                    type: 'select',
-                    options: [
-                        {
-                            value: 'A1',
-                            title: 'A1'
-                        },
-                        {
-                            value: 'A2',
-                            title: 'A2'
-                        },
-                        {
-                            value: 'B1',
-                            title: 'B1'
-                        },
-                        {
-                            value: 'B2',
-                            title: 'B2'
-                        },
-                    ],
-                    title: 'Уровень сложности'
                 },
             ],
             model: {
