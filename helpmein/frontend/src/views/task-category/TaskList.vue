@@ -64,6 +64,10 @@
             </div>
         </div>
 
+        <div v-if="task_categories.length === 0">
+            <div class="alert alert-primary">{{getErrorMessage()}}</div>
+        </div>
+
         <div v-if="task_categories.length < 2" class="col-8 p-1" style="min-height: 203px;">
             <div class="card h-100"></div>
         </div>
@@ -85,12 +89,22 @@ export default {
             currentPage: 1,
             perPage: 2,
             pagesCount: null,
+            loading: null,
             task_category: '',
             task_categories: []
         };
     },
     methods: {
+        getErrorMessage() {
+            if (this.loading === true) {
+                return "Загрузка...";
+            }
+            if (this.task_categories.length === 0) {
+                return "Задач нет";
+            }
+        },
         async loadData() {
+            this.loading = true;
             await ApiService.query('/admin/user-task/list', {
                 params: {
                     filter: {
@@ -104,6 +118,7 @@ export default {
                 console.log(this.task_categories)
                 this.pagesCount = response.data.data.meta.pages_count;
             })
+            this.loading = false;
         },
         getCreateLink() {
             return '/task/edit' + '?task_category_id=' + this.task_category.id;
