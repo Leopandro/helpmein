@@ -19,19 +19,27 @@ class ClientTaskInfoResource extends JsonResource
         $type = new EnumResource($task->type);
         $questions = $task->questions;
         $resultQuestions = [];
+        if (isset($task->clients->first()->pivot->answer->status)) {
+            $status = new EnumResource($task->clients->first()->pivot->answer->status);
+        } else {
+            $status = new EnumResource(new UserTaskStatus(UserTaskStatus::ASSIGNED));
+        }
         foreach ($questions as $question) {
             $answers = [];
-            foreach ($question['answers'] as $answer) {
-                $answer['checkBoxValue'] = false;
-                $answers[] = $answer;
+            if (isset($question['answers'])) {
+                foreach ($question['answers'] as $answer) {
+                    $answer['checkBoxValue'] = false;
+                    $answers[] = $answer;
+                }
+                $question['radioValue'] = null;
+                $question['answers'] = $answers;
             }
-            $question['radioValue'] = null;
-            $question['answers'] = $answers;
             $resultQuestions[] = $question;
         }
         return [
             'id' => $task->id,
             'name' => $task->name,
+            'status' => $status,
             'answer' => $task->clients()?->first()?->pivot?->answer()->first(),
             'description' => $task->description,
             'task_category_id' => $task->task_category_id,

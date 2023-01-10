@@ -4,7 +4,7 @@
 
         </div>
 
-        <div class="col-8">
+        <div class="col-12">
             <div class="row">
                 <div class="col-4">
                     <select
@@ -12,7 +12,7 @@
                         v-model="selectedUser"
                         @change="loadData">
                         <option :value="client.id" v-for="client in clients">
-                            {{client.name}}
+                            {{client.name + ' ' + client.surname}}
                         </option>
                     </select>
                     <select
@@ -20,7 +20,7 @@
                         v-model="difficultLevel"
                         @change="loadData">
                         <option value="">
-                            -- Нет ---
+                            Все
                         </option>
                         <option :value="levels.id" v-for="levels in difficultLevels">
                             {{levels.name}}
@@ -34,24 +34,26 @@
                 </div>
             </div>
         </div>
-        <div class="col-8 p-1" v-for="(task, name, index) in tasks">
-            <div class="card h-100">
 
-                <div class="card-header flex-nowrap border-0 pt-1">
-                    <!--begin::Card title-->
-                    <div class="card-title m-0">
-                        <div class="row">
-                            <div class="p-1 col-auto">
-                                <div class="form-check form-check-custom form-check-success form-check-solid">
-                                    <input
-                                        class="form-check-input"
-                                        :id="'task_assign_'+task.id"
-                                        type="checkbox"
-                                        :checked="['assigned', 'in_review', 'finished', 'reassigned'].includes(task.status.id)"
-                                        :disabled="['in_review', 'finished', 'reassigned'].includes(task.status.id)"
-                                        v-model="selectedItems[task.id]"/>
+        <div style="min-height: 406px;" v-if="tasks.length > 0">
+            <div class="col-12 p-1" v-for="(task, name, index) in tasks">
+                <div class="card h-100">
+
+                    <div class="card-header flex-nowrap border-0 pt-1">
+                        <!--begin::Card title-->
+                        <div class="card-title m-0">
+                            <div class="row">
+                                <div class="p-1 col-auto">
+                                    <div class="form-check form-check-custom form-check-success form-check-solid">
+                                        <input
+                                            class="form-check-input"
+                                            :id="'task_assign_'+task.id"
+                                            type="checkbox"
+                                            :checked="['assigned', 'in_review', 'finished', 'reassigned'].includes(task.status.id)"
+                                            :disabled="['in_review', 'finished', 'reassigned'].includes(task.status.id)"
+                                            v-model="selectedItems[task.id]"/>
+                                    </div>
                                 </div>
-                            </div>
                                 <div class="p-1 col-auto">
                                     <label :for="'task_assign_'+task.id" role="button">
                                         {{task.type.title}}
@@ -62,39 +64,41 @@
                                         {{task.difficult_level}}
                                     </label>
                                 </div>
+                            </div>
+                            <!--end::Title-->
                         </div>
-                        <!--end::Title-->
+                        <!--end::Card title-->
+                        <div class="card-toolbar m-0">
+                            № {{task.id}}
+                        </div>
                     </div>
-                    <!--end::Card title-->
-                    <div class="card-toolbar m-0">
-                        № {{task.id}}
-                    </div>
-                </div>
-                <div class="card-body d-flex flex-column px-9 pt-1 pb-8">
-                    <!--begin::Heading-->
-                    <div class="row">
-                        <p class="text-break">
-                        <b>{{task.name}}</b>
-                        {{task.description}}</p>
-                    </div>
-                    <div class="row">
-                        <p class="text-break">
-                            <b>Комментарий для клиента:</b> {{task.comment_client}}
-                        </p>
-                    </div>
-                    <div class="row">
-                        <p class="text-break">
-                            <b>Комментарий для себя:</b> {{task.comment}}
-                        </p>
+                    <div class="card-body d-flex flex-column px-9 pt-1 pb-8">
+                        <!--begin::Heading-->
+                        <div class="row">
+                            <p class="text-break">
+                                <b>{{task.name}}</b>
+                                {{task.description}}</p>
+                        </div>
+                        <div class="row">
+                            <p class="text-break">
+                                <b>Комментарий для клиента:</b> {{task.comment_client}}
+                            </p>
+                        </div>
+                        <div class="row">
+                            <p class="text-break">
+                                <b>Комментарий для себя:</b> {{task.comment}}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div v-if="tasks.length < 2" class="col-8 p-1" style="min-height: 203px;">
-            <div class="card h-100"></div>
+        <div v-if="tasks.length === 0">
+            <div class="alert alert-primary">{{getErrorMessage()}}</div>
         </div>
-        <div class="col-8 p-0" v-if="tasks.length > 0">
+
+        <div class="col-12 p-0" v-if="tasks.length > 0">
             <PaginationTemplate :count="pagesCount" :current-page="currentPage" :per-page="perPage"></PaginationTemplate>
         </div>
     </div>
@@ -113,6 +117,7 @@ export default {
             currentPage: 1,
             perPage: 2,
             pagesCount: null,
+            loading: null,
             task_category: '',
             tasks: [],
             selectedUser: null,
@@ -150,12 +155,20 @@ export default {
         }
     },
     methods: {
+        getErrorMessage() {
+            if (this.loading === true) {
+                return "Загрузка...";
+            }
+            if (this.tasks.length === 0) {
+                return "Задач нет";
+            }
+        },
         getButtonText() {
             let message = "";
             if (this.count === 0) {
                 message = "Не выбраны задачи для назначения"
             } else {
-                message = "Применить изменение ("+this.count+")"
+                message = "Назначить задачи"
             }
             return message;
         },
@@ -204,6 +217,7 @@ export default {
             this.uploadMassAssignment();
         },
         async loadData() {
+            this.loading = true;
             await ApiService.query('/admin/user-task/list-with-assign', {
                 params: {
                     filter: {
@@ -218,6 +232,7 @@ export default {
                 this.tasks = response.data.data.items;
                 this.pagesCount = response.data.data.meta.pages_count;
             })
+            this.loading = false;
         },
     },
     mounted() {

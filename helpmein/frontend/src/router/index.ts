@@ -109,7 +109,7 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: "/task-category/assignment",
                 name: "task-category-assignment",
-                component: () => import("@/views/task-category/TaskCategoryAssign.vue"),
+                component: () => import("@/views/task-category/TaskCategoryAssignment.vue"),
                 meta: {
                     pageTitle: "Назначение задач",
                     breadcrumbs: ["Назначение задач"],
@@ -123,11 +123,10 @@ const routes: Array<RouteRecordRaw> = [
                     pageTitle: "Редактирование задачи",
                     breadcrumbs: [{
                         "name": "Задачи",
-                        "path": "/task/list"
-                    }, {
-                        "name": "Редактировать задачу",
-                        "path": "task/create"
-                    }],
+                        "path": "/task-category/list"
+                    },
+                        "Редактировать задачу"
+                    ],
                 },
             },
             {
@@ -138,11 +137,8 @@ const routes: Array<RouteRecordRaw> = [
                     pageTitle: "Создание задачи",
                     breadcrumbs: [{
                         "name": "Задачи",
-                        "path": "/task/list"
-                    }, {
-                        "name": "Создать задачу",
-                        "path": "task/create"
-                    }],
+                        "path": "/task-category/list"
+                    }, "Создать задачу"],
                 },
             },
             {

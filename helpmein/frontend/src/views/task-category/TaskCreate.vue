@@ -1,11 +1,42 @@
 <template>
     <div class="card row">
-        <div class="card-header">
-            <div class="card-title">
-                {{ title }}
-            </div>
-        </div>
         <div class="card-body" v-if="isVisible">
+            <div class="row mb-6">
+                <div class="col-6">
+                    <div class="row fv-row">
+                        <label class="col-4 col-form-label fw-semobold fs-6">{{ formType['type'].title }}</label>
+                        <div class="col-8 fv-row">
+                            <select class="form-select" v-model="model[formType['type'].name]">
+                                <option v-if="formType['type'].placeholder" value="">{{ formType['type'].placeholder }}</option>
+                                <option v-for="option in formType['type'].options" :value="option.value">{{ option.title }}</option>
+                            </select>
+                            <div v-if="errors[formType['type'].name]" class="fv-plugins-message-container invalid-feedback">
+                                <div data-validator="notEmpty">{{
+                                        errors[formType['type'].name][0]
+                                    }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row fv-row">
+                        <label class="col-4 col-form-label fw-semobold fs-6">{{ formType['difficult_level'].title }}</label>
+                        <div class="col-8 fv-row">
+                            <select class="form-select" v-model="model[formType['difficult_level'].name]">
+                                <option v-if="formType['difficult_level'].placeholder" value="">{{ formType['difficult_level'].placeholder }}</option>
+                                <option v-for="option in formType['difficult_level'].options" :value="option.value">{{ option.title }}</option>
+                            </select>
+                            <div v-if="errors[formType['difficult_level'].name]" class="fv-plugins-message-container invalid-feedback">
+                                <div data-validator="notEmpty">{{
+                                        errors[formType['difficult_level'].name][0]
+                                    }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row mb-6" v-for="(value, name, index) in form">
                 <template
                     v-if="value.type === 'text' || value.type === 'select'  || value.type === 'textarea' || value.type === 'datetime' ">
@@ -185,8 +216,8 @@ export default {
     data() {
         return {
             errors: {},
-            form: [
-                {
+            formType: {
+                type: {
                     name: 'type',
                     type: 'select',
                     title: 'Тип задачи',
@@ -201,7 +232,7 @@ export default {
                         },
                     ]
                 },
-                {
+                difficult_level: {
                     name: 'difficult_level',
                     type: 'select',
                     options: [
@@ -224,6 +255,8 @@ export default {
                     ],
                     title: 'Уровень сложности'
                 },
+            },
+            form: [
                 {
                     name: 'name',
                     type: 'text',

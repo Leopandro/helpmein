@@ -29,7 +29,11 @@ export const useAuthStore = defineStore("auth", () => {
         isAuthenticated.value = true;
         user.value = authUser;
         errors.value = "";
-        JwtService.saveToken(user.value.token);
+        JwtService.saveToken(authUser.token);
+    }
+    function setUserData(authUser: User) {
+        user.value = authUser;
+        errors.value = "";
     }
 
     function setError(error: any) {
@@ -73,6 +77,7 @@ export const useAuthStore = defineStore("auth", () => {
         return ApiService.post("auth/login", credentials)
             .then(({data}) => {
                 setAuth(data);
+                verifyAuth();
                 setRoles(data.roles);
                 setMessage('');
                 setPermissions(data.permissions);
@@ -92,6 +97,7 @@ export const useAuthStore = defineStore("auth", () => {
         return ApiService.post("auth/register", credentials)
             .then(({data}) => {
                 setAuth(data.data);
+                verifyAuth();
                 setRoles(data.data.roles);
                 setMessage('');
                 setPermissions(data.data.permissions);
@@ -136,7 +142,7 @@ export const useAuthStore = defineStore("auth", () => {
             ApiService.setHeader();
             ApiService.post("verify_token")
                 .then(({data}) => {
-                    setAuth(data.data);
+                    setUserData(data.data);
                 })
                 .catch(({response}) => {
                     console.log(response)
