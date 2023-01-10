@@ -13,9 +13,10 @@ class UserTaskService
         $client = Client::query()->find($request->get('selected_user'));
         foreach ($selectedItems as $taskId => $value) {
             if (!$client->tasks()->wherePivot('task_id','=',$taskId)->wherePivotNotNull('answer_id')->first()) {
-                if ($value) {
+                if ($value === true) {
                     $client->tasks()->syncWithoutDetaching([$taskId]);
-                } else {
+                }
+                if ($value === false) {
                     $client->tasks()->detach($taskId);
                 }
             }

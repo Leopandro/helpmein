@@ -92,6 +92,11 @@
                                         <input type="text" v-model="model.questions[index].title"
                                                placeholder="Введите название вопроса"
                                                class="form-control form-control-lg form-control-solid">
+                                        <div class="fv-plugins-message-container invalid-feedback">
+                                            <div v-if="errors['questions.'+index+'.title']">
+                                                {{errors['questions.'+index+'.title'][0]}}
+                                            </div>
+                                        </div>
                                         <span class="form-text text-muted">Название вопроса</span>
                                     </div>
                                     <div class="col-lg-2" v-on:click="removeQuestion(index)">
@@ -107,20 +112,27 @@
                                 <div class="form-group row">
 
                                     <div class="col-3">Правильных ответов</div>
-                                    <div class="radio-inline radio-box col-3">
-                                        <div class="form-check form-check-custom form-check-solid">
-                                            <label class="form-check-label" for="flexRadioDefault1">
-                                                <input class="form-check-input" type="radio" id="flexRadioDefault1"
-                                                       v-model="model.questions[index].type" v-bind:value="'radio'">
-                                                Один
-                                            </label>
+                                    <div class="col-8">
+                                        <div class="radio-inline radio-box col-8">
+                                            <div class="form-check form-check-custom form-check-solid">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                    <input class="form-check-input" type="radio" id="flexRadioDefault1"
+                                                           v-model="model.questions[index].type" v-bind:value="'radio'">
+                                                    Один
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-custom form-check-solid">
+                                                <label class="form-check-label" for="flexRadioDefault">
+                                                    <input class="form-check-input" type="radio" id="flexRadioDefault"
+                                                           v-model="model.questions[index].type" v-bind:value="'checkbox'">
+                                                    Несколько
+                                                </label>
+                                            </div>
                                         </div>
-                                        <div class="form-check form-check-custom form-check-solid">
-                                            <label class="form-check-label" for="flexRadioDefault">
-                                                <input class="form-check-input" type="radio" id="flexRadioDefault"
-                                                       v-model="model.questions[index].type" v-bind:value="'checkbox'">
-                                                Несколько
-                                            </label>
+                                        <div class="fv-plugins-message-container invalid-feedback">
+                                            <div v-if="errors['questions.'+index+'.type']">
+                                                {{errors['questions.'+index+'.type'][0]}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -164,8 +176,19 @@
                                                         </svg>
                                                     </span>
                                                 </div>
+                                                <div class="fv-plugins-message-container invalid-feedback m-0">
+                                                    <div v-if="errors['questions.'+index+'.answers.'+answerIndex+'.title']">
+                                                        {{errors['questions.'+index+'.answers.'+answerIndex+'.title'][0]}}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </template>
+
+                                        <div class="fv-plugins-message-container invalid-feedback">
+                                            <div v-if="errors['questions.'+index+'.answers']">
+                                                {{errors['questions.'+index+'.answers'][0]}}
+                                            </div>
+                                        </div>
                                         <button class="btn btn-secondary btn-sm col-5" type="button"
                                                 v-on:click="addAnswer(index)">Добавить ответ
                                         </button>

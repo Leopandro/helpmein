@@ -193,8 +193,8 @@ export default {
                     customClass: {
                         confirmButton: "btn btn-primary",
                     },
-                }).then(() => {
-                    this.loadData();
+                }).then(async () => {
+                    await this.loadData();
                     this.selectedItems = [];
                 });
             }).catch((response) => {
