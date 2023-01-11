@@ -159,6 +159,7 @@
                                                         v-model="model.questions[index].answers[answerIndex].checkBoxValue"
                                                         v-bind:value="true">
                                                     <input type="text"
+                                                           :ref="'answer_'+index+'_'+answerIndex"
                                                            class="form-control form-control-sm form-control-solid"
                                                            placeholder="название ответа"
                                                            v-model="model.questions[index].answers[answerIndex].title"
@@ -397,6 +398,12 @@ export default {
         },
         async addAnswer(index) {
             this.model.questions[index].answers.push(this.getQuestion());
+            let ref = 'answer_' + index + '_' + (this.model.questions[index].answers.length - 1);
+            console.log(this.$refs);
+            console.log(ref);
+            setTimeout(() => {
+                this.$refs[ref][0].focus();
+            }, 1);
         },
         async getTask() {
             await ApiService.get("admin/task/info/" + this.$route.params.id).then((response) => {
