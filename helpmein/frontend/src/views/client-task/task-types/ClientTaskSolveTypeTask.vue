@@ -71,7 +71,7 @@
                         <button
                             :ref="'check_answer_' + index"
                             v-on:click="checkAnswer(index)"
-                            class="btn-color-primary shadow-lg btn btn-sm">
+                            class="btn-color-primary shadow btn btn-sm">
                             <span class="indicator-label"> Проверить ответ </span>
                             <span class="indicator-progress">
                                 подождите...
@@ -84,12 +84,12 @@
             </div>
 
             <div class="box justify-content-center pt-8">
-                <div class="col-3">
+                <div class="col-auto p-1">
                     <button ref="submitButton"
                             href="javascript:;"
                             v-on:click="submitForm"
                             type="submit"
-                            class="btn-color-success shadow-lg btn btn-sm">
+                            class="btn-color-success shadow btn btn-sm">
                         <span class="indicator-label"> Отправить решение </span>
                         <span class="indicator-progress">
                             Пожалуйста подождите...
@@ -97,12 +97,12 @@
                         </span>
                     </button>
                 </div>
-                <div class="col-3">
+                <div class="col-auto p-1">
                     <router-link to="/task/list">
                         <button
                             href="javascript:;"
                             type="submit"
-                            class="btn-color-warning shadow-lg btn btn-sm">
+                            class="btn-color-warning shadow btn btn-sm">
                             <span class="indicator-label"> Отмена </span>
                             <span class="indicator-progress">
                                 Пожалуйста подождите...

@@ -189,7 +189,7 @@
                                                 {{errors['questions.'+index+'.answers'][0]}}
                                             </div>
                                         </div>
-                                        <button class="btn btn-secondary btn-sm col-5" type="button"
+                                        <button class="shadow btn-primary btn btn-sm col-5" type="button"
                                                 v-on:click="addAnswer(index)">Добавить ответ
                                         </button>
                                     </div>
@@ -199,33 +199,40 @@
                     </div>
                 </div>
             </div>
-            <button :class="{'disabled': model.type === 'essay'}" type="button" v-on:click="addQuestion" class="btn btn-primary">Добавить вопрос</button>
+            <div class="row">
+                <button :class="{'disabled': model.type === 'essay'}" type="button" v-on:click="addQuestion" class="btn btn-success shadow btn-sm col-2">Добавить вопрос</button>
+            </div>
             <br>
         </div>
         <div class="box">
-            <button ref="submitButton"
-                    href="javascript:;"
-                    v-on:click="submitForm"
-                    type="submit"
-                    class="btn btn-success">
-                <span class="indicator-label"> Сохранить </span>
-                <span class="indicator-progress">
-                    Пожалуйста подождите...
-                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                </span>
-            </button>
-            <router-link to="/task-category/list">
-                <button
-                    href="javascript:;"
-                    type="submit"
-                    class="btn btn-danger">
-                    <span class="indicator-label"> Отмена </span>
+
+            <div class="col-auto p-3">
+                <button ref="submitButton"
+                        href="javascript:;"
+                        v-on:click="submitForm"
+                        type="submit"
+                        class="btn-success shadow btn">
+                    <span class="indicator-label"> Сохранить </span>
                     <span class="indicator-progress">
-                    Пожалуйста подождите...
-                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                </span>
+                        Пожалуйста подождите...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                    </span>
                 </button>
-            </router-link>
+            </div>
+            <div class="col-auto p-3">
+                <router-link to="/task-category/list">
+                    <button
+                        href="javascript:;"
+                        type="submit"
+                        class="btn-warning shadow btn">
+                        <span class="indicator-label"> Отмена </span>
+                        <span class="indicator-progress">
+                        Пожалуйста подождите...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                    </span>
+                    </button>
+                </router-link>
+            </div>
         </div>
     </div>
 </template>
@@ -333,10 +340,22 @@ export default {
                 task_category_id: task.task_category_id,
             };
         },
+        parseModel() {
+            let model = this.model;
+            model.questions.forEach((item) => {
+                if (item.type === 'radio') {
+                    if (item.answers[item.radioValue]) {
+                        item.answers[item.radioValue].checkBoxValue = true;
+                    }
+                }
+            });
+            return model;
+        },
         async submitForm() {
             this.$refs.submitButton.disabled = true;
             this.$refs.submitButton.setAttribute("data-kt-indicator", "on");
-            await ApiService.post(this.model.id ? "admin/task/edit/"+this.model.id : "admin/task/create", this.model)
+            let parsedModel = this.parseModel();
+            await ApiService.post(this.model.id ? "admin/task/edit/"+this.model.id : "admin/task/create", parsedModel)
                 .then(() => {
                     Swal.fire({
                         text: this.model.id ? "Задача успешно обновлена" : "Задача успешно создана",

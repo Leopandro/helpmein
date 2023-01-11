@@ -28,10 +28,10 @@ class TaskEditRequest extends FormRequest
             }, 'required|string|max:128')],
             'questions.*.answers' => [Rule::when(function(Fluent $input) {
                 return $input->getAttributes()["type"] === "task";
-            }, 'required|array|min:2|max:256')],
+            }, ['required', 'array', 'min:2', 'max:20', 'arrayChecked:1',])],
             'questions.*.radioValue' => [Rule::when(function(Fluent $input) {
                 return $input->getAttributes()["type"] === "task";
-            }, 'sometimes|nullable|string|max:128')],
+            }, ['sometimes', 'nullable', 'numeric', 'max:128'])],
             'questions.*.answers.*.title' => [Rule::when(function(Fluent $input) {
                 return $input->getAttributes()["type"] === "task";
             }, 'required|string|min:1|max:128')],
@@ -55,6 +55,7 @@ class TaskEditRequest extends FormRequest
         return [
             'questions.required_if' => 'Вопросы обязательны к заполнению когда тип задачи - задача',
             'questions.*.answers.min' => 'Вопрос должен содержать как минимум 2 ответа',
+            'questions.*.type.required' => 'Не выбран тип вопроса',
             'questions.*.type.required' => 'Не выбран тип вопроса',
         ];
     }
