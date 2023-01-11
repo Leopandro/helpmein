@@ -194,7 +194,7 @@ export default {
                         confirmButton: "btn btn-primary",
                     },
                 }).then(async () => {
-                    // this.selectedItems = [];
+                    this.selectedItems = [];
                     await this.loadData();
                 });
             }).catch((response) => {
@@ -208,8 +208,8 @@ export default {
                         confirmButton: "btn btn-danger",
                     },
                 }).then(async () => {
+                    this.selectedItems = [];
                     await this.loadData();
-                    // this.selectedItems = [];
                 });
             })
         },
