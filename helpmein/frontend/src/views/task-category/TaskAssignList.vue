@@ -194,8 +194,8 @@ export default {
                         confirmButton: "btn btn-primary",
                     },
                 }).then(async () => {
+                    // this.selectedItems = [];
                     await this.loadData();
-                    this.selectedItems = [];
                 });
             }).catch((response) => {
                 Swal.fire({
@@ -209,7 +209,7 @@ export default {
                     },
                 }).then(async () => {
                     await this.loadData();
-                    this.selectedItems = [];
+                    // this.selectedItems = [];
                 });
             })
         },
