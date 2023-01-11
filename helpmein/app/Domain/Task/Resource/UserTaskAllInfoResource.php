@@ -17,10 +17,10 @@ class UserTaskAllInfoResource extends JsonResource
         /** @var Task $task */
         $task = $this->resource;
         $type = new EnumResource($task->type);
-        $trash = $task->clients?->first()?->pivot;
-        $status = ($trash) ?
-            ( $trash->answer_id ? new EnumResource($trash->answer->status) : new EnumResource(new UserTaskStatus(UserTaskStatus::ASSIGNED)))
-            : new EnumResource(new UserTaskStatus(UserTaskStatus::NOT_ASSIGNED));
+        $answer = $task->answers->first();
+        $client = $task->clients->first();
+        $status = $answer ? new EnumResource($answer->status)
+            : ($client ? new EnumResource(new UserTaskStatus(UserTaskStatus::ASSIGNED)) : new EnumResource(new UserTaskStatus(UserTaskStatus::NOT_ASSIGNED)));
         $taskCategory = TaskCategory::query()->find($task->task_category_id);
         $categories = $this->getTaskCategoriesRecursively($taskCategory);
         $categoriesText = $this->parseTaskCategoriesArray($categories);
