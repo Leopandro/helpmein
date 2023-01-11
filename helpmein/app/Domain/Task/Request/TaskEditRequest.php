@@ -16,7 +16,7 @@ class TaskEditRequest extends FormRequest
         /** @var User $user */
         return [
             'name' => 'required|string|max:127',
-            'description' => 'sometimes|nullable|string|max:127',
+            'description' => 'sometimes|nullable|string|max:2047',
             'comment' => 'sometimes|nullable|string|max:255',
             'comment_client' => 'sometimes|nullable|string|max:255',
             'questions' => 'sometimes|required_if:type,task|array|max:2048',

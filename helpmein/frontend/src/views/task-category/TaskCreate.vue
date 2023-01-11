@@ -145,14 +145,6 @@
                                                 <div
                                                     class="form-check-custom form-check-inline form-check-solid me-5 form-flex p-1">
                                                     <input
-                                                        v-if="model.questions[index].type === 'radio'"
-                                                        class="form-check-input"
-                                                        type="radio"
-                                                        :id="'model_question_answer_'+index+'_'+answerIndex"
-                                                        v-model="model.questions[index].radioValue"
-                                                        v-bind:value="answerIndex">
-                                                    <input
-                                                        v-if="model.questions[index].type === 'checkbox'"
                                                         class="form-check-input"
                                                         type="checkbox"
                                                         :id="'model_question_answer_'+index+'_'+answerIndex"
@@ -343,13 +335,6 @@ export default {
         },
         parseModel() {
             let model = this.model;
-            model.questions.forEach((item) => {
-                if (item.type === 'radio') {
-                    if (item.answers[item.radioValue]) {
-                        item.answers[item.radioValue].checkBoxValue = true;
-                    }
-                }
-            });
             return model;
         },
         async submitForm() {
@@ -393,7 +378,7 @@ export default {
         getQuestion() {
             return {
                 title: '',
-                checkBoxValue: ''
+                checkBoxValue: false
             };
         },
         async addAnswer(index) {

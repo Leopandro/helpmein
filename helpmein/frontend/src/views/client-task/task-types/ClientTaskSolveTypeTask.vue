@@ -118,6 +118,7 @@
 <script>
 import ApiService from "@/core/services/ApiService";
 import Swal from "sweetalert2";
+import {cloneDeep} from "lodash";
 
 export default {
     name: 'ClientTaskSolveTypeTask',
@@ -209,11 +210,28 @@ export default {
                 task_category_id: task.task_category_id,
             };
         },
+        parseModel(index) {
+            var model = cloneDeep(this.model);
+            let radioValue = model.questions[index].radioValue;
+            let questionType = model.questions[index].type;
+            let question = model.questions[index];
+            if (questionType === 'checkbox') {
+                return question;
+            }
+            if (questionType === 'radio' && !(radioValue === null) && (radioValue >= 0)){
+                question.answers[radioValue].checkBoxValue = true;
+            } else {
+            }
+            console.log(question.answers);
+            console.log(model.questions[index].answers);
+            return question;
+        },
         async checkAnswer(index) {
             let ref = 'check_answer_' + index;
             this.$refs[ref][0].disabled = true;
             this.$refs[ref][0].setAttribute("data-kt-indicator", "on");
-            await ApiService.post("client/task/" + this.model.id + "/check-answer/" + index, this.model.questions[index])
+            let question = this.parseModel(index);
+            await ApiService.post("client/task/" + this.model.id + "/check-answer/" + index, question)
                 .then(() => {
                     this.question_answers[index] = true;
                 })

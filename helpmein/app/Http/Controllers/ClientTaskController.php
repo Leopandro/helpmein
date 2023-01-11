@@ -25,13 +25,16 @@ class ClientTaskController extends Controller
     public function info(Request $request, Task $task): JsonResponse
     {
         Gate::authorize(TaskViewByClientGate::getCode(), $task->id);
-        return $this->getSuccessResponse((new TaskInfoResource($task))->toArray($request));
+        return $this->getSuccessResponse((new ClientTaskInfoResource($task))->toArray($request));
     }
 
     /** Проверить решение 1 вопроса из задачи */
     public function checkAnswer(Request $request, Task $task, int $index): JsonResponse
     {
         Gate::authorize(TaskViewByClientGate::getCode(), $task->id);
+        $q = $task->questions[$index]['answers'];
+        $a = $request->get('answers');
+        $r = ($q === $a);
         $result = $task->questions[$index] === $request->all();
         if ($result) {
             return $this->getSuccessResponse([
