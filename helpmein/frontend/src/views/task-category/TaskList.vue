@@ -125,7 +125,7 @@ export default {
         },
         async deleteTask(item) {
             if (confirm('Удалить задачу?')) {
-                await ApiService.post('/task/delete/'+item.id).then((response) => {
+                await ApiService.post('/admin/task/delete/'+item.id).then((response) => {
                     this.loadData();
                 })
             }
