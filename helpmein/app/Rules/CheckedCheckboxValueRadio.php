@@ -2,12 +2,10 @@
 
 namespace App\Rules;
 
-use Illuminate\Validation\Rule;
-
 /**
  * Валидация инн
  */
-class CheckedCheckboxValueRadio extends Rule
+class CheckedCheckboxValueRadio
 {
     public function validate($attribute, $values, $parameters, $validator): bool
     {

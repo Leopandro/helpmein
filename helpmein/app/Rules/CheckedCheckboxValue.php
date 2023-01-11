@@ -1,13 +1,10 @@
 <?php
 
 namespace App\Rules;
-
-use Illuminate\Validation\Rule;
-
 /**
  * Валидация инн
  */
-class CheckedCheckboxValue extends Rule
+class CheckedCheckboxValue
 {
     public function validate($attribute, $values, $parameters, $validator): bool
     {
