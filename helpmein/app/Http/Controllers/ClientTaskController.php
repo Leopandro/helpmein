@@ -7,7 +7,6 @@ use App\Domain\Task\Gates\TaskViewByClientGate;
 use App\Domain\Task\Model\Task;
 use App\Domain\Task\Request\Client\TaskSolveByClientRequest;
 use App\Domain\Task\Resource\ClientTaskInfoResource;
-use App\Domain\Task\Resource\TaskInfoResource;
 use App\Domain\User\Model\User;
 use App\Domain\UserAnswer\Model\Answer;
 use App\Enum\UserTaskStatus;
@@ -17,7 +16,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\QueryBuilder;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class ClientTaskController extends Controller
 {
@@ -35,7 +33,7 @@ class ClientTaskController extends Controller
         $q = $task->questions[$index]['answers'];
         $a = $request->get('answers');
         $r = ($q === $a);
-        $result = $task->questions[$index] === $request->all();
+        $result = $task->questions[$index]['answers'] === $request->get('answers');
         if ($result) {
             return $this->getSuccessResponse([
                 'message' => 'Успешно',

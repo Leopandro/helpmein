@@ -73,7 +73,7 @@
                     </div>
                 </template>
             </div>
-            <div :class="{'disabled': model.type === 'essay'}">
+            <div :class="{'disabled': model.type !== 'task'}">
                 <div class="card">
                     <div class="card-header">
                         <div>
@@ -198,7 +198,7 @@
                 </div>
             </div>
             <div class="row">
-                <button :class="{'disabled': model.type === 'essay'}" type="button" v-on:click="addQuestion" class="btn btn-success shadow btn-sm col-2">Добавить вопрос</button>
+                <button :class="{'disabled': model.type !== 'task'}" type="button" v-on:click="addQuestion" class="btn btn-success shadow btn-sm col-2">Добавить вопрос</button>
             </div>
             <br>
         </div>
@@ -248,6 +248,7 @@ export default {
                 type: {
                     name: 'type',
                     type: 'select',
+                    placeholder: '-- Не выбрано --',
                     title: 'Тип задачи',
                     options: [
                         {
@@ -256,7 +257,7 @@ export default {
                         },
                         {
                             value: 'task',
-                            title: 'Задача'
+                            title: 'Тест'
                         },
                     ]
                 },
@@ -313,7 +314,7 @@ export default {
             ],
             model: {
                 id: '',
-                type: 'essay',
+                type: '',
                 task_category_id: '',
                 name: '',
                 description: '',

@@ -3,7 +3,7 @@
 return [
     'TaskType' => [
         'essay' => 'Эссе',
-        'task' => 'Задача',
+        'task' => 'Тест',
     ],
     'UserTaskStatus' => [
         'not_assigned' => 'Не назначен',

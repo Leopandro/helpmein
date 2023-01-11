@@ -100,7 +100,7 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: "/task-category/list",
                 name: "task-category-list",
-                component: () => import("@/views/task-category/TaskCategoryTree.vue"),
+                component: () => import("@/views/task-category/TaskCategoryList.vue"),
                 meta: {
                     pageTitle: "Категории и задачи",
                     breadcrumbs: ["Категории и задачи"],

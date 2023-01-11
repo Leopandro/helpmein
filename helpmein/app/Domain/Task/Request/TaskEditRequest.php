@@ -58,7 +58,7 @@ class TaskEditRequest extends FormRequest
     public function messages()
     {
         return [
-            'questions.required_if' => 'Вопросы обязательны к заполнению когда тип задачи - задача',
+            'questions.required_if' => 'Вопросы обязательны к заполнению когда тип задачи - тест',
             'questions.*.answers.min' => 'Вопрос должен содержать как минимум 2 ответа',
             'questions.*.type.required' => 'Не выбран тип вопроса',
             'questions.*.answers.*.checkBoxValue' => 'Старый формат данных ответа - попробуйте переназначить',
