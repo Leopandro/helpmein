@@ -115,15 +115,15 @@
                                     <div class="col-8">
                                         <div class="radio-inline radio-box col-8">
                                             <div class="form-check form-check-custom form-check-solid">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                    <input class="form-check-input" type="radio" id="flexRadioDefault1"
+                                                <label class="form-check-label" :for="'input_'+index+'_radio'">
+                                                    <input class="form-check-input" type="radio" :id="'input_'+index+'_radio'"
                                                            v-model="model.questions[index].type" v-bind:value="'radio'">
                                                     Один
                                                 </label>
                                             </div>
                                             <div class="form-check form-check-custom form-check-solid">
-                                                <label class="form-check-label" for="flexRadioDefault">
-                                                    <input class="form-check-input" type="radio" id="flexRadioDefault"
+                                                <label class="form-check-label" :for="'input_'+index+'_checkbox'">
+                                                    <input class="form-check-input" type="radio" :id="'input_'+index+'_checkbox'"
                                                            v-model="model.questions[index].type" v-bind:value="'checkbox'">
                                                     Несколько
                                                 </label>
