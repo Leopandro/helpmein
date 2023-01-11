@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Models\User;
 use App\Rules\CheckedCheckboxValue;
+use App\Rules\CheckedCheckboxValueMax;
+use App\Rules\CheckedCheckboxValueRadio;
 use App\Rules\InnValidationRule;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Validator;
@@ -34,5 +36,6 @@ class AppServiceProvider extends ServiceProvider
     public function bootValidators()
     {
         Validator::extend('arrayChecked', CheckedCheckboxValue::class);
+        Validator::extend('arrayCheckedRadio', CheckedCheckboxValueRadio::class);
     }
 }

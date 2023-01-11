@@ -174,6 +174,11 @@
                                                         {{errors['questions.'+index+'.answers.'+answerIndex+'.title'][0]}}
                                                     </div>
                                                 </div>
+                                                <div class="fv-plugins-message-container invalid-feedback m-0">
+                                                    <div v-if="errors['questions.'+index+'.answers.'+answerIndex+'.checkBoxValue']">
+                                                        {{errors['questions.'+index+'.answers.'+answerIndex+'.checkBoxValue'][0]}}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </template>
 
