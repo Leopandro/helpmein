@@ -249,6 +249,9 @@ export default {
                 this.showChildrenFlag = true;
             }
         }
+        if (this.store.selectedNode.id === this.item.id) {
+            this.folderClick(this.item);
+        }
     },
     setup() {
         let store = useNodeStore();
