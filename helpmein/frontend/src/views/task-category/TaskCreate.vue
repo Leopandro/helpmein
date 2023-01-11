@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="form-group row">
 
-                                    <div class="col-3">Правильных ответов</div>
+                                    <div class="col-2">Правильных ответов</div>
                                     <div class="col-8">
                                         <div class="radio-inline radio-box col-8">
                                             <div class="form-check form-check-custom form-check-solid">
@@ -138,8 +138,8 @@
                                 </div>
                                 <div class="form-group row">
 
-                                    <div class="col-3">Варианты ответов</div>
-                                    <div class="radio-inline radio-box col-9 row">
+                                    <div class="col-2">Варианты ответов</div>
+                                    <div class="col-8 radio-inline radio-box row">
                                         <template v-for="(answerItem, answerIndex) of model.questions[index].answers">
                                             <div class="row">
                                                 <div
