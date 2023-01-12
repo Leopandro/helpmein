@@ -15,10 +15,12 @@ class TeacherClientTaskController extends Controller
 {
     public function massAssign(Request $request, UserTaskService $userTaskService): JsonResponse
     {
-        if ($userTaskService->massAssign($request)) {
-            return $this->getSuccessResponse([]);
+        if (($count = $userTaskService->massAssign($request)) > 0) {
+            return $this->getSuccessResponse([
+                'message' => $count
+            ]);
         } else {
-            return $this->getSingleErrorResponse("Ошибка");
+            return $this->getSingleErrorResponse('Не выбраны задачи для назначения/снятия назначения');
         }
     }
 

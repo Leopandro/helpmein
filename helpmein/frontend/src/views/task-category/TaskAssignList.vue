@@ -1,16 +1,12 @@
 <template>
     <div v-if="task_category.id">
-        <div class="row">
-
-        </div>
-
         <div class="col-12">
             <div class="row">
                 <div class="col-4">
                     <select
                         class="form-select form-select-dark"
                         v-model="selectedUser"
-                        @change="loadData">
+                        @change="changeUser">
                         <option :value="client.id" v-for="client in clients">
                             {{client.name + ' ' + client.surname}}
                         </option>
@@ -36,35 +32,32 @@
         </div>
 
         <div style="min-height: 406px;" v-if="tasks.length > 0">
-            <div class="col-12 p-1" v-for="(task, name, index) in tasks">
+            <div class="col-12 p-1 task-list-item" v-for="(task, name, index) in tasks">
                 <div class="card h-100">
 
                     <div class="card-header flex-nowrap border-0 pt-1">
                         <!--begin::Card title-->
                         <div class="card-title m-0">
-                            <div class="row">
+                            <div class="col-auto">
                                 <div class="p-1 col-auto">
                                     <div class="form-check form-check-custom form-check-success form-check-solid">
                                         <input
                                             class="form-check-input"
                                             :id="'task_assign_'+task.id"
                                             type="checkbox"
-                                            :checked="['assigned', 'in_review', 'finished', 'reassigned'].includes(task.status.id)"
-                                            :disabled="['in_review', 'finished', 'reassigned'].includes(task.status.id)"
+                                            :disabled="task.answer?.id"
                                             v-model="selectedItems[task.id]"/>
                                     </div>
                                 </div>
-                                <div class="p-1 col-auto">
-                                    <label :for="'task_assign_'+task.id" role="button">
-                                        {{task.type.title}}
-                                    </label>
-                                </div>
-                                <div class="p-1 col-auto">
-                                    <label :for="'task_assign_'+task.id" role="button">
-                                        {{task.difficult_level}}
-                                    </label>
-                                </div>
                             </div>
+                            <label :for="'task_assign_'+task.id" role="button">
+                                <span class="p-1 h6">
+                                    {{task.type.title}}
+                                </span>
+                                <span class="p-1 h6">
+                                    {{task.difficult_level}}
+                                </span>
+                            </label>
                             <!--end::Title-->
                         </div>
                         <!--end::Card title-->
@@ -75,8 +68,8 @@
                     <div class="card-body d-flex flex-column px-9 pt-1 pb-8">
                         <!--begin::Heading-->
                         <div class="row">
+                            <h2><b>{{task.name}}</b></h2>
                             <p class="text-break">
-                                <b>{{task.name}}</b>
                                 {{task.description}}</p>
                         </div>
                         <div class="row">
@@ -139,15 +132,15 @@ export default {
             ],
             clients: [],
             selectedItemsCount: 0,
-            selectedItems: [],
+            selectedItems: {},
         };
     },
     computed: {
         count() {
             var len = 0;
 
-            for (var i = 0; i <= this.selectedItems.length; i++) {
-                if (this.selectedItems[i] === true || this.selectedItems[i] === false) {
+            for (const [key, value] of Object.entries(this.selectedItems)) {
+                if (value === true || value === false) {
                     len++;
                 }
             }
@@ -185,7 +178,7 @@ export default {
                 selected_user: this.selectedUser,
             }).then((response) => {
                 Swal.fire({
-                    text: "Успешно!",
+                    text: "Задач переназначено в сумме: " + response.data.data.message + "!",
                     icon: "success",
                     buttonsStyling: false,
                     confirmButtonText: "Ок!",
@@ -194,12 +187,11 @@ export default {
                         confirmButton: "btn btn-primary",
                     },
                 }).then(async () => {
-                    this.selectedItems = [];
                     await this.loadData();
                 });
-            }).catch((response) => {
+            }).catch((error) => {
                 Swal.fire({
-                    text: "Ошибка!",
+                    text: error.response.data.message,
                     icon: "error",
                     buttonsStyling: false,
                     confirmButtonText: "Ок!",
@@ -208,13 +200,16 @@ export default {
                         confirmButton: "btn btn-danger",
                     },
                 }).then(async () => {
-                    this.selectedItems = [];
                     await this.loadData();
                 });
             })
         },
         acceptAssignments() {
             this.uploadMassAssignment();
+        },
+        async changeUser() {
+            this.selectedItems = {};
+            await this.loadData();
         },
         async loadData() {
             this.loading = true;
@@ -230,6 +225,11 @@ export default {
                 }
             }).then((response) => {
                 this.tasks = response.data.data.items;
+                this.tasks.forEach((task) => {
+                    if (this.selectedItems[task.id] === undefined) {
+                        this.selectedItems[task.id] = ['assigned', 'reassigned', 'in_review', 'finished'].includes(task.status.id);
+                    }
+                });
                 this.pagesCount = response.data.data.meta.pages_count;
             })
             this.loading = false;
@@ -261,4 +261,12 @@ export default {
 }
 </script>
 <style>
+.task-list-item {
+    max-height: 203px;
+    overflow: hidden;
+}
+.card .card-header {
+    min-height: 50px;
+    height: 50px;
+}
 </style>

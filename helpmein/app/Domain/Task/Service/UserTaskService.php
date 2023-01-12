@@ -7,20 +7,27 @@ use Illuminate\Http\Request;
 
 class UserTaskService
 {
-    public function massAssign(Request $request): bool {
+    public function massAssign(Request $request): int {
         $selectedItems = $request->get('selected_items');
         /** @var Client $client */
         $client = Client::query()->find($request->get('selected_user'));
+        $count = 0;
         foreach ($selectedItems as $taskId => $value) {
             if (!$client->tasks()->wherePivot('task_id','=',$taskId)->wherePivotNotNull('answer_id')->first()) {
                 if ($value === true) {
-                    $client->tasks()->syncWithoutDetaching([$taskId]);
+                    $r = $client->tasks()->syncWithoutDetaching([$taskId]);
+                    $count += count($r['detached']) + count($r['attached']);
                 }
                 if ($value === false) {
-                    $client->tasks()->detach($taskId);
+                    $r = $client->tasks()->detach($taskId);
+                    if ($r) {
+                        $count += $r;
+                    }
                 }
+            } else {
+
             }
         }
-        return true;
+        return $count;
     }
 }
