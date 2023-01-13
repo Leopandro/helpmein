@@ -13,7 +13,8 @@ class TaskSolveByClientRequest extends FormRequest
     {
         /** @var User $user */
         return [
-            'answer' => 'required|string|max:2048',
+            'type' => 'sometimes',
+            'answer' => 'sometimes|nullable|max:2048',
         ];
     }
 }

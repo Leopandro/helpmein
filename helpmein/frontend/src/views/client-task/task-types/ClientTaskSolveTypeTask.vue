@@ -1,27 +1,27 @@
 <template>
     <div class="card col-8">
         <div class="card-body" v-if="isVisible">
-            <div class="row p-5">
+            <div class="row p-3">
                 <div class="col-5 p-0">
                     Ответьте на вопросы по теме
                 </div>
-                <div class="col-3 p-0 offset-md-4">
+                <div class="col-1 p-0 offset-md-6">
                     <b>№ {{ model.id }}</b>
                 </div>
             </div>
-            <div class="row p-5">
+            <div class="row p-3">
                 <div class="p-0">
                     <b>{{ model.name }}</b>
                 </div>
             </div>
-            <div class="row p-5">
+            <div class="row p-3">
                 {{ model.description }}
             </div>
-            <div class="row p-5">
+            <div class="row p-3">
                 {{ model.comment_client }}
             </div>
 
-            <div class="row p-5">
+            <div class="col-12 p-3">
                 <!-- Question start -->
                 <template v-for="(item, index) of model.questions">
                     <div class="row p-0">
@@ -37,7 +37,8 @@
 
                         <div class="row p-0">Выберите один из вариантов:</div>
                         <div class="radio-inline radio-box col-9 row" :class="{
-                            'alert-danger': getQuestionAnswerClass(index)
+                            'alert-danger': getQuestionAnswerResult(index) === false,
+                            'alert-success': getQuestionAnswerResult(index) === true
                         }">
                             <template v-for="(answerItem, answerIndex) of model.questions[index].answers">
                                 <div class="row">
@@ -282,12 +283,18 @@ export default {
                 this.model = this.mappingFieldsFromTask(response.data.data);
             })
         },
-        getQuestionAnswerClass(index) {
+        getQuestionAnswerResult(index) {
             let result = this.question_answers[index];
-            if (result === false) {
+            console.log(result);
+            if (result === undefined) {
+                return undefined;
+            }
+            if (result === true) {
                 return true;
             }
-            return false;
+            if (result === false) {
+                return false;
+            }
         },
     },
     watch: {
@@ -309,7 +316,7 @@ export default {
         }
     },
     async created() {
-        console.log(this.$route.params.id);
+        console.log(this.question_answers);
         if (this.$route.params.id) {
             let result = await ApiService.get("/client/task/info/" + this.$route.params.id).then((response) => {
                 this.model = this.mappingFieldsFromTask(response.data.data);

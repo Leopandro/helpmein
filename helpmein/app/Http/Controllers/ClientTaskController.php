@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Task\Gates\TaskSolveByClientGate;
 use App\Domain\Task\Gates\TaskViewByClientGate;
+use App\Domain\Task\Model\Pivot\UserTask;
 use App\Domain\Task\Model\Task;
 use App\Domain\Task\Request\Client\TaskSolveByClientRequest;
 use App\Domain\Task\Resource\ClientTaskInfoResource;
@@ -53,8 +54,13 @@ class ClientTaskController extends Controller
         Gate::authorize(TaskSolveByClientGate::getCode(), $task->id);
         DB::beginTransaction();
         try {
-            $pivot = $task->clients()->where('user_id','=',auth('sanctum')->user()->id)->first()->pivot;
-            if (!$pivot->answer_id) {
+            /** @var UserTask $pivot */
+            $pivot = $task
+                ->clients()
+                ->where('user_id','=',auth('sanctum')->user()->id)
+                ->first()
+                ->pivot;
+            if (!$pivot->answer) {
                 $userAnswer = Answer::query()->firstOrCreate([
                     'answer' => $request->get('answer'),
                     'status' => UserTaskStatus::IN_REVIEW
@@ -66,8 +72,9 @@ class ClientTaskController extends Controller
                 $userAnswer->answer = $request->get('answer');
             }
             $userAnswer->save();
-            $pivot->answer_id = $userAnswer->id;
-            $pivot->save();
+            $task->answers()->syncWithPivotValues($userAnswer->id, [
+                'user_id' => auth('sanctum')->user()->id
+            ]);
             DB::commit();
         } catch (\Throwable $throwable) {
             DB::rollBack();
