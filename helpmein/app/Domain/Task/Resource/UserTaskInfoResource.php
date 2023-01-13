@@ -17,9 +17,9 @@ class UserTaskInfoResource extends JsonResource
         /** @var Task $task */
         $task = $this->resource;
         $type = new EnumResource($task->type);
-        $trash = $task->clients?->first()?->pivot;
-        $status = ($trash) ?
-            ( $trash->answer_id ? new EnumResource($trash->answer->status) : new EnumResource(new UserTaskStatus(UserTaskStatus::ASSIGNED)))
+        $pivot = $task->clients?->first()?->pivot;
+        $status = ($pivot) ?
+            ( $pivot->answer_id ? new EnumResource($pivot->answer->status) : new EnumResource(new UserTaskStatus(UserTaskStatus::ASSIGNED)))
             : new EnumResource(new UserTaskStatus(UserTaskStatus::ASSIGNED));
         $taskCategory = TaskCategory::query()->find($task->task_category_id);
         $categories = $this->getTaskCategoriesRecursively($taskCategory);
@@ -37,6 +37,7 @@ class UserTaskInfoResource extends JsonResource
             'questions' => $task->questions,
             'difficult_level' => $task->difficult_level,
             'type' => $type,
+            'created_at' => $pivot->created_at
         ];
     }
 

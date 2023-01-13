@@ -50,14 +50,18 @@ class Task extends Model
 
     public function clients(): BelongsToMany
     {
-        return $this->belongsToMany(Client::class, 'user_task', 'task_id', 'user_id')->using(UserTask::class)->withPivot([
+        return $this->belongsToMany(Client::class, 'user_task', 'task_id', 'user_id')
+            ->using(UserTask::class)
+            ->withPivot([
             'answer_id',
-        ]);
+        ])->withTimestamps();
     }
 
     public function answers(): BelongsToMany
     {
-        return $this->belongsToMany(Answer::class, 'user_task', 'task_id', 'answer_id')->using(UserTask::class);
+        return $this->belongsToMany(Answer::class, 'user_task', 'task_id', 'answer_id')
+            ->using(UserTask::class)
+            ->withTimestamps();
     }
 
     public function user(): BelongsTo

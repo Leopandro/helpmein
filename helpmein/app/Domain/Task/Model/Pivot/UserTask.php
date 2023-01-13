@@ -10,7 +10,7 @@ class UserTask extends Pivot
     protected $table = 'user_task';
 
     protected $primaryKey = 'id';
-
+    public $timestamps = true;
     protected $casts = [
         'status' => UserTaskStatus::class
     ];

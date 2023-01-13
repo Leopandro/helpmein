@@ -44,7 +44,7 @@
                         </p>
                     </th>
                     <th>{{
-                            getFormattedDate(task.answer.created_at)
+                            getFormattedDate(task.created_at)
                         }}</th>
                     <td class="text-end">
 
