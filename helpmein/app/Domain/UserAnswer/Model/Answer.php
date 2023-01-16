@@ -5,6 +5,7 @@ use App\Enum\UserTaskStatus;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @property integer id
  * @property string status
  * @property string answer
  */

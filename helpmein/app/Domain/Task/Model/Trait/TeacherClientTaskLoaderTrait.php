@@ -9,6 +9,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 trait TeacherClientTaskLoaderTrait {
+    /** Все задачи с назначениями и без */
     public static function buildQueryForTeacherClientTaskAllList(Request $request): LengthAwarePaginator
     {
         return QueryBuilder::for(Task::class)
@@ -18,9 +19,6 @@ trait TeacherClientTaskLoaderTrait {
                 }),
                 AllowedFilter::callback('user_id', static function (Builder $query, $value) {
                     return $query
-                        ->with(['answers' => function($query) use ($value) {
-                            $query->where('user_task.user_id', '=', $value);
-                        }])
                         ->with(['clients' => function($query) use ($value) {
                             $query->where('user_task.user_id', '=', $value);
                         }]);
@@ -33,10 +31,11 @@ trait TeacherClientTaskLoaderTrait {
             ->paginate($request->get('count'));
     }
 
+    /** Все задачи только с назначениями */
     public static function buildQueryForTeacherClientTaskList(Request $request): LengthAwarePaginator
     {
         return QueryBuilder::for(Task::class)
-            ->with('answers')
+            ->with('answer')
             ->allowedFilters([
                 AllowedFilter::callback('task_category_id', static function (Builder $query, $value) {
                     return $query->where('task_category_id', '=',$value);
@@ -46,19 +45,19 @@ trait TeacherClientTaskLoaderTrait {
                         ->with('clients')
                         ->whereHas(
                             'clients', function($query) use ($value) {
-                                $query->where('user_task.user_id', '=', $value);
-                            });
+                            $query->where('user_task.user_id', '=', $value);
+                        });
                 }),
                 AllowedFilter::callback('assigned', fn(Builder $query, $value) =>
                     $query
-                        ->with('answers' )
-                        ->whereHas('answers', fn($query) =>
+                        ->with('answer')
+                        ->whereHas('answer', fn($query) =>
                             $query->whereIn('answer.status', ['assigned', 'reassigned'])
                         )
                 ),
                 AllowedFilter::callback('in_review', fn(Builder $query, $value) =>
-                    $query->with('answers')
-                        ->whereHas('answers', fn($query) =>
+                    $query->with('answer')
+                        ->whereHas('answer', fn($query) =>
                             $query->where('answer.status', '=', 'in_review')
                         )
                 ),

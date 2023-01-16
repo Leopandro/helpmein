@@ -2,9 +2,9 @@
     <div class="card">
         <div class="card-header border-0 pt-6">
             <div class="card-title">
-                <button :class="{'btn-default': taskStatus === 'all'}" v-on:click="setStatus('all')" type="button" class="btn btn-sm btn-light">Все задачи</button>
-                <button :class="{'btn-default': taskStatus === 'assigned'}" v-on:click="setStatus('assigned')" type="button" class="btn btn-sm btn-light">В работе</button>
-                <button :class="{'btn-default': taskStatus === 'in_review'}" v-on:click="setStatus('in_review')" type="button" class="btn btn-sm btn-light">На проверку</button>
+                <button :class="{'btn-primary': taskStatus === 'all'}" v-on:click="setStatus('all')" type="button" class="btn btn-sm btn-light">Все задачи</button>
+                <button :class="{'btn-primary': taskStatus === 'assigned'}" v-on:click="setStatus('assigned')" type="button" class="btn btn-sm btn-light">В работе</button>
+                <button :class="{'btn-primary': taskStatus === 'in_review'}" v-on:click="setStatus('in_review')" type="button" class="btn btn-sm btn-light">На проверку</button>
             </div>
             <div class="card-toolbar">
                 <div
@@ -133,7 +133,7 @@ export default {
         },
         async removeTask(id) {
             if (confirm('Вы уверены?')) {
-                await ApiService.post('/admin/user-task/delete', {
+                await ApiService.post('/admin/user-task-tree/delete', {
                     user_id: this.$route.params.id,
                     task_id: id
                 }).then((response) => {

@@ -10,25 +10,20 @@ use App\Enum\UserTaskStatus;
 use App\Infrastructure\Http\Resource\EnumResource;
 use App\Infrastructure\Http\Resource\JsonResource;
 
-class UserTaskInfoResource extends JsonResource
+class UserTaskAssignedInfoResource extends JsonResource
 {
     public function toArray($request): array
     {
         /** @var Task $task */
         $task = $this->resource;
         $type = new EnumResource($task->type);
-        $pivot = $task->clients?->first()?->pivot;
-        $status = ($pivot) ?
-            ( $pivot->answer_id ? new EnumResource($pivot->answer->status) : new EnumResource(new UserTaskStatus(UserTaskStatus::ASSIGNED)))
-            : new EnumResource(new UserTaskStatus(UserTaskStatus::ASSIGNED));
         $taskCategory = TaskCategory::query()->find($task->task_category_id);
         $categories = $this->getTaskCategoriesRecursively($taskCategory);
         $categoriesText = $this->parseTaskCategoriesArray($categories);
         return [
             'id' => $task->id,
             'name' => $task->name,
-            'answer' => $task->answers->first(),
-            'status' => $status,
+            'status' => new EnumResource($task->answer->status),
             'description' => $task->description,
             'task_category_id' => $task->task_category_id,
             'task_category' => $categoriesText,
@@ -37,7 +32,6 @@ class UserTaskInfoResource extends JsonResource
             'questions' => $task->questions,
             'difficult_level' => $task->difficult_level,
             'type' => $type,
-            'created_at' => $pivot->created_at
         ];
     }
 

@@ -85,6 +85,7 @@ class TaskController extends Controller
                     return $query->where('task_category_id', '=',$value);
                 }),
             ])
+            ->with('answers')
             ->orderBy('id')
             ->paginate($request->get('count'));
         return $this->getListItemsResponse($tasks, TaskInfoResource::class, $request);

@@ -101,7 +101,7 @@ export default {
         },
         async loadData() {
             this.loading = true;
-            await ApiService.query('/admin/user-task/list', {
+            await ApiService.query('/admin/user-task-tree/list-without-assign', {
                 params: {
                     filter: {
                         task_category_id: this.task_category.id

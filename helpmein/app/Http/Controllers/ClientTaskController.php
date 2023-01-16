@@ -55,26 +55,13 @@ class ClientTaskController extends Controller
         DB::beginTransaction();
         try {
             /** @var UserTask $pivot */
-            $pivot = $task
-                ->clients()
+            $answer = $task
+                ->answers()
                 ->where('user_id','=',auth('sanctum')->user()->id)
-                ->first()
-                ->pivot;
-            if (!$pivot->answer) {
-                $userAnswer = Answer::query()->firstOrCreate([
-                    'answer' => $request->get('answer'),
-                    'status' => UserTaskStatus::IN_REVIEW
-                ]);
-                $userAnswer->status = UserTaskStatus::IN_REVIEW;
-                $userAnswer->answer = $request->get('answer');
-            } else {
-                $userAnswer = $pivot->answer;
-                $userAnswer->answer = $request->get('answer');
-            }
-            $userAnswer->save();
-            $task->answers()->syncWithPivotValues($userAnswer->id, [
-                'user_id' => auth('sanctum')->user()->id
-            ]);
+                ->first();
+            $answer->answer = $request->get('answer');
+            $answer->status = UserTaskStatus::IN_REVIEW;
+            $answer->save();
             DB::commit();
         } catch (\Throwable $throwable) {
             DB::rollBack();
@@ -93,9 +80,9 @@ class ClientTaskController extends Controller
 //                    return $query->where('task_category_id', '=',$value);
 //                }),
             ])
-            ->with('clients')
-            ->whereHas( 'clients',function ($query) {
-                $query->where('user_task.user_id', '=', auth('sanctum')->id());
+            ->with('answers')
+            ->whereHas('answers', function ($query) use ($user) {
+                $query->where('user_task.user_id', '=', $user->getAttribute('id'));
             })
             ->orderBy('id')
             ->paginate($request->get('count'));

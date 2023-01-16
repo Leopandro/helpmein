@@ -30,13 +30,7 @@ class Client extends User
     {
         return $this->belongsToMany(Task::class, 'user_task', 'user_id', 'task_id')
             ->using(UserTask::class)
-            ->withTimestamps();
-    }
-
-    public function answers(): BelongsToMany
-    {
-        return $this->belongsToMany(Answer::class, 'user_task', 'user_id', 'answer_id')
-            ->using(UserTask::class)
+            ->withPivot('id')
             ->withTimestamps();
     }
 }

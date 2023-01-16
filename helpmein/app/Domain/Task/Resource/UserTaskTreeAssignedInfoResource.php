@@ -4,26 +4,34 @@ declare(strict_types=1);
 
 namespace App\Domain\Task\Resource;
 
+use App\Domain\Task\Model\Pivot\UserTask;
 use App\Domain\Task\Model\Task;
 use App\Domain\TaskCategory\Model\TaskCategory;
 use App\Enum\UserTaskStatus;
 use App\Infrastructure\Http\Resource\EnumResource;
 use App\Infrastructure\Http\Resource\JsonResource;
 
-class UserTaskAllInfoResource extends JsonResource
+class UserTaskTreeAssignedInfoResource extends JsonResource
 {
     public function toArray($request): array
     {
         /** @var Task $task */
         $task = $this->resource;
         $type = new EnumResource($task->type);
+        $userTask = UserTask::query()
+            ->where('task_id','=',$task->id)
+            ->where('user_id', '=', $request->get('filter')['user_id'])
+            ->with('answer')
+            ->first();
+        $answer = $userTask?->answer;
+        $status = $answer ? new EnumResource($answer->status) : new EnumResource(new UserTaskStatus(UserTaskStatus::NOT_ASSIGNED));
         $taskCategory = TaskCategory::query()->find($task->task_category_id);
         $categories = $this->getTaskCategoriesRecursively($taskCategory);
         $categoriesText = $this->parseTaskCategoriesArray($categories);
         return [
             'id' => $task->id,
             'name' => $task->name,
-//            'status' => new EnumResource($task->answer->status),
+            'status' => $status,
             'description' => $task->description,
             'task_category_id' => $task->task_category_id,
             'task_category' => $categoriesText,

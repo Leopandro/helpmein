@@ -40,9 +40,13 @@ Route::middleware('auth:sanctum')->group(function () {
         });
         Route::group(['prefix' => 'user-task'], function () {
             Route::get('/list', [Controller\TeacherClientTaskController::class, 'list'])->name('list');
-            Route::get('/list-with-assign', [Controller\TeacherClientTaskController::class, 'listAllWithAssign'])->name('listAllWithAssign');
-            Route::post('/delete', [Controller\TeacherClientTaskController::class, 'delete'])->name('delete');
-            Route::post('/mass-assign', [Controller\TeacherClientTaskController::class, 'massAssign'])->name('mass-assign');
+            Route::get('/delete', [Controller\TeacherClientTaskController::class, 'delete'])->name('delete');
+        });
+        Route::group(['prefix' => 'user-task-tree'], function () {
+            Route::get('/list-without-assign', [Controller\TeacherClientTaskTreeController::class, 'listWithoutAssign'])->name('listWithoutAssign');
+            Route::get('/list-with-assign', [Controller\TeacherClientTaskTreeController::class, 'listAllWithAssign'])->name('listAllWithAssign');
+            Route::post('/delete', [Controller\TeacherClientTaskTreeController::class, 'delete'])->name('delete');
+            Route::post('/mass-assign', [Controller\TeacherClientTaskTreeController::class, 'massAssign'])->name('mass-assign');
         });
     });
 

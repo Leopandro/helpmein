@@ -3,31 +3,60 @@ namespace  App\Domain\Task\Service;
 
 use App\Domain\Client\Model\Client;
 use App\Domain\Task\Model\Pivot\UserTask;
+use App\Domain\Task\Model\Task;
+use App\Domain\UserAnswer\Model\Answer;
+use App\Enum\UserTaskStatus;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 
 class UserTaskService
 {
-    public function massAssign(Request $request): int {
+    public function massAssign(Request $request): array {
         $selectedItems = $request->get('selected_items');
         /** @var Client $client */
         $client = Client::query()->find($request->get('selected_user'));
         $count = 0;
-        foreach ($selectedItems as $taskId => $value) {
-            if (!$client->tasks()->wherePivot('task_id','=',$taskId)->wherePivotNotNull('answer_id')->first()) {
-                if ($value === true) {
-                    $r = $client->tasks()->syncWithoutDetaching([$taskId]);
-                    $count += count($r['detached']) + count($r['attached']);
-                }
-                if ($value === false) {
+        $unAssigned = 0;
+        foreach ($selectedItems as $taskId => $assign) {
+//            $item = Task::query()
+//                ->with('answers')
+//                ->whereHas('answers', function ($query) use ($client, $taskId) {
+//                    $query->where('user_task.user_id', '=', $client->getAttribute('id'))
+//                        ->where('user_task.task_id', '=', $taskId);
+//                })
+//                ->first();
+//            if (!$item) {
+                if ($assign) {
+                    if (!UserTask::query()
+                        ->where('user_id','=',$client->id)
+                        ->where('task_id','=',$taskId)
+                        ->first()
+                    )
+                    $userTaskId = UserTask::insertGetId([
+                        'user_id' => $client->id,
+                        'task_id' => $taskId
+                    ]);
+                    Answer::query()->create([
+                        'status' => UserTaskStatus::ASSIGNED,
+                        'user_task_id' => $userTaskId
+                    ]);
+                    $count += 1;
+                } else {
                     $r = $client->tasks()->detach($taskId);
                     if ($r) {
-                        $count += $r;
+                        $unAssigned += $r;
                     }
                 }
-            } else {
-
-            }
+//            } else {
+//                $x = 1;
+//            }
         }
-        return $count;
+        if ($count === 0 && $unAssigned === 0) {
+            throw new \Exception("Не выбраны задачи для назначения/снятия назначения");
+        }
+        return [
+            "message" => "Снято назначений с $unAssigned, задач назначено $count задач",
+        ];
     }
 }

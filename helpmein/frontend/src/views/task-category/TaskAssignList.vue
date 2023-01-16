@@ -45,7 +45,7 @@
                                             class="form-check-input"
                                             :id="'task_assign_'+task.id"
                                             type="checkbox"
-                                            :disabled="task.answer?.id"
+                                            :disabled="!(task.status?.id === 'assigned' || task.status?.id === 'not_assigned')"
                                             v-model="selectedItems[task.id]"/>
                                     </div>
                                 </div>
@@ -173,12 +173,12 @@ export default {
             })
         },
         async uploadMassAssignment() {
-            await ApiService.post('/admin/user-task/mass-assign', {
+            await ApiService.post('/admin/user-task-tree/mass-assign', {
                 selected_items: this.selectedItems,
                 selected_user: this.selectedUser,
             }).then((response) => {
                 Swal.fire({
-                    text: "Задач переназначено в сумме: " + response.data.data.message + "!",
+                    text: response.data.data.message,
                     icon: "success",
                     buttonsStyling: false,
                     confirmButtonText: "Ок!",
@@ -213,7 +213,7 @@ export default {
         },
         async loadData() {
             this.loading = true;
-            await ApiService.query('/admin/user-task/list-with-assign', {
+            await ApiService.query('/admin/user-task-tree/list-with-assign', {
                 params: {
                     filter: {
                         user_id: this.selectedUser,
@@ -260,7 +260,7 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 .task-list-item {
     max-height: 203px;
     overflow: hidden;
@@ -268,5 +268,8 @@ export default {
 .card .card-header {
     min-height: 50px;
     height: 50px;
+}
+.swal2-html-container {
+    white-space: pre-wrap;
 }
 </style>
