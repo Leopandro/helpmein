@@ -74,10 +74,10 @@
                             {{ user.surname + ' ' + user.name }}
                         </router-link>
                     </td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
+                    <td>{{user.taskStats.in_review}}</td>
+                    <td>{{user.taskStats.active}}</td>
+                    <td>{{user.taskStats.finished}}</td>
+                    <td>{{user.taskStats.finished10}}</td>
                     <td>
                         <router-link :to="'edit/'+user.id">
                             <a href="javascript:;" class="btn btn-icon-primary btn-text-primary p-0"><i class="bi bi-pencil-square fs-4 me-2"></i></a>

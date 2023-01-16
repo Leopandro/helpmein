@@ -6,6 +6,7 @@ use App\Domain\Task\Model\Task;
 use App\Domain\User\Model\User;
 use App\Domain\UserAnswer\Model\Answer;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 /**
  * @property User teachers
@@ -22,15 +23,25 @@ class Client extends User
                 'name',
                 'active',
                 'surname'
-            ])
-            ->withTimestamps();
+            ]);
+    }
+
+    public function answers(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            Answer::class,
+            UserTask::class,
+            'user_id',
+            'user_task_id',
+            'id',
+            'id'
+        );
     }
 
     public function tasks(): BelongsToMany
     {
         return $this->belongsToMany(Task::class, 'user_task', 'user_id', 'task_id')
             ->using(UserTask::class)
-            ->withPivot('id')
-            ->withTimestamps();
+            ->withPivot('id');
     }
 }

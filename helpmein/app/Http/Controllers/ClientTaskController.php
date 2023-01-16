@@ -80,8 +80,8 @@ class ClientTaskController extends Controller
 //                    return $query->where('task_category_id', '=',$value);
 //                }),
             ])
-            ->with('answers')
-            ->whereHas('answers', function ($query) use ($user) {
+            ->with('answer')
+            ->whereHas('answer', function ($query) use ($user) {
                 $query->where('user_task.user_id', '=', $user->getAttribute('id'));
             })
             ->orderBy('id')

@@ -32,16 +32,22 @@ class UserTaskService
                         ->where('user_id','=',$client->id)
                         ->where('task_id','=',$taskId)
                         ->first()
-                    )
-                    $userTaskId = UserTask::insertGetId([
-                        'user_id' => $client->id,
-                        'task_id' => $taskId
-                    ]);
-                    Answer::query()->create([
-                        'status' => UserTaskStatus::ASSIGNED,
-                        'user_task_id' => $userTaskId
-                    ]);
-                    $count += 1;
+                    ) {
+                        $userTaskId = UserTask::query()->firstOrCreate([
+                            'user_id' => $client->id,
+                            'task_id' => $taskId
+                        ]);
+                        $userTask = UserTask::query()
+                            ->where('user_id', '=', $client->id)
+                            ->where('task_id', '=', $taskId)
+                            ->first();
+                        Answer::query()->create([
+                            'status' => UserTaskStatus::ASSIGNED,
+                            'user_task_id' => $userTask->id
+                        ]);
+                        $count += 1;
+                    }
+
                 } else {
                     $r = $client->tasks()->detach($taskId);
                     if ($r) {
