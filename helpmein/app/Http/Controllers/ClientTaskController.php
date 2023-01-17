@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Domain\Task\Gates\TaskSolveByClientGate;
 use App\Domain\Task\Gates\TaskViewByClientGate;
-use App\Domain\Task\Model\Pivot\UserTask;
 use App\Domain\Task\Model\Task;
 use App\Domain\Task\Request\Client\TaskSolveByClientRequest;
 use App\Domain\Task\Resource\ClientTaskInfoResource;
+use App\Domain\Task\Resource\ClientTaskResultResource;
+use App\Domain\Task\Service\UserTaskService;
 use App\Domain\User\Model\User;
 use App\Domain\UserAnswer\Model\Answer;
 use App\Enum\UserTaskStatus;
@@ -47,24 +48,41 @@ class ClientTaskController extends Controller
     }
 
     /**
+     * Просмотр результата решения задачи
+     */
+    public function result(TaskSolveByClientRequest $request, Task $task, UserTaskService $userTaskService): JsonResponse
+    {
+        $answer = $task
+            ->answer()
+            ->where('user_id','=',auth('sanctum')->user()->id)
+            ->first();
+        $task->questions = $userTaskService->getQuestionsWithMistakes($task, $answer);
+        return $this->getSuccessResponse((new ClientTaskResultResource($task))->toArray($request));
+    }
+
+    /**
      * Решает задачу клиентом
      */
-    public function solve(TaskSolveByClientRequest $request, Task $task): JsonResponse
+    public function solve(TaskSolveByClientRequest $request, Task $task, UserTaskService $userTaskService): JsonResponse
     {
         Gate::authorize(TaskSolveByClientGate::getCode(), $task->id);
         DB::beginTransaction();
         try {
-            /** @var UserTask $pivot */
+            /** @var Answer $answer */
             $answer = $task
-                ->answers()
+                ->answer()
                 ->where('user_id','=',auth('sanctum')->user()->id)
                 ->first();
             $answer->answer = $request->get('answer');
+            $mistakes = $userTaskService->getMistakesCount($task, $request->get('questions'));
             $answer->status = UserTaskStatus::IN_REVIEW;
+            $answer->mistakes = $mistakes;
+            $answer->questions = $request->get('questions');
             $answer->save();
             DB::commit();
-        } catch (\Throwable $throwable) {
+        } catch (\Throwable $exception) {
             DB::rollBack();
+            throw $exception;
             return $this->getSingleErrorResponse($throwable->getMessage(), 422);
         }
         return $this->getSuccessResponse([]);

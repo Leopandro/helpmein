@@ -55,6 +55,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/list', [Controller\ClientTaskController::class, 'list'])->name('list');
             Route::post('/{task}/check-answer/{id}', [Controller\ClientTaskController::class, 'checkAnswer'])->name('check-answer');
             Route::post('/solve/{task}', [Controller\ClientTaskController::class, 'solve'])->name('solve');
+            Route::get('/result/{task}', [Controller\ClientTaskController::class, 'result'])->name('result');
             Route::get('/info/{task}', [Controller\ClientTaskController::class, 'info'])->name('info');
         });
     });

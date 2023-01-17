@@ -19,21 +19,13 @@ class UserTaskService
         $count = 0;
         $unAssigned = 0;
         foreach ($selectedItems as $taskId => $assign) {
-//            $item = Task::query()
-//                ->with('answers')
-//                ->whereHas('answers', function ($query) use ($client, $taskId) {
-//                    $query->where('user_task.user_id', '=', $client->getAttribute('id'))
-//                        ->where('user_task.task_id', '=', $taskId);
-//                })
-//                ->first();
-//            if (!$item) {
                 if ($assign) {
                     if (!UserTask::query()
                         ->where('user_id','=',$client->id)
                         ->where('task_id','=',$taskId)
                         ->first()
                     ) {
-                        $userTaskId = UserTask::query()->firstOrCreate([
+                        $userTask = UserTask::query()->firstOrCreate([
                             'user_id' => $client->id,
                             'task_id' => $taskId
                         ]);
@@ -54,9 +46,6 @@ class UserTaskService
                         $unAssigned += $r;
                     }
                 }
-//            } else {
-//                $x = 1;
-//            }
         }
         if ($count === 0 && $unAssigned === 0) {
             throw new \Exception("Не выбраны задачи для назначения/снятия назначения");
@@ -64,5 +53,55 @@ class UserTaskService
         return [
             "message" => "Снято назначений с $unAssigned, задач назначено $count задач",
         ];
+    }
+
+    public function getMistakesCount(Task $task, array $answers)
+    {
+        $mistakes = 0;
+        if (!$task->questions) {
+            return $mistakes;
+        }
+        $taskQuestions = $task->questions;
+        foreach ($taskQuestions as $key => $question) {
+            if ($question['radioValue'] !== $answers[$key]['radioValue']) {
+                $mistakes++;
+            }
+            foreach ($question['answers'] as $answerKey => $answer) {
+                $x = 1;
+                if ($answer['checkBoxValue'] !== $answers[$key]['answers'][$answerKey]['checkBoxValue']) {
+                    $mistakes++;
+                }
+            }
+        }
+        return $mistakes;
+    }
+
+    public function getQuestionsWithMistakes(Task $task, Answer $answer): array
+    {
+        $taskQuestions = $task->questions;
+        $answers = $answer->questions;
+        foreach ($taskQuestions as $questionNumber => $question) {
+            foreach ($question['answers'] as $answerNumber => $answer) {
+                $answerValue = $answers[$questionNumber]['answers'][$answerNumber]['checkBoxValue'];
+                $questionValue = $answer['checkBoxValue'];
+                if ($answerValue === false) {
+                    if ($questionValue === false) {
+                        $taskQuestions[$questionNumber]['answers'][$answerNumber]['success'] = null;
+                    }
+                    if ($questionValue === true) {
+                        $taskQuestions[$questionNumber]['answers'][$answerNumber]['success'] = true;
+                    }
+                }
+                if ($answerValue === true) {
+                    if ($questionValue === false) {
+                        $taskQuestions[$questionNumber]['answers'][$answerNumber]['success'] = false;
+                    }
+                    if ($questionValue === true) {
+                        $taskQuestions[$questionNumber]['answers'][$answerNumber]['success'] = true;
+                    }
+                }
+            }
+        }
+        return $taskQuestions;
     }
 }
