@@ -79,10 +79,10 @@ class UserTaskService
     public function getQuestionsWithMistakes(Task $task, Answer $answer): array
     {
         $taskQuestions = $task->questions;
-        $answers = $answer->questions;
+        $taskAnswers = $answer->questions;
         foreach ($taskQuestions as $questionNumber => $question) {
             foreach ($question['answers'] as $answerNumber => $answer) {
-                $answerValue = $answers[$questionNumber]['answers'][$answerNumber]['checkBoxValue'];
+                $answerValue = $taskAnswers[$questionNumber]['answers'][$answerNumber]['checkBoxValue'];
                 $questionValue = $answer['checkBoxValue'];
                 if ($answerValue === false) {
                     if ($questionValue === false) {
@@ -100,6 +100,10 @@ class UserTaskService
                         $taskQuestions[$questionNumber]['answers'][$answerNumber]['success'] = true;
                     }
                 }
+                if ($question['type'] === "radio" && $answerValue) {
+                    $taskQuestions[$questionNumber]['radioValue'] = $answerNumber;
+                }
+                $taskQuestions[$questionNumber]['answers'][$answerNumber]['checkBoxValue'] = $answerValue;
             }
         }
         return $taskQuestions;
