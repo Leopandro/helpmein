@@ -3,9 +3,9 @@
         <div class="card-body" v-if="isVisible">
             <div class="row p-3">
                 <div class="col-5 p-0">
-                    Ответьте на вопросы по теме
+                    <b>Ответьте на вопросы по теме</b>
                 </div>
-                <div class="col-1 p-0 offset-md-6">
+                <div class="col-auto ms-auto p-0">
                     <b>№ {{ model.id }}</b>
                 </div>
             </div>
@@ -24,7 +24,7 @@
             <div class="col-12 p-3">
                 <!-- Question start -->
                 <template v-for="(item, index) of model.questions">
-                    <div class="row p-0">
+                    <div class="col-12 p-0">
                         <div class="col-3 col-form-label fw-semobold fs-6">
                             <b>
                                 {{ index + 1 }}.
@@ -33,9 +33,9 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row p-3">
 
-                        <div class="row p-0">Выберите один из вариантов:</div>
+                        <div class="col-12 p-0">Выберите один из вариантов:</div>
                         <div class="radio-inline radio-box col-9 row" :class="{
                             'alert-danger': getQuestionAnswerResult(index) === false,
                             'alert-success': getQuestionAnswerResult(index) === true
@@ -68,23 +68,11 @@
                             </template>
                         </div>
                     </div>
-                    <div class="col-3">
-                        <button
-                            :ref="'check_answer_' + index"
-                            v-on:click="checkAnswer(index)"
-                            class="btn-color-primary shadow btn btn-sm">
-                            <span class="indicator-label"> Проверить ответ </span>
-                            <span class="indicator-progress">
-                                подождите...
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                            </span>
-                        </button>
-                    </div>
                 </template>
                 <!-- Question end -->
             </div>
 
-            <div class="box justify-content-center pt-8">
+            <div class="box justify-content-start pt-8">
                 <div class="col-auto p-1">
                     <button ref="submitButton"
                             href="javascript:;"
@@ -103,7 +91,7 @@
                         <button
                             href="javascript:;"
                             type="submit"
-                            class="btn-color-warning shadow btn btn-sm">
+                            class="btn-color-dark shadow btn btn-sm">
                             <span class="indicator-label"> Отмена </span>
                             <span class="indicator-progress">
                                 Пожалуйста подождите...

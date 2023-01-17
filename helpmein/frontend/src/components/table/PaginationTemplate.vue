@@ -3,6 +3,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-start">
+                    Страницы:
                     <ul class="pagination pagination-outline">
                         <li class="page-item m-1"
                             v-for="(item, index) in count"
@@ -14,11 +15,15 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-auto ms-auto">
-                    <select class="form-select form-select-sm form-select-solid m-1" :value="perPage" @change="setCurrentCount($event)">
-                        <option value="2">2</option>
-                        <option value="10">10</option>
-                        <option value="50">50</option>
+                <div class="col-auto ms-auto d-flex">
+                    Кол-во:
+                    <select class="form-select form-select-sm form-select-solid m-1"
+                            :value="perPage"
+                            @change="setCurrentCount($event)">
+                        <option
+                            :value="pages"
+                            v-for="pages in pagesCount"
+                        >{{pages}}</option>
                     </select>
                 </div>
             </div>
@@ -31,8 +36,18 @@ export default {
     props: [
         'count',
         'perPage',
-        'currentPage'
+        'currentPage',
+        'values'
     ],
+    data() {
+        return {
+            pagesCount: [
+                2,
+                10,
+                50
+            ]
+        };
+    },
     methods: {
         setCurrent(index) {
             this.emitter.emit("change-page", index);
@@ -42,7 +57,11 @@ export default {
         }
     },
     updated() {
-        console.log(this);
+    },
+    mounted() {
+        if (this.values) {
+            this.pagesCount = this.values;
+        }
     }
 }
 </script>

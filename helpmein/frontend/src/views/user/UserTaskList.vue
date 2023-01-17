@@ -19,12 +19,13 @@
                 <thead>
                 <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-25px">Статус</th>
-                    <th class="min-w-65px">Номер задачи</th>
                     <th class="min-w-25px">Уровень</th>
+                    <th class="min-w-50px">Тип</th>
                     <th class="min-w-125px">Тема</th>
                     <th class="min-w-125px">Комментарий</th>
                     <th class="min-w-75px">Назначена</th>
                     <th class="min-w-25px text-end">Действия</th>
+                    <th class="w-25px">Id</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -32,15 +33,18 @@
                     <td>
                         <GetSvgByStatus :status="task.status.id"></GetSvgByStatus>
                     </td>
-                    <th>{{task.id}}</th>
                     <th>{{task.difficult_level}}</th>
+                    <th>{{task.type.title}}</th>
                     <td>
                         {{task.task_category}}
                     </td>
                     <th class="text-break">
-                        <p class="">
+                        <p v-if="task.comment">
                             <b>Для себя:</b>{{task.comment}}<br>
-                            <b>Для клиента:</b>{{task.comment_client}}
+                        </p>
+                        <p v-if="task.comment_client">
+                            <b>Для клиента:</b>
+                            {{task.comment_client}}
                         </p>
                     </th>
                     <th>{{
@@ -61,11 +65,12 @@
                             </ul>
                         </div>
                     </td>
+                    <th>{{task.id}}</th>
                 </tr>
                 </tbody>
             </table>
             <div class="col-12">
-                <PaginationTemplate v-if="tasks?.length > 0" :count="pagesCount" :current-page="currentPage" :per-page="perPage"></PaginationTemplate>
+                <PaginationTemplate v-if="tasks?.length > 0" :count="pagesCount" :current-page="currentPage" :per-page="perPage" :values="[10,50]"></PaginationTemplate>
             </div>
             <div v-if="tasks?.length == 0" class="alert alert-primary">{{getErrorMessage()}}</div>
         </div>

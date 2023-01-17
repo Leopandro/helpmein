@@ -3,28 +3,38 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-4">
-                    <select
-                        class="form-select form-select-dark"
-                        v-model="selectedUser"
-                        @change="changeUser">
-                        <option :value="client.id" v-for="client in clients">
-                            {{client.name + ' ' + client.surname}}
-                        </option>
-                    </select>
-                    <select
-                        class="form-select form-select-dark"
-                        v-model="difficultLevel"
-                        @change="loadData">
-                        <option value="">
-                            Все
-                        </option>
-                        <option :value="levels.id" v-for="levels in difficultLevels">
-                            {{levels.name}}
-                        </option>
-                    </select>
+                    <div class="row">
+                        <div class="form-floating">
+                            <select
+                                class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                                v-model="selectedUser"
+                                @change="changeUser">
+                                <option :value="client.id" v-for="client in clients">
+                                    {{client.name + ' ' + client.surname}}
+                                </option>
+                            </select>
+                            <label for="floatingSelect">Кому</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-floating">
+                            <select
+                                class="form-select" id="floatingSelect2" aria-label="123123"
+                                v-model="difficultLevel"
+                                @change="loadData">
+                                <option value="">
+                                    Все
+                                </option>
+                                <option :value="levels.id" v-for="levels in difficultLevels">
+                                    {{levels.name}}
+                                </option>
+                            </select>
+                            <label for="floatingSelect2">Фильтр по уровню</label>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-auto ms-auto">
-                    <button type="button"  :disabled="this.count === 0" class="btn btn-secondary" v-on:click="acceptAssignments">
+                    <button type="button"  :disabled="this.count === 0" class="btn btn-primary" v-on:click="acceptAssignments">
                         {{getButtonText()}}
                     </button>
                 </div>
@@ -235,8 +245,8 @@ export default {
             this.loading = false;
         },
     },
-    mounted() {
-        this.loadUsers();
+    async mounted() {
+        await this.loadUsers();
         this.emitter.on("pick-folder", (item) => {
             this.task_category = item;
             this.loadData();
