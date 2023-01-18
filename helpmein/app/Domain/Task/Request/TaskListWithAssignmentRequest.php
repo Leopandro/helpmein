@@ -29,7 +29,7 @@ class TaskListWithAssignmentRequest extends FormRequest
     public function messages()
     {
         return [
-            'filter.user_id.required' => 'В поле :attribute выберите кашего клиента',
+            'filter.user_id.required' => 'В поле :attribute выберите вашего клиента',
         ];
     }
 }
