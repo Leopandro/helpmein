@@ -82,12 +82,12 @@
                             <p class="text-break">
                                 {{task.description}}</p>
                         </div>
-                        <div class="row">
+                        <div class="row" v-if="task.comment_client">
                             <p class="text-break">
                                 <b>Комментарий для клиента:</b> {{task.comment_client}}
                             </p>
                         </div>
-                        <div class="row">
+                        <div class="row" v-if="task.comment">
                             <p class="text-break">
                                 <b>Комментарий для себя:</b> {{task.comment}}
                             </p>
