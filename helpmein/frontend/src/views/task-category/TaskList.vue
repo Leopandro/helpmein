@@ -1,5 +1,5 @@
 <template>
-    <div v-if="this.task_categories.length >= 0">
+    <div v-if="task_category.id">
         <div class="col-12">
             <router-link :to="getCreateLink()">
                 <button type="button" class="btn btn-primary">Добавить задачу</button>
@@ -133,13 +133,12 @@ export default {
         }
     },
     async mounted() {
-        await this.loadData();
         const nodeStore = this.store;
         this.task_category = nodeStore.selectedNode;
-        console.log(this.task_category)
+        await this.loadData();
         this.emitter.on("pick-folder", (item) => {
-            nodeStore.setNode(item.id);
             this.task_category = nodeStore.selectedNode;
+            console.log(this.task_category)
             this.loadData();
         });
         this.emitter.on("change-page", (page) => {
