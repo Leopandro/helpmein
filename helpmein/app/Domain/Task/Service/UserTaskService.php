@@ -16,7 +16,7 @@ class UserTaskService
         $selectedItems = $request->get('selected_items');
         /** @var Client $client */
         $client = Client::query()->find($request->get('selected_user'));
-        $count = 0;
+        $assigned = 0;
         $unAssigned = 0;
         foreach ($selectedItems as $taskId => $assign) {
                 if ($assign) {
@@ -37,7 +37,7 @@ class UserTaskService
                             'status' => UserTaskStatus::ASSIGNED,
                             'user_task_id' => $userTask->id
                         ]);
-                        $count += 1;
+                        $assigned += 1;
                     }
 
                 } else {
@@ -47,11 +47,15 @@ class UserTaskService
                     }
                 }
         }
-        if ($count === 0 && $unAssigned === 0) {
+        if ($assigned === 0 && $unAssigned === 0) {
             throw new \Exception("Не выбраны задачи для назначения/снятия назначения");
         }
+        $unAssigned ? $message = "Снято назначений: $unAssigned" : $message = "";
+        if ($assigned) {
+            $message ? $message .= ", задач назначено: $assigned" : $message .= "Задач назначено: $assigned";
+        }
         return [
-            "message" => "Снято назначений с $unAssigned, задач назначено $count задач",
+            "message" => $message,
         ];
     }
 

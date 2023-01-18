@@ -132,6 +132,7 @@ return [
         "difficult_level" => "Уровень сложности",
         "description" => "Описание",
         "surname" => "Фамилия",
+        "selected_user" => "Кому",
         "password" => "Пароль",
         "password_confirmation" => "Подтверждение пароля",
         "password_confirm" => "Подтверждение пароля",

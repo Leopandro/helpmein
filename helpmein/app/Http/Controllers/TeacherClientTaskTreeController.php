@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Domain\Client\Model\Client;
 use App\Domain\Task\Model\Task;
+use App\Domain\Task\Request\TaskListWithAssignmentRequest;
+use App\Domain\Task\Request\TaskMassAssignRequest;
 use App\Domain\Task\Resource\UserTaskTreeAssignedInfoResource;
 use App\Domain\Task\Resource\UserTaskAllInfoResource;
 use App\Domain\Task\Service\UserTaskService;
@@ -13,7 +15,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class TeacherClientTaskTreeController extends Controller
 {
-    public function massAssign(Request $request, UserTaskService $userTaskService): JsonResponse
+    public function massAssign(TaskMassAssignRequest $request, UserTaskService $userTaskService): JsonResponse
     {
         $message = $userTaskService->massAssign($request);
         return $this->getSuccessResponse($message);
@@ -26,7 +28,7 @@ class TeacherClientTaskTreeController extends Controller
     }
 
     /** Загрузка всех задач со статусами */
-    public function listAllWithAssign(Request $request): JsonResponse {
+    public function listAllWithAssign(TaskListWithAssignmentRequest $request): JsonResponse {
         /** @var LengthAwarePaginator $tasks */
         $tasks = Task::buildQueryForTeacherClientTaskAllList($request);
         return $this->getListItemsResponse($tasks, UserTaskTreeAssignedInfoResource::class, $request);

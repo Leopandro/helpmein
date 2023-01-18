@@ -43,10 +43,10 @@
                         </div>
                     </div>
                     <div ref="div"
-                         class="node-tree-folder-name p-1"
+                         class="node-tree-folder-name p-1 h6 d-flex aligns-items-center m-0"
                          :style="{display: showEditInput ? 'none' : 'block'}"
                          :id="'node_item_'+item.id+'_input'">
-                        {{ item.name }}
+                        <div>{{ item.name }}</div>
                     </div>
                     <input type="text" ref="input" :style="{display: showEditInput ? 'block' : 'none'}"
                            @keydown.enter="saveNode">

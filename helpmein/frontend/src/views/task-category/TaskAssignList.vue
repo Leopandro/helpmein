@@ -9,6 +9,9 @@
                                 class="form-select" id="floatingSelect" aria-label="Floating label select example"
                                 v-model="selectedUser"
                                 @change="changeUser">
+                                <option value="">
+                                    Выбрать клиента
+                                </option>
                                 <option :value="client.id" v-for="client in clients">
                                     {{client.name + ' ' + client.surname}}
                                 </option>
@@ -34,7 +37,7 @@
                     </div>
                 </div>
                 <div class="col-auto ms-auto">
-                    <button type="button"  :disabled="this.count === 0" class="btn btn-primary" v-on:click="acceptAssignments">
+                    <button type="button" class="btn btn-primary" v-on:click="acceptAssignments">
                         {{getButtonText()}}
                     </button>
                 </div>
@@ -123,7 +126,8 @@ export default {
             loading: null,
             task_category: '',
             tasks: [],
-            selectedUser: null,
+            tasksErrorMessage: '',
+            selectedUser: '',
             difficultLevel: '',
             difficultLevels: [
                 {
@@ -163,6 +167,9 @@ export default {
                 return "Загрузка...";
             }
             if (this.tasks.length === 0) {
+                if (this.tasksErrorMessage) {
+                    return this.tasksErrorMessage;
+                }
                 return "Задач нет";
             }
         },
@@ -173,12 +180,12 @@ export default {
             } else {
                 message = "Назначить задачи"
             }
+            message = "Назначить задачи"
             return message;
         },
         async loadUsers() {
             await ApiService.query('/user/list').then((response) => {
                 this.clients = response.data.data.items
-                this.selectedUser = this.clients[0].id
                 console.log(response);
             })
         },
@@ -223,6 +230,7 @@ export default {
         },
         async loadData() {
             this.loading = true;
+            this.tasksErrorMessage = '';
             await ApiService.query('/admin/user-task-tree/list-with-assign', {
                 params: {
                     filter: {
@@ -241,6 +249,9 @@ export default {
                     }
                 });
                 this.pagesCount = response.data.data.meta.pages_count;
+            }).catch((error) => {
+                this.tasks = [];
+                this.tasksErrorMessage = error.response.data.message;
             })
             this.loading = false;
         },
