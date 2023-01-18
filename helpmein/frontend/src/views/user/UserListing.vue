@@ -139,7 +139,7 @@ export default defineComponent({
     data() {
         return {
             currentPage: 1,
-            perPage: 2,
+            perPage: 10,
             pagesCount: null,
             tableData: [],
             filter: {

@@ -83,7 +83,7 @@ export default {
     data() {
         return {
             currentPage: 1,
-            perPage: 2,
+            perPage: 10,
             pagesCount: null,
             loading: null,
             task_category: '',
