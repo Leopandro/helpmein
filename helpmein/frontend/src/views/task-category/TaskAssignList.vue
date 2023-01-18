@@ -110,6 +110,7 @@
 import ApiService from "@/core/services/ApiService";
 import PaginationTemplate from "@/components/table/PaginationTemplate.vue";
 import Swal from "sweetalert2";
+import {useNodeStore} from "@/stores/node-tree";
 export default {
     name: 'TaskAssignList',
     components: {
@@ -247,8 +248,11 @@ export default {
     },
     async mounted() {
         await this.loadUsers();
+        const nodeStore = this.store;
+        this.task_category = nodeStore.selectedNode;
         this.emitter.on("pick-folder", (item) => {
             this.task_category = item;
+            this.task_category = nodeStore.selectedNode;
             this.loadData();
         });
         this.emitter.on("change-page", (index) => {
@@ -266,7 +270,12 @@ export default {
         this.emitter.off("change-page");
     },
     updated() {
-        console.log(this.selectedItems);
+    },
+    setup() {
+        let store = useNodeStore();
+        return {
+            store
+        }
     }
 }
 </script>

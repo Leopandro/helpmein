@@ -1,5 +1,5 @@
 <template>
-    <div v-if="task_category.id">
+    <div v-if="this.task_categories.length >= 0">
         <div class="col-12">
             <router-link :to="getCreateLink()">
                 <button type="button" class="btn btn-primary">Добавить задачу</button>
@@ -75,6 +75,7 @@
 <script type="ts">
 import ApiService from "@/core/services/ApiService";
 import PaginationTemplate from "@/components/table/PaginationTemplate.vue";
+import {useNodeStore} from "@/stores/node-tree";
 export default {
     name: 'TaskCategoryList',
     components: {
@@ -131,9 +132,14 @@ export default {
             return '/task/edit/' + task.id;
         }
     },
-    mounted() {
+    async mounted() {
+        await this.loadData();
+        const nodeStore = this.store;
+        this.task_category = nodeStore.selectedNode;
+        console.log(this.task_category)
         this.emitter.on("pick-folder", (item) => {
-            this.task_category = item;
+            nodeStore.setNode(item.id);
+            this.task_category = nodeStore.selectedNode;
             this.loadData();
         });
         this.emitter.on("change-page", (page) => {
@@ -149,6 +155,13 @@ export default {
     unmounted() {
         this.emitter.off("pick-folder");
         this.emitter.off("change-page");
+        this.emitter.off("change-count");
+    },
+    setup() {
+        let store = useNodeStore();
+        return {
+            store
+        }
     }
 }
 </script>
