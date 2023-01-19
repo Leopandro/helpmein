@@ -23,7 +23,7 @@ class TeacherClientTaskTreeController extends Controller
 
     public function listWithoutAssign(Request $request): JsonResponse {
         /** @var LengthAwarePaginator $tasks */
-        $tasks = Task::buildQueryForTeacherClientTaskList($request);
+        $tasks = Task::buildQueryForTeacherClientTaskWithoutAssignList($request);
         return $this->getListItemsResponse($tasks, UserTaskAllInfoResource::class, $request);
     }
 

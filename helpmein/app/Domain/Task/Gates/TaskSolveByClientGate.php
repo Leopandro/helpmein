@@ -9,6 +9,7 @@ use App\Domain\User\Model\User;
 use App\Infrastructure\Access\Gates\BaseGate;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Http\Response;
 
 /**
  * Гейт для решения задачи
@@ -40,6 +41,8 @@ class TaskSolveByClientGate extends BaseGate
         {
             return in_array($answer->status,['assigned', 'reassigned', 'in_review']);
         }
-        return (bool) $client;
+        return (bool) $client
+            ? Response::allow()
+            : Response::deny('You must be an administrator.');
     }
 }

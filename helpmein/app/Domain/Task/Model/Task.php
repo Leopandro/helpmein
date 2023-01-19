@@ -61,6 +61,17 @@ class Task extends Model
             'id'
         );
     }
+    public function answers(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Answer::class,
+            UserTask::class,
+            'task_id',
+            'user_task_id',
+            'id',
+            'id'
+        );
+    }
 
     public function clients(): BelongsToMany
     {

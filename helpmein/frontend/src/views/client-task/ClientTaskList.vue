@@ -31,15 +31,16 @@
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li>
-                                        <router-link :to="'/task/view/'+task.id" class="dropdown-item">
-                                            Просмотр ответа
-                                        </router-link>
-                                        <router-link v-if="['assigned','reassigned', 'in_review'].includes(task.status.id)" :to="getResultLink(task)" class="dropdown-item">
-                                            Просмотр решения
-                                        </router-link>
-                                        <router-link v-if="['assigned','reassigned', 'in_review'].includes(task.status.id)" :to="getEditLink(task)" class="dropdown-item">
-                                            Отправить решение
-                                        </router-link>
+                                        <template v-if="task.type.id === 'essay'">
+                                            <router-link :to="'/task/view/'+task.id" class="dropdown-item">
+                                                Просмотр ответа
+                                            </router-link>
+                                        </template>
+                                        <template v-if="task.type.id === 'task'">
+                                            <router-link v-if="!['assigned'].includes(task.status.id)" :to="getResultLink(task)" class="dropdown-item">
+                                                Просмотр решения
+                                            </router-link>
+                                        </template>
                                     </li>
                                 </ul>
                             </div>

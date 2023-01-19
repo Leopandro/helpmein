@@ -29,6 +29,7 @@ class ClientTaskResultResource extends JsonResource
             'name' => $task->name,
             'status' => $status,
             'answer' => $resultQuestions,
+            'mistakes' => $task->answer->mistakes,
             'description' => $task->description,
             'task_category_id' => $task->task_category_id,
             'comment' => $task->comment,

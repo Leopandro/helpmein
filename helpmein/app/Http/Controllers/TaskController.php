@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Domain\Auth\Model\PasswordReset;
 use App\Domain\Client\Model\Client;
 use App\Domain\Task\Gates\TaskEditByUserGate;
+use App\Domain\Task\Gates\TaskInfoByUserGate;
 use App\Domain\Task\Model\Task;
 use App\Domain\Task\Request\TaskEditRequest;
 use App\Domain\Task\Resource\TaskInfoResource;
@@ -22,7 +23,7 @@ class TaskController extends Controller
 {
     public function info(Request $request, Task $task): JsonResponse
     {
-        Gate::authorize(TaskEditByUserGate::getCode(), $task->id);
+        Gate::authorize(TaskInfoByUserGate::getCode(), $task->id);
         return $this->getSuccessResponse((new TaskInfoResource($task))->toArray($request));
     }
 

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Domain\Task\Gates\TaskEditByUserGate;
+use App\Domain\Task\Gates\TaskInfoByUserGate;
 use App\Domain\Task\Gates\TaskSolveByClientGate;
 use App\Domain\Task\Gates\TaskViewByClientGate;
 use App\Domain\User\Gates\ClientEditByUserGate;
@@ -37,6 +38,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         Gate::define(ClientEditByUserGate::getCode(), ClientEditByUserGate::class);
         Gate::define(TaskEditByUserGate::getCode(), TaskEditByUserGate::class);
+        Gate::define(TaskInfoByUserGate::getCode(), TaskInfoByUserGate::class);
         Gate::define(TaskSolveByClientGate::getCode(), TaskSolveByClientGate::class);
         Gate::define(TaskViewByClientGate::getCode(), TaskViewByClientGate::class);
     }

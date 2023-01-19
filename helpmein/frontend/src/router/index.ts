@@ -156,6 +156,18 @@ const routes: Array<RouteRecordRaw> = [
                 },
             },
             {
+                path: "/admin/task/view/:id",
+                name: "admin-task-view",
+                component: () => import("@/views/task-category/TaskView.vue"),
+                meta: {
+                    pageTitle: "Просмотр задачи",
+                    breadcrumbs: [{
+                        "name": "Задачи",
+                        "path": "/task-category/list"
+                    }, "Просмотр задачу"],
+                },
+            },
+            {
                 path: "/admin/task/list",
                 name: "admin-task-list",
                 component: () => import("@/views/task-category/TaskList.vue"),

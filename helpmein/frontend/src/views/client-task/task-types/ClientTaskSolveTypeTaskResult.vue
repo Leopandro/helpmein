@@ -78,16 +78,39 @@
                 <!-- Question end -->
             </div>
 
+            <div class=" p-3 alert alert-danger" v-if="model.mistakes > 0">
+                Тест не пройден <br>
+                Кол-во ошибок: <b>{{ model.mistakes }}</b>
+            </div>
+            <div class="row p-3 alert alert-success" v-if="model.mistakes === 0">
+                Тест успешно пройден
+            </div>
+
             <div class="box justify-content-start pt-8">
                 <div class="col-auto p-1">
                 </div>
                 <div class="col-auto p-1">
+
+                    <router-link :to="getEditLink(model)">
+                        <button
+                            v-if="model.mistakes > 0"
+                            href="javascript:;"
+                            type="submit"
+                            class="btn btn-danger shadow btn btn-sm me-1">
+                            <span class="indicator-label"> Пересдать </span>
+                            <span class="indicator-progress">
+                                Пожалуйста подождите...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                    </router-link>
+
                     <router-link to="/task/list">
                         <button
                             href="javascript:;"
                             type="submit"
-                            class="btn-color-dark shadow btn btn-sm">
-                            <span class="indicator-label"> Отмена </span>
+                            class="btn btn-secondary shadow btn btn-sm me-1">
+                            <span class="indicator-label"> К списку задач </span>
                             <span class="indicator-progress">
                                 Пожалуйста подождите...
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
@@ -163,6 +186,7 @@ export default {
                 name: '',
                 description: '',
                 comment: '',
+                mistakes: '',
                 comment_client: '',
                 questions: [],
                 difficult_level: '',
@@ -180,6 +204,9 @@ export default {
         })
     },
     methods: {
+        getEditLink(task) {
+            return '/task/solve-' + task.type.id + '/'+ task.id;
+        },
         setRadioCheck(index, answerIndex) {
             console.log(index, answerIndex);
             this.model.questions[index].answers.forEach((item, itemIndex) => {
@@ -198,6 +225,7 @@ export default {
                 name: task.name,
                 description: task.description,
                 comment: task.comment,
+                mistakes: task.mistakes,
                 questions: task.questions,
                 difficult_level: task.difficult_level,
                 comment_client: task.comment_client,

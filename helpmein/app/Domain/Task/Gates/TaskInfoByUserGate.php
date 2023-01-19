@@ -9,13 +9,13 @@ use App\Domain\User\Model\User;
 use App\Infrastructure\Access\Gates\BaseGate;
 
 /**
- * Гейт для редактирования пользователя
+ * Гейт для просмотра задачи
  */
-class TaskEditByUserGate extends BaseGate
+class TaskInfoByUserGate extends BaseGate
 {
     public static function getCode(): string
     {
-        return 'task-edit';
+        return 'task-info';
     }
 
     public function __invoke(User $user, string $taskId): bool
@@ -26,10 +26,6 @@ class TaskEditByUserGate extends BaseGate
 //        }
         /** @var Task $task */
         $task = Task::query()->where('user_id','=',$user->id)->find($taskId);
-
-        if ($task->answers()->count() > 0) {
-            return false;
-        };
         return (bool) $task;
     }
 }

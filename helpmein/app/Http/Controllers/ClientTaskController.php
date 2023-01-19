@@ -50,7 +50,7 @@ class ClientTaskController extends Controller
     /**
      * Просмотр результата решения задачи
      */
-    public function result(TaskSolveByClientRequest $request, Task $task, UserTaskService $userTaskService): JsonResponse
+    public function result(Request $request, Task $task, UserTaskService $userTaskService): JsonResponse
     {
         $answer = $task
             ->answer()
@@ -75,7 +75,11 @@ class ClientTaskController extends Controller
                 ->first();
             $answer->answer = $request->get('answer');
             $mistakes = $userTaskService->getMistakesCount($task, $request->get('questions'));
-            $answer->status = UserTaskStatus::IN_REVIEW;
+            if ($mistakes > 0) {
+                $answer->status = UserTaskStatus::IN_REVIEW;
+            } else {
+                $answer->status = UserTaskStatus::FINISHED;
+            }
             $answer->mistakes = $mistakes;
             $answer->questions = $request->get('questions');
             $answer->save();
