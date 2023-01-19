@@ -32,8 +32,11 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li>
                                         <template v-if="task.type.id === 'essay'">
-                                            <router-link :to="'/task/view/'+task.id" class="dropdown-item">
+                                            <router-link v-if="['reassigned','in_review','finished'].includes(task.status.id)" :to="'/task/view/'+task.id" class="dropdown-item">
                                                 Просмотр ответа
+                                            </router-link>
+                                            <router-link v-if="['assigned','reassigned'].includes(task.status.id)" :to="getEditLink(task)" class="dropdown-item">
+                                                Отправить ответ
                                             </router-link>
                                         </template>
                                         <template v-if="task.type.id === 'task'">

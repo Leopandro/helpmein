@@ -61,6 +61,7 @@ class Task extends Model
             'id'
         );
     }
+
     public function answers(): HasManyThrough
     {
         return $this->hasManyThrough(

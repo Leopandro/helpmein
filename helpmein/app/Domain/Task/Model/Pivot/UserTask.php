@@ -1,7 +1,9 @@
 <?php
 namespace App\Domain\Task\Model\Pivot;
 
+use App\Domain\Client\Model\Client;
 use App\Domain\UserAnswer\Model\Answer;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
@@ -20,5 +22,10 @@ class UserTask extends Pivot
     public function answer(): HasOne
     {
         return $this->hasOne(Answer::class,'user_task_id','id');
+    }
+
+    public function client(): BelongsTo
+    {
+        return $this->BelongsTo(Client::class,'user_id','id');
     }
 }

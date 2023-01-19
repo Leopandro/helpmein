@@ -2,26 +2,29 @@
     <div class="card col-8">
         <div class="card-body" v-if="isVisible">
             <div class="row p-5">
-                <div class="col-1 p-0">
+                <div class="col-1">
                     {{model.type.title}}
                 </div>
-                <div class="col-1 p-0">
+                <div class="col-1">
                     <b>{{model.name}}</b>
                 </div>
             </div>
             <div class="row p-5">
-                {{model.description}}
+                <p class=""><b>Описание задачи: </b>{{model.description}}</p>
             </div>
-            <div class="row p-5">
+            <div class="row p-5" v-if="model.comment_client">
                 {{model.comment_client}}
             </div>
-
-            <div class="row p-5">
-                <div class="fw-semibold fs-6 p-0">Решение задачи</div>
+            <div class="row p-5" v-if="model.answer.teacher_comment">
+                <p class=""><b>Комментарий преподавателя: </b>{{model.answer.teacher_comment}}</p>
             </div>
 
             <div class="row p-5">
-                <div class="p-0">{{model.answer}}</div>
+                <div class="fw-semibold fs-6">Решение задачи</div>
+            </div>
+
+            <div class="row p-5">
+                <div class="">{{model.answer.answer}}</div>
             </div>
         </div>
     </div>
@@ -99,7 +102,7 @@ export default {
         mappingFieldsFromTask(task) {
             return {
                 id: task.id,
-                answer: task.answer?.answer,
+                answer: task.answer,
                 type: task.type,
                 name: task.name,
                 description: task.description,

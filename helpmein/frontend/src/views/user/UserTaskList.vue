@@ -57,7 +57,14 @@
                                 Действия
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li v-on:click="removeTask(task.id)">
+                                <template v-if="task.type.id === 'essay'">
+                                    <li v-if="['reassigned','in_review','finished'].includes(task.status.id)">
+                                        <router-link class="dropdown-item" :to="viewTask(task)">
+                                            Просмотр ответа
+                                        </router-link>
+                                    </li>
+                                </template>
+                                <li v-if="task.status.id === 'assigned'" v-on:click="removeTask(task.id)">
                                     <a class="dropdown-item" href="javascript:;">
                                         Удалить
                                     </a>
@@ -135,6 +142,9 @@ export default {
             if (this.tasks.length === 0) {
                 return this.taskStatuses[this.taskStatus].errorMessage;
             }
+        },
+        viewTask(task) {
+            return '/admin/task/view-' + task.type.id + '-result/'+ task.id;
         },
         async removeTask(id) {
             if (confirm('Вы уверены?')) {

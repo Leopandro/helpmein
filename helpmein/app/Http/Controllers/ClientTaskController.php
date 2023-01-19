@@ -73,7 +73,7 @@ class ClientTaskController extends Controller
                 ->answer()
                 ->where('user_id','=',auth('sanctum')->user()->id)
                 ->first();
-            $answer->answer = $request->get('answer');
+            $answer->answer = $request->get('answer')['answer'];
             $mistakes = $userTaskService->getMistakesCount($task, $request->get('questions'));
             if ($mistakes > 0) {
                 $answer->status = UserTaskStatus::IN_REVIEW;

@@ -10,7 +10,7 @@ use App\Enum\UserTaskStatus;
 use App\Infrastructure\Http\Resource\EnumResource;
 use App\Infrastructure\Http\Resource\JsonResource;
 
-class UserTaskAssignedInfoResource extends JsonResource
+class AdminUserTaskAssignedInfoResource extends JsonResource
 {
     public function toArray($request): array
     {
