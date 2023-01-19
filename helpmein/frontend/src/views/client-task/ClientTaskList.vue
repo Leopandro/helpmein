@@ -40,6 +40,9 @@
                                             <router-link v-if="!['assigned'].includes(task.status.id)" :to="getResultLink(task)" class="dropdown-item">
                                                 Просмотр решения
                                             </router-link>
+                                            <router-link v-if="['assigned'].includes(task.status.id)" :to="getEditLink(task)" class="dropdown-item">
+                                                Отправить решение
+                                            </router-link>
                                         </template>
                                     </li>
                                 </ul>
