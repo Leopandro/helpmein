@@ -40,7 +40,7 @@
                     </td>
                     <th class="text-break">
                         <p v-if="task.comment">
-                            <b>Для себя:</b>{{task.comment}}<br>
+                            <b>Для себя:</b> {{task.comment}}<br>
                         </p>
                         <p v-if="task.comment_client">
                             <b>Для клиента:</b>

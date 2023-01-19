@@ -81,7 +81,7 @@
                     <div class="card-body d-flex flex-column px-9 pt-1 pb-8">
                         <!--begin::Heading-->
                         <div class="row">
-                            <h2><b>{{task.name}}</b></h2>
+                            <h6><b>{{task.name}}</b></h6>
                             <p class="text-break">
                                 {{task.description}}</p>
                         </div>

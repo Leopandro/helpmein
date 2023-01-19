@@ -17,7 +17,7 @@
 
                                data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar"><i
                             class="bi bi-pencil-fill fs-7"></i>
-                            <input type="file" @change="handleImage" name="avatar" accept=".png, .jpg, .jpeg">
+                            <input ref="fileInput" type="file" v-on:change="handleImage" name="avatar" accept=".png, .jpg, .jpeg">
                             <input type="hidden" name="avatar_remove">
                         </label>
                         <span
@@ -132,8 +132,8 @@ export default {
                 });
         },
         deleteImage() {
-            console.log('delete')
             this.model.avatar = '';
+            this.$refs.fileInput.value = '';
         },
         handleImage(e) {
             console.log('handleImage')

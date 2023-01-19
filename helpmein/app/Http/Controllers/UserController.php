@@ -9,6 +9,7 @@ use App\Domain\User\Model\User;
 use App\Domain\User\Request\UserCreateRequest;
 use App\Domain\User\Request\UserEditRequest;
 use App\Domain\User\Request\UserProfileEditRequest;
+use App\Domain\User\Resource\Admin\AdminUserInfoWithTaskStatsResource;
 use App\Domain\User\Resource\ProfileResource;
 use App\Domain\User\Resource\UserInfoResource;
 use App\Domain\User\UseCase\UserInvation\UserInvationEmail;
@@ -17,7 +18,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Gate;
-use Spatie\Permission\Guard;
 use Spatie\Permission\Models\Role;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -106,6 +106,7 @@ class UserController extends Controller
         }
     }
 
+    /**  */
     public function list(Request $request) {
         /** @var User $user */
         $user = auth('sanctum')->user();
@@ -130,6 +131,6 @@ class UserController extends Controller
                 }
             })
             ->paginate($request->get('count'));
-        return $this->getListItemsResponse($clients, UserInfoResource::class, $request);
+        return $this->getListItemsResponse($clients, AdminUserInfoWithTaskStatsResource::class, $request);
     }
 }
