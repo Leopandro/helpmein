@@ -41,8 +41,6 @@ class TaskSolveByClientGate extends BaseGate
         {
             return in_array($answer->status,['assigned', 'reassigned', 'in_review']);
         }
-        return (bool) $client
-            ? Response::allow()
-            : Response::deny('You must be an administrator.');
+        return (bool) $client;
     }
 }
