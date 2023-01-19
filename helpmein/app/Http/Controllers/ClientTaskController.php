@@ -75,10 +75,14 @@ class ClientTaskController extends Controller
                 ->first();
             $answer->answer = $request->get('answer')['answer'];
             $mistakes = $userTaskService->getMistakesCount($task, $request->get('questions'));
-            if ($mistakes > 0) {
+            if ($task->type->value === 'task') {
+                if ($mistakes > 0) {
+                    $answer->status = UserTaskStatus::IN_REVIEW;
+                } else {
+                    $answer->status = UserTaskStatus::FINISHED;
+                }
+            }if ($task->type->value === 'essay') {
                 $answer->status = UserTaskStatus::IN_REVIEW;
-            } else {
-                $answer->status = UserTaskStatus::FINISHED;
             }
             $answer->mistakes = $mistakes;
             $answer->questions = $request->get('questions');
