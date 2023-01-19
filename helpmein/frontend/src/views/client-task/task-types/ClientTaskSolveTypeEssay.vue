@@ -5,7 +5,7 @@
                 <div class="col-1">
                     {{model.type.title}}
                 </div>
-                <div class="col-3">
+                <div class="col-auto">
                     <b>{{model.name}}</b>
                 </div>
             </div>
@@ -31,31 +31,35 @@
                     class="form-control"
                     placeholder="Решение задачи"></textarea>
             </div>
-
-            <div class="box justify-content-center pt-8">
-                <button ref="submitButton"
-                        href="javascript:;"
-                        v-on:click="submitForm"
-                        type="submit"
-                        class="btn btn-success">
-                    <span class="indicator-label"> Отправить решение </span>
-                    <span class="indicator-progress">
-                    Пожалуйста подождите...
-                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                </span>
-                </button>
-                <router-link to="/task/list">
+            <div class="box justify-content-start pt-8">
+                <div class="col-auto p-1">
+                </div>
+                <div class="col-auto p-1">
                     <button
+                        v-on:click="submitForm"
                         href="javascript:;"
                         type="submit"
-                        class="btn btn-danger">
-                        <span class="indicator-label"> Отмена </span>
+                        ref="submitButton"
+                        class="btn btn-success shadow btn btn-sm me-1">
+                        <span class="indicator-label"> Отправить решение </span>
                         <span class="indicator-progress">
-                    Пожалуйста подождите...
-                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                </span>
+                            Пожалуйста подождите...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
                     </button>
-                </router-link>
+                    <router-link to="/task/list">
+                        <button
+                            href="javascript:;"
+                            type="submit"
+                            class="btn btn-warning shadow btn btn-sm me-1">
+                            <span class="indicator-label"> Назад к списку задач </span>
+                            <span class="indicator-progress">
+                            Пожалуйста подождите...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                        </button>
+                    </router-link>
+                </div>
             </div>
         </div>
     </div>
