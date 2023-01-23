@@ -6,6 +6,7 @@ import {
 import {useAuthStore} from "@/stores/auth";
 import {useConfigStore} from "@/stores/config";
 import {usePermissionStore} from "@/stores/permission";
+import {useRouterStore} from "@/stores/router";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -296,8 +297,12 @@ router.beforeEach((to, from, next) => {
     const configStore = useConfigStore();
 
     // current page view title
-    document.title = `${to.meta.pageTitle} - ${import.meta.env.VITE_APP_NAME}`;
+    let toPageTitle = '';
+    toPageTitle = to.meta.pageTitle;
+    document.title = `${toPageTitle} - ${import.meta.env.VITE_APP_NAME}`;
 
+    const store = useRouterStore();
+    store.currentTitle = toPageTitle;
     // reset config to initial state
     configStore.resetLayoutConfig();
 

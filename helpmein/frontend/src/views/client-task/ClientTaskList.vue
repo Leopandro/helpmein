@@ -95,7 +95,7 @@
                         <!--end::Title-->
                     </div>
                     <!--end::Card title-->
-                    <div class="card-toolbar m-0">
+                    <div class="card-toolbar m-0 text-secondary">
                         № {{task.id}}
                     </div>
                 </div>

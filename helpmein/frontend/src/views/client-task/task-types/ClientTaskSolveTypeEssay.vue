@@ -1,5 +1,5 @@
 <template>
-    <div class="card col-8">
+    <div class="card col-12">
         <div class="card-body" v-if="isVisible">
             <div class="row p-5">
                 <div class="col-1">

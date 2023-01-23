@@ -136,6 +136,7 @@ return [
         "password" => "Пароль",
         "password_confirmation" => "Подтверждение пароля",
         "password_confirm" => "Подтверждение пароля",
+        "teacher_comment" => "Комментарий для клиента",
     ],
 
 ];

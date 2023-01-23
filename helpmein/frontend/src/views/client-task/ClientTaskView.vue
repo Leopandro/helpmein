@@ -2,10 +2,10 @@
     <div class="card col-8">
         <div class="card-body" v-if="isVisible">
             <div class="row p-5">
-                <div class="col-1">
+                <div class="col-auto">
                     {{model.type.title}}
                 </div>
-                <div class="col-1">
+                <div class="col-auto">
                     <b>{{model.name}}</b>
                 </div>
             </div>

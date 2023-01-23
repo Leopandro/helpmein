@@ -5,13 +5,12 @@
         :class="`page-title d-flex flex-${pageTitleDirection} justify-content-center flex-wrap me-3`"
     >
         <template v-if="pageTitle">
-            <!--begin::Title-->
             <h1
+                v-if="typeof pageTitle === 'string'"
                 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0"
             >
-                {{ pageTitle }}
+                {{ currentTitle }}
             </h1>
-            <!--end::Title-->
 
             <span
                 v-if="pageTitleDirection === 'row' && pageTitleBreadcrumbDisplay"
@@ -53,29 +52,36 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, computed} from "vue";
+import {defineComponent, computed, ref} from "vue";
 import {
     pageTitleDisplay,
     pageTitleBreadcrumbDisplay,
     pageTitleDirection,
 } from "@/core/helpers/config";
 import {useRoute} from "vue-router";
+import {useRouterStore} from "@/stores/router";
 
 export default defineComponent({
     name: "layout-page-title",
     components: {},
     setup() {
         const route = useRoute();
+        const router = useRouterStore();
 
-        const pageTitle = computed(() => {
+        let pageTitle = computed(() => {
             return route.meta.pageTitle;
         });
-
-        const breadcrumbs = computed(() => {
+        router.currentTitle = route.meta.pageTitle;
+        const currentTitle = computed(() => {
+            const store = useRouterStore();
+            return store.currentTitle;
+        });
+        let breadcrumbs = computed(() => {
             return route.meta.breadcrumbs;
         });
 
         return {
+            currentTitle,
             pageTitle,
             breadcrumbs,
             pageTitleDisplay,

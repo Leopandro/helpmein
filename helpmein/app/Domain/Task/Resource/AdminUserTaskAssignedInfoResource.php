@@ -23,6 +23,7 @@ class AdminUserTaskAssignedInfoResource extends JsonResource
         return [
             'id' => $task->id,
             'name' => $task->name,
+            'clients' => $task->clients,
             'status' => new EnumResource($task->answer->status),
             'description' => $task->description,
             'task_category_id' => $task->task_category_id,

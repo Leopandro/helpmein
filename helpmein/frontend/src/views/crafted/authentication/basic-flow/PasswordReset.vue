@@ -113,7 +113,7 @@ export default defineComponent({
       const message = store.messages;
       if (!error) {
         Swal.fire({
-          text: "Ссылка для изменения пароля была отправлена",
+          text: message,
           icon: "success",
           buttonsStyling: false,
           confirmButtonText: "Ок!",

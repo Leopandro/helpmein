@@ -31,7 +31,7 @@ class AuthController extends Controller
     {
         $data = $request->all();
 
-        $user = $service->getUserByCredentials($data['email'], $data['password']);
+        $user = $service->getUserByCredentials(Str::lower($data['email']), $data['password']);
         $token = $service->createUserToken($user);
 
         $userData = $user->attributesToArray();
@@ -67,8 +67,8 @@ class AuthController extends Controller
     public function register(RegisterRequest $request, AuthenticationService $service): JsonResponse
     {
         $user = new User();
-        $user->login = $request->get('login');
-        $user->email = $request->get('email');
+        $user->login = Str::lower($request->get('login'));
+        $user->email = Str::lower($request->get('email'));
         $user->name = $request->get('name');
         $user->surname = $request->get('surname');
         $user->password = bcrypt($request->get('password'));
@@ -90,7 +90,7 @@ class AuthController extends Controller
     public function remindPassword(RemindPasswordRequest $request): JsonResponse
     {
         /** @var User $user */
-        $user = User::query()->where('email','=',$request->get('email'))->firstOrFail();
+        $user = User::query()->where('email','=',Str::lower($request->get('email')))->firstOrFail();
         $token = Str::random(20);
 
         $passwordReset = PasswordReset::query()->updateOrCreate([
@@ -100,9 +100,13 @@ class AuthController extends Controller
         ]);
         Mail::to($user->email)->send(new PasswordChangedEmail($user, $token));
         if ($result = $user->save()) {
-            return $this->getSuccessResponse([]);
+            return $this->getSuccessResponse([
+                "message" => "Ссылка для изменения пароля отправлена.
+
+Если письмо не появится в течение нескольких минут, проверьте папку “спам”."
+            ]);
         } else {
-            return $this->getErrorResponse(["Ошибка"],422);
+            return $this->getSingleErrorResponse("Произошла ошибка отправки сообщения",422);
         }
     }
 

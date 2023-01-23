@@ -1,11 +1,11 @@
 <template>
-    <div class="card col-8">
+    <div class="card col-12">
         <div class="card-body" v-if="isVisible">
             <div class="row p-3">
                 <div class="col-5 p-0">
                     <b>Ответьте на вопросы по теме</b>
                 </div>
-                <div class="col-auto ms-auto p-0">
+                <div class="col-auto ms-auto p-0 text-secondary">
                     <b>№ {{ model.id }}</b>
                 </div>
             </div>
@@ -35,7 +35,7 @@
 
                     <div class="form-group row p-3">
 
-                        <div class="col-12 p-0">Выберите один из вариантов:</div>
+                        <div class="col-12 p-0">{{getLabelByQuestion(item)}}</div>
                         <div class="radio-inline radio-box col-9 row" :class="{
                             'alert-danger': getQuestionAnswerResult(index) === false,
                             'alert-success': getQuestionAnswerResult(index) === true
@@ -186,6 +186,13 @@ export default {
         })
     },
     methods: {
+        getLabelByQuestion(question) {
+            if (question.type === 'radio') {
+                return "Выберите один из вариантов:";
+            } else {
+                return "Выберите один или несколько вариантов:";
+            }
+        },
         setRadioCheck(index, answerIndex) {
             this.model.questions[index].answers.forEach((item, itemIndex) => {
                 if (itemIndex === answerIndex) {

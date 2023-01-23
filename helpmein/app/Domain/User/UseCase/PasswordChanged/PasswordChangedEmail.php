@@ -28,9 +28,9 @@ class PasswordChangedEmail extends Mailable
                 ->with([
                     'resetPasswordLink' => $link,
                     'user' => $this->user,
-                    'subject' => 'Password reset'
+                    'subject' => 'Ссылка для восстановления пароля'
                 ])
-                ->from('admin@admin.com', 'Ссылка для восстановления пароля')
-                ->subject('Восстановить пароль');
+                ->from('admin@admin.com', 'Help-me-in')
+                ->subject('Ссылка для восстановления пароля');
     }
 }

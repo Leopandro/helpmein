@@ -154,8 +154,8 @@
                                         <td>
                                             <font style='font-family: Arial,serif;font-size:14px;line-height:20px;color:#8D8D8D;margin-bottom:8px;-webkit-text-size-adjust:none;display:block'>
                                                 Вы получили это письмо, так как зарегистрировались на сайте
-                                                <a href="{{ \App\Infrastructure\Http\Routing\FrontendRouterFacade::route('frontend.main-page') }}" style="color:#6977D2;font-size: 14px;font-family:Arial,sans-serif;line-height: 20px;-webkit-text-size-adjust:none;" target="_blank" title="helpmein">
-                                                    helpmein.ru
+                                                <a href="{{ request()->getScheme().'://'.request()->getHost() }}" style="color:#6977D2;font-size: 14px;font-family:Arial,sans-serif;line-height: 20px;-webkit-text-size-adjust:none;" target="_blank" title="helpmein">
+                                                    Help-me-in.ru
                                                 </a>
                                             </font>
                                         </td>
@@ -164,7 +164,7 @@
                                         <td>
                                             <font style='font-family: Arial,serif;font-size:14px;line-height:20px;color:#8D8D8D;-webkit-text-size-adjust:none;display:block'>
                                                 Не отвечайте на него, мы не сможем получить ваше сообщение. Если вам нужна помощь, то напишите нам в
-                                                <a href="{{ \App\Infrastructure\Http\Routing\FrontendRouterFacade::route('frontend.support', []) }}" style="color:#6977D2;font-size: 14px;font-family:Arial,sans-serif;line-height: 20px;-webkit-text-size-adjust:none;" target="_blank" title="helpmein">
+                                                <a href="mailto:help@help-me-in.ru" style="color:#6977D2;font-size: 14px;font-family:Arial,sans-serif;line-height: 20px;-webkit-text-size-adjust:none;" target="_blank" title="helpmein">
                                                     техподдержку
                                                 </a>
                                             </font>

@@ -60,11 +60,6 @@
                                                 <div class="" style="background-color:#3699FF;text-align: center;color:white;width:80px;height:30px;display: table-cell;vertical-align: middle;">Helpmein</div>
                                             </a>
                                         </td>
-                                        <td align="right">
-                                            <font style='font-family: Arial,serif;font-size:12px;line-height:16px;color:#8D8D8D;-webkit-text-size-adjust:none;display:block'>
-                                                Пн-Пт 8:00 - 18:00
-                                            </font>
-                                        </td>
                                     </tr>
                                 </table>
                             </center>
@@ -95,6 +90,9 @@
                                         <td>
                                             <font style='font-family: Arial,serif;font-size:14px;line-height:20px;color:#8D8D8D;margin-bottom:8px;-webkit-text-size-adjust:none;display:block'>
                                                 Вы получили это письмо, так как зарегистрировались на сайте
+                                                <a href="{{ request()->getScheme().'://'.request()->getHost() }}" style="color:#6977D2;font-size: 14px;font-family:Arial,sans-serif;line-height: 20px;-webkit-text-size-adjust:none;" target="_blank" title="helpmein">
+                                                    Help-me-in.ru
+                                                </a>
                                             </font>
                                         </td>
                                     </tr>
@@ -102,7 +100,7 @@
                                         <td>
                                             <font style='font-family: Arial,serif;font-size:14px;line-height:20px;color:#8D8D8D;-webkit-text-size-adjust:none;display:block'>
                                                 Не отвечайте на него, мы не сможем получить ваше сообщение. Если вам нужна помощь, то напишите нам в
-                                                <a href="mailto:help@helpmein.ru" style="color:#6977D2;font-size: 14px;font-family:Arial,sans-serif;line-height: 20px;-webkit-text-size-adjust:none;" target="_blank" title="helpmein">
+                                                <a href="mailto:help@help-me-in.ru" style="color:#6977D2;font-size: 14px;font-family:Arial,sans-serif;line-height: 20px;-webkit-text-size-adjust:none;" target="_blank" title="helpmein">
                                                     техподдержку
                                                 </a>
                                             </font>

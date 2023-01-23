@@ -1,11 +1,11 @@
 <template>
-    <div class="card col-8">
+    <div class="card col-12">
         <div class="card-body" v-if="isVisible">
             <div class="row p-3">
                 <div class="col-5 p-0">
                     <b>Ответьте на вопросы по теме</b>
                 </div>
-                <div class="col-auto ms-auto p-0">
+                <div class="col-auto ms-auto p-0 text-secondary">
                     <b>№ {{ model.id }}</b>
                 </div>
             </div>

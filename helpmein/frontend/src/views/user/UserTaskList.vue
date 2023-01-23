@@ -22,6 +22,7 @@
                     <th class="min-w-25px">Уровень</th>
                     <th class="min-w-50px">Тип</th>
                     <th class="min-w-125px">Тема</th>
+                    <th class="min-w-50px">Название задачи</th>
                     <th class="min-w-125px">Комментарий</th>
                     <th class="min-w-75px">Назначена</th>
                     <th class="min-w-25px text-end">Действия</th>
@@ -37,6 +38,9 @@
                     <th>{{task.type.title}}</th>
                     <td>
                         {{task.task_category}}
+                    </td>
+                    <td>
+                        {{task.name}}
                     </td>
                     <th class="text-break">
                         <p v-if="task.comment">
@@ -92,6 +96,9 @@ import ApiService from "@/core/services/ApiService";
 import GetSvgByStatus from "@/views/client-task/_helpers/GetSvgByStatus.vue";
 import PaginationTemplate from "@/components/table/PaginationTemplate.vue";
 import moment from 'moment';
+import {useRoute} from "vue-router/dist/vue-router";
+import {useRouterStore} from "../../stores/router";
+import {computed} from "vue";
 
 export default {
     name: "UserTaskList",
@@ -112,6 +119,7 @@ export default {
             selectedIds: [],
             deleteFewCustomers: [],
             sort: [],
+            client: {},
             tasks: null,
             taskStatus: 'all',
             loading: null,
@@ -177,16 +185,39 @@ export default {
             });
             this.loading = false;
         },
+        setTasks(items) {
+            this.tasks = items;
+            const store = useRouterStore();
+            this.client = items[0]['clients'][0];
+            store.currentTitle = "Список задач клиента " + this.client.surname + ' ' + this.client.name;
+        },
         async setStatus(status) {
             this.taskStatus = status;
             this.currentPage = 1;
             await this.loadData();
         },
     },
-    beforeMount() {
-        this.loadData();
+    async beforeRouteEnter(to, from, next) {
+        let filter  = {
+            user_id: to.params.id,
+            all: true
+        };
+        await ApiService.query("/admin/user-task/list", {
+            params: {
+                filter: filter,
+                page: 1,
+                count: 10
+            },
+        }).then((response) => {
+            // this.model = this.mappingFieldsFromTask(response.data.data);
+            next((vm) => {
+                vm.setTasks(response.data.data.items);
+                vm.pagesCount = response.data.data.meta.pages_count;
+            })
+        })
     },
     async mounted() {
+        const route = useRoute();
         this.emitter.on("change-page", (index) => {
             this.currentPage = index;
             this.loadData();
@@ -200,6 +231,16 @@ export default {
     unmounted() {
         this.emitter.off("change-count");
         this.emitter.off("change-page");
+    },
+    setup() {
+        const router = useRouterStore();
+        const email = computed(() => {
+            const store = useRouterStore();
+            return store.currentTitle;
+        });
+        return {
+            email,
+        }
     }
 };
 </script>

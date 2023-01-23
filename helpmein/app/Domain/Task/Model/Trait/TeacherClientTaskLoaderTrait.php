@@ -34,6 +34,7 @@ trait TeacherClientTaskLoaderTrait {
     /** Список всех задач клиента */
     public static function buildQueryForTeacherClientTaskList(Request $request): LengthAwarePaginator
     {
+        $userId = $request->get('filter')['user_id'];
         return QueryBuilder::for(Task::class)
             ->with('answer')
             ->allowedFilters([
@@ -42,7 +43,9 @@ trait TeacherClientTaskLoaderTrait {
                 }),
                 AllowedFilter::callback('user_id', static function (Builder $query, $value) {
                     return $query
-                        ->with('clients')
+                        ->with('clients', function($query) use ($value) {
+                            $query->where('user_task.user_id', '=', $value);
+                        })
                         ->whereHas(
                             'clients', function($query) use ($value) {
                             $query->where('user_task.user_id', '=', $value);
@@ -50,10 +53,13 @@ trait TeacherClientTaskLoaderTrait {
                 }),
                 AllowedFilter::callback('assigned', fn(Builder $query, $value) =>
                     $query
-                        ->with('answer')
-                        ->whereHas('answer', fn($query) =>
-                            $query->whereIn('answer.status', ['assigned', 'reassigned'])
+                        ->with('answer', fn($query) =>
+                            $query->where('user_task.user_id', '=', $userId)
                         )
+                        ->whereHas('answer',fn($query) =>
+                            $query
+                                ->whereIn('answer.status', ['assigned', 'reassigned'])
+                                ->where('user_task.user_id', '=', $userId))
                 ),
                 AllowedFilter::callback('in_review', fn(Builder $query, $value) =>
                     $query->with('answer')
@@ -63,7 +69,14 @@ trait TeacherClientTaskLoaderTrait {
                 ),
                 AllowedFilter::callback('all', fn(Builder $query, $value) =>
                     $query
-                ),
+                        ->with('answer', fn ($query) =>
+                            $query->where('user_task.user_id', '=', $userId)
+                        )
+                        ->whereHas('answer', fn ($query) =>
+                            $query
+                                ->where('user_task.user_id', '=', $userId)
+                        )
+                    ),
                 AllowedFilter::callback('difficult_level', static function (Builder $query, $value) {
                     return $query->where('difficult_level', '=',$value);
                 }),

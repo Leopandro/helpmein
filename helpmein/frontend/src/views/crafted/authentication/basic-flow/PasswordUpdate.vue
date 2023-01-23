@@ -25,14 +25,14 @@
       <!--begin::Input group-->
         <div class="mb-10">
             <label class="form-label">Пароль</label>
-            <input v-model="model.password" type="text" class="form-control" placeholder="">
+            <input v-model="model.password" type="password" class="form-control" placeholder="">
             <div v-if="errors.password" class="fv-plugins-message-container invalid-feedback">
                 <div data-field="daterangepicker_input" data-validator="notEmpty">{{ errors.password[0] }}</div>
             </div>
         </div>
         <div class="mb-10">
             <label class="form-label">Пароль(повторно)</label>
-            <input v-model="model.password_confirm" type="text" class="form-control" placeholder="">
+            <input v-model="model.password_confirm" type="password" class="form-control" placeholder="">
             <div v-if="errors.password_confirm" class="fv-plugins-message-container invalid-feedback">
                 <div data-field="daterangepicker_input" data-validator="notEmpty">{{ errors.password_confirm[0] }}</div>
             </div>

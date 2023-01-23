@@ -126,7 +126,8 @@ export const useAuthStore = defineStore("auth", () => {
     function forgotPassword(email: string) {
         return ApiService.post("auth/remind-password", email)
             .then((response) => {
-                setMessage('');
+                console.log(response);
+                setMessage(response.data.data.message);
                 setError('');
                 setStatus(response.status);
             })
