@@ -15,7 +15,7 @@
 
         <!--begin::Link-->
         <div class="text-gray-400 fw-semobold fs-4">
-          Введите e-mail, чтобы получить ссылку
+          Введите e-mail, чтобы получить ссылку для восстановления пароля
         </div>
         <!--end::Link-->
       </div>
@@ -29,6 +29,7 @@
           type="email"
           placeholder=""
           name="email"
+          v-model="object.email"
           autocomplete="off"
         />
           <div class="fv-plugins-message-container" v-if="errors.email">
@@ -40,25 +41,27 @@
       <!--end::Input group-->
 
       <!--begin::Actions-->
-      <div class="d-flex flex-wrap justify-content-center pb-lg-0">
-        <button
-          type="submit"
-          ref="submitButton"
-          id="kt_password_reset_submit"
-          class="btn btn-lg btn-primary fw-bold me-4"
-        >
-          <span class="indicator-label"> Подтвердить </span>
-          <span class="indicator-progress">
+      <div class="justify-content-center row between-sm">
+          <div class="col-auto p-1">
+              <button
+                  type="submit"
+                  ref="submitButton"
+                  id="kt_password_reset_submit"
+                  class="btn btn-lg btn-primary"
+              >
+                  <span class="indicator-label"> Подтвердить </span>
+                  <span class="indicator-progress">
             Пожалуйста подождите ...
             <span
-              class="spinner-border spinner-border-sm align-middle ms-2"
+                class="spinner-border spinner-border-sm align-middle ms-2"
             ></span>
           </span>
-        </button>
+              </button>
+          </div>
+          <div class="col-auto p-1">
+              <router-link to="/sign-in" class="btn btn-lg btn-light-primary fw-bold">Отмена</router-link>
+          </div>
 
-        <router-link to="/sign-in" class="btn btn-lg btn-light-primary fw-bold"
-          >Отмена</router-link
-        >
       </div>
       <!--end::Actions-->
     </VForm>
@@ -74,6 +77,7 @@ import { useAuthStore } from "@/stores/auth";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import {useRouter} from "vue-router";
+import {useLoginStore} from "@/stores/login";
 
 export default defineComponent({
   name: "password-reset",
@@ -82,12 +86,24 @@ export default defineComponent({
     VForm,
     ErrorMessage,
   },
+    data() {
+      return {
+          object: {
+              email: ''
+          }
+      }
+    },
     computed: {
         errors() {
             const store = useAuthStore();
             let errors = store.errors;
             return errors;
         }
+    },
+    mounted() {
+        let store = useLoginStore();
+        console.log(store.email);
+        this.object.email = store.email;
     },
   setup() {
     const store = useAuthStore();
