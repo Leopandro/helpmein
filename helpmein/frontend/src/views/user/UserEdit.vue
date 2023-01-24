@@ -86,6 +86,7 @@ export default {
             model: {
                 email: '',
                 avatar: '',
+                image: '',
                 name: '',
                 surname: ''
             }
@@ -96,11 +97,19 @@ export default {
             .then((response) => {
                 console.log(response);
                 this.model = response.data.data;
+                this.model.avatar = 'url(' + response.data.data.avatar + ')';
+                console.log(this.model);
+
             })
     },
     methods: {
         submitForm() {
-            ApiService.post("user/edit/"+this.$route.params.id, this.model)
+            let formData = new FormData();
+            formData.set('avatar', this.model.image)
+            formData.set('email', this.model.email)
+            formData.set('name', this.model.name)
+            formData.set('surname', this.model.surname)
+            ApiService.post("user/edit/"+this.$route.params.id, formData)
                 .then(() => {
                     Swal.fire({
                         text: "Клиент успешно изменен",
@@ -138,6 +147,8 @@ export default {
         handleImage(e) {
             console.log('handleImage')
             const selectedImage = e.target.files[0];
+            this.model.image = selectedImage;
+            console.log(selectedImage);
             this.createBase64Image(selectedImage);
         },
         createBase64Image(fileObject) {
@@ -145,6 +156,7 @@ export default {
 
             reader.onload = (e) => {
                 this.model.avatar = 'url(' + e.target.result + ')';
+                console.log(this.model);
             }
 
             reader.readAsDataURL(fileObject);

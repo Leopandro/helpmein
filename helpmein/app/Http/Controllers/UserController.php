@@ -71,6 +71,12 @@ class UserController extends Controller
                 'token' => $token
             ]);
             Mail::to($user->email)->send(new UserInvationEmail($user, $token));
+            if ($file = $request->file('avatar')) {
+                $name = $user->id.'.'.$file->getExtension();
+                $file->storeAs('avatars', $name, ['disk' => 'public']);
+                $user->avatar = $name;
+                $user->save();
+            }
             return $this->getSuccessResponse([]);
         } else {
             return $this->getSingleErrorResponse("Ошибка");
@@ -90,6 +96,12 @@ class UserController extends Controller
                     'surname' => $request->get('surname')
                 ]]);
         if ($user->save()) {
+            if ($file = $request->file('avatar')) {
+                $name = $user->id.'.'.$file->getClientOriginalExtension();
+                $file->storeAs('avatars', $name, ['disk' => 'public']);
+                $user->avatar = $name;
+                $user->save();
+            }
             return $this->getSuccessResponse([]);
         } else {
             return $this->getSingleErrorResponse("Ошибка");
@@ -117,7 +129,6 @@ class UserController extends Controller
                     $query->whereHas('teachers', fn(Builder $query) =>
                         $query->where('user_clients.active', '=', $value)
                     );
-//                    return $query->where('user_clients.active', '=', 'true');
                 }),
             ])
             ->with('teachers')
