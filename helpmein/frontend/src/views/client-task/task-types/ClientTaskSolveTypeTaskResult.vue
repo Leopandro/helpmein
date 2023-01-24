@@ -1,31 +1,31 @@
 <template>
     <div class="card col-12">
-        <div class="card-body" v-if="isVisible">
+        <div class="p-3" v-if="isVisible">
             <div class="row p-3">
-                <div class="col-5 p-0">
+                <div class="col-auto">
                     <b>Ответьте на вопросы по теме</b>
                 </div>
-                <div class="col-auto ms-auto p-0 text-secondary">
+                <div class="col-auto ms-auto text-secondary">
                     <b>№ {{ model.id }}</b>
                 </div>
             </div>
             <div class="row p-3">
-                <div class="p-0">
+                <div class="col-auto">
                     <b>{{ model.name }}</b>
                 </div>
             </div>
             <div class="row p-3">
-                {{ model.description }}
+                <div>{{ model.description }}</div>
             </div>
             <div class="row p-3">
-                {{ model.comment_client }}
+                <div>{{ model.comment_client }}</div>
             </div>
 
-            <div class="col-12 p-3">
+            <div class="row p-3">
                 <!-- Question start -->
                 <template v-for="(item, index) of model.questions">
-                    <div class="col-12 p-0">
-                        <div class="col-3 col-form-label fw-semobold fs-6">
+                    <div class="col-auto">
+                        <div class="col-auto col-form-label fw-semobold fs-6">
                             <b>
                                 {{ index + 1 }}.
                                 {{ model.questions[index].title }}
@@ -35,13 +35,13 @@
 
                     <div class="form-group row p-3">
 
-                        <div class="col-12 p-0">Выберите один из вариантов:</div>
+                        <div class="col-12">Выберите один из вариантов:</div>
                         <div class="radio-inline radio-box col-9 row" :class="{
                             'alert-danger': getQuestionAnswerResult(index) === false,
                             'alert-success': getQuestionAnswerResult(index) === true
                         }">
                             <template v-for="(answerItem, answerIndex) of model.questions[index].answers">
-                                <div class="row">
+                                <div class="col-12">
                                     <div
                                         class="form-check form-check-custom form-check-solid form-check-sm me-5 form-flex p-1 me-5 form-flex p-1">
                                         <input
@@ -78,12 +78,16 @@
                 <!-- Question end -->
             </div>
 
-            <div class=" p-3 alert alert-danger" v-if="model.mistakes > 0">
-                Тест не пройден <br>
-                Кол-во ошибок: <b>{{ model.mistakes }}</b>
+            <div class="row p-6" v-if="model.mistakes > 0">
+                <div class="alert alert-danger">
+                    Тест не пройден <br>
+                    Кол-во ошибок: <b>{{ model.mistakes }}</b>
+                </div>
             </div>
-            <div class="row p-3 alert alert-success" v-if="model.mistakes === 0">
-                Тест успешно пройден
+            <div class="row p-6" v-if="model.mistakes === 0">
+                <div class="alert alert-success">
+                    Тест успешно пройден
+                </div>
             </div>
 
             <div class="box justify-content-start pt-8">

@@ -1,7 +1,7 @@
 <template>
-    <div class="card col-8">
-        <div class="card-body" v-if="isVisible">
-            <div class="row p-5">
+    <div class="card col-12">
+        <div class="p-3" v-if="isVisible">
+            <div class="row p-2">
                 <div class="col-auto">
                     {{model.type.title}}
                 </div>
@@ -9,21 +9,21 @@
                     <b>{{model.name}}</b>
                 </div>
             </div>
-            <div class="row p-5">
+            <div class="row p-2">
                 <p class=""><b>Описание задачи: </b>{{model.description}}</p>
             </div>
-            <div class="row p-5" v-if="model.comment_client">
+            <div class="row p-2" v-if="model.comment_client">
                 {{model.comment_client}}
             </div>
-            <div class="row p-5" v-if="model.answer.teacher_comment">
-                <p class=""><b>Комментарий преподавателя: </b>{{model.answer.teacher_comment}}</p>
+            <div class="row p-2" v-if="model.answer.teacher_comment">
+                <span class=""><span class="fw-bold">Комментарий преподавателя: </span>{{model.answer.teacher_comment}}</span>
             </div>
 
-            <div class="row p-5">
-                <div class="fw-semibold fs-6">Решение задачи</div>
+            <div class="row p-2">
+                <div class="fw-bold fs-6">Решение задачи</div>
             </div>
 
-            <div class="row p-5">
+            <div class="row p-2">
                 <div class="">{{model.answer.answer}}</div>
             </div>
         </div>

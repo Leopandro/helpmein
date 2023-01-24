@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid row">
-        <div class="col-6">
+        <div class="col-6 p-0">
             <node-tree ref="node-tree" :item="this.task_categories" :value="this.task_categories.name"></node-tree>
         </div>
         <div class="col-6">

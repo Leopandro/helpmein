@@ -1,6 +1,6 @@
 <template>
     <div class="card h-100">
-        <div class="card-body">
+        <div class="p-3">
             <div class="row">
                 <div class="col-8 col-md-7 d-flex align-items-center justify-content-center justify-content-md-start">
                     Страницы:
@@ -16,7 +16,7 @@
                     </ul>
                 </div>
                 <div class="col-auto ms-auto d-flex align-items-center">
-                    <div class="col-auto">Кол-во:</div>
+                    <div class="col-auto">Задач на странице по:</div>
                     <select class="form-select form-select-sm form-select-solid m-1"
                             :value="perPage"
                             @change="setCurrentCount($event)">

@@ -5,10 +5,10 @@
                 <button type="button" class="btn btn-primary">Добавить задачу</button>
             </router-link>
         </div>
-        <div class="col-12 p-1 task-list-item" v-for="(task, name, index) in task_categories">
+        <div class="col-12 px-0 p-1 task-list-item" v-for="(task, name, index) in task_categories">
             <div class="card h-100">
 
-                <div class="card-header flex-nowrap border-0 pt-1">
+                <div class="card-header flex-nowrap border-0 p-3 px-5">
                     <!--begin::Card title-->
                     <div class="card-title m-0">
                         <!--begin::Icon-->
@@ -48,11 +48,11 @@
                         <!--end::Title-->
                     </div>
                     <!--end::Card title-->
-                    <div class="card-toolbar m-0">
+                    <div class="card-toolbar m-0 text-secondary">
                         № {{task.id}}
                     </div>
                 </div>
-                <div class="card-body d-flex flex-column px-9 pt-1 pb-8">
+                <div class="card-body d-flex flex-column p-3 px-5">
                     <!--begin::Heading-->
                     <div class="row">
                         <h6><b>{{task.name}}</b></h6>
@@ -73,14 +73,14 @@
             </div>
         </div>
 
-        <div v-if="task_categories.length === 0">
+        <div v-if="task_categories.length === 0" class="px-0 p-1">
             <div class="alert alert-primary">{{getErrorMessage()}}</div>
         </div>
 
         <div v-if="task_categories.length < 2" class="col-8 p-1" style="min-height: 203px;">
             <div class="card h-100"></div>
         </div>
-        <div class="col-12 p-0" v-if="task_categories.length > 0">
+        <div class="col-12 px-0 p-1" v-if="task_categories.length > 0">
             <PaginationTemplate :per-page="perPage" :count="pagesCount" :current-page="currentPage"></PaginationTemplate>
         </div>
     </div>

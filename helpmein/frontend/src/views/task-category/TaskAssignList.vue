@@ -2,8 +2,8 @@
     <div v-if="task_category.id">
         <div class="col-12">
             <div class="row">
-                <div class="col-4">
-                    <div class="row">
+                <div class="col-lg-6 col-sm-12">
+                    <div class="mw-200px">
                         <div class="form-floating">
                             <select
                                 class="form-select" id="floatingSelect" aria-label="Floating label select example"
@@ -19,7 +19,7 @@
                             <label for="floatingSelect">Кому</label>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="mw-200px">
                         <div class="form-floating">
                             <select
                                 class="form-select" id="floatingSelect2" aria-label="123123"
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-auto ms-auto">
+                <div class="col-lg-auto col-sm-12 ms-auto">
                     <button type="button" class="btn btn-primary" v-on:click="acceptAssignments">
                         {{getButtonText()}}
                     </button>
@@ -45,10 +45,10 @@
         </div>
 
         <div style="min-height: 406px;" v-if="tasks.length > 0">
-            <div class="col-12 p-1 task-list-item" v-for="(task, name, index) in tasks">
+            <div class="col-12 px-0 p-1 task-list-item" v-for="(task, name, index) in tasks">
                 <div class="card h-100">
 
-                    <div class="card-header flex-nowrap border-0 pt-1">
+                    <div class="card-header flex-nowrap border-0 p-3 px-5">
                         <!--begin::Card title-->
                         <div class="card-title m-0">
                             <div class="col-auto">
@@ -74,11 +74,11 @@
                             <!--end::Title-->
                         </div>
                         <!--end::Card title-->
-                        <div class="card-toolbar m-0">
+                        <div class="card-toolbar m-0 text-secondary">
                             № {{task.id}}
                         </div>
                     </div>
-                    <div class="card-body d-flex flex-column px-9 pt-1 pb-8">
+                    <div class="card-body d-flex flex-column p-3 px-5">
                         <!--begin::Heading-->
                         <div class="row">
                             <h6><b>{{task.name}}</b></h6>
@@ -100,11 +100,11 @@
             </div>
         </div>
 
-        <div v-if="tasks.length === 0">
+        <div v-if="tasks.length === 0" class="px-0 p-1">
             <div class="alert alert-primary">{{getErrorMessage()}}</div>
         </div>
 
-        <div class="col-12 p-0" v-if="tasks.length > 0">
+        <div class="col-12 px-0 p-1" v-if="tasks.length > 0">
             <PaginationTemplate :count="pagesCount" :current-page="currentPage" :per-page="perPage"></PaginationTemplate>
         </div>
     </div>

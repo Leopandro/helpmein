@@ -1,29 +1,29 @@
 <template>
     <div class="card col-12">
-        <div class="card-body" v-if="isVisible">
-            <div class="row p-5">
-                <div class="col-1">
+        <div class="p-3" v-if="isVisible">
+            <div class="row p-3">
+                <div class="col-auto">
                     {{model.type.title}}
                 </div>
                 <div class="col-auto">
                     <b>{{model.name}}</b>
                 </div>
             </div>
-            <div class="row p-5">
+            <div class="row p-3">
                 <p class=""><b>Описание задачи: </b>{{model.description}}</p>
             </div>
-            <div class="row p-5" v-if="model.comment_client">
+            <div class="row p-3" v-if="model.comment_client">
                 {{model.comment_client}}
             </div>
-            <div class="row p-5" v-if="model.answer.teacher_comment">
+            <div class="row p-3" v-if="model.answer.teacher_comment">
                 <p class=""><b>Комментарий преподавателя: </b>{{model.answer.teacher_comment}}</p>
             </div>
 
-            <div class="row p-5">
+            <div class="row p-3">
                 <div class="fw-semibold fs-6">Решение задачи</div>
             </div>
 
-            <div class="row p-5">
+            <div class="row p-6">
                 <textarea
                     v-model="model.answer.answer"
                     type="text"
@@ -31,7 +31,7 @@
                     class="form-control"
                     placeholder="Решение задачи"></textarea>
             </div>
-            <div class="box justify-content-start pt-8">
+            <div class="box justify-content-start pt-1">
                 <div class="col-auto p-1">
                 </div>
                 <div class="col-auto p-1">
