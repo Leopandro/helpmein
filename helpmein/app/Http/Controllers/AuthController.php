@@ -62,7 +62,7 @@ class AuthController extends Controller
         $token = $request->bearerToken();
         $userAttributes = $user->attributesToArray();
         $userAttributes['token'] = $token;
-        $userAttributes['avatar'] = new MediaResource($user->getFirstMedia('avatars'));
+        $userAttributes['avatar'] = $user->getFirstMedia('avatars') ? new MediaResource($user->getFirstMedia('avatars')) : null;
         return $this->getSuccessResponse($userAttributes);
     }
 
