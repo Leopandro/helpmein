@@ -9,7 +9,7 @@
       <div class="menu-content d-flex align-items-center px-3">
         <!--begin::Avatar-->
         <div class="symbol symbol-50px me-5">
-          <img alt="Logo" src="/media/avatars/300-1.jpg" />
+          <img alt="Logo" :src="avatar" style="width: 50px; height: 50px; object-fit: cover"/>
         </div>
         <!--end::Avatar-->
 
@@ -247,6 +247,11 @@ export default defineComponent({
           const user = store.user;
           return user.name + ' ' + user.surname;
       });
+      const avatar = computed(() => {
+          const store = useAuthStore();
+          const avatar = store.avatar;
+          return avatar;
+      });
       const email = computed(() => {
           const store = useAuthStore();
           const user = store.user;
@@ -255,6 +260,7 @@ export default defineComponent({
     return {
       signOut,
       setLang,
+        avatar,
         username,
         email,
       currentLanguage,

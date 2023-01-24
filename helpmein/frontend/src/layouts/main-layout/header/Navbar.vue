@@ -12,7 +12,7 @@
         data-kt-menu-attach="parent"
         data-kt-menu-placement="bottom-end"
       >
-        <img src="/media/avatars/300-1.jpg" alt="user" />
+        <img :src="avatar" alt="user" style="width: 50px; height: 50px; object-fit: cover"/>
       </div>
       <KTUserMenu />
       <!--end::Menu wrapper-->
@@ -42,6 +42,7 @@ import KTQuickLinksMenu from "@/layouts/main-layout/menus/QuickLinksMenu.vue";
 import KTUserMenu from "@/layouts/main-layout/menus/UserAccountMenu.vue";
 import KTThemeModeSwitcher from "@/layouts/main-layout/theme-mode/ThemeModeSwitcher.vue";
 import { useThemeStore } from "@/stores/theme";
+import {useAuthStore} from "@/stores/auth";
 
 export default defineComponent({
   name: "header-navbar",
@@ -58,9 +59,14 @@ export default defineComponent({
     const themeMode = computed(() => {
       return store.mode;
     });
-
+      const avatar = computed(() => {
+          const store = useAuthStore();
+          const avatar = store.avatar;
+          return avatar;
+      });
     return {
       themeMode,
+        avatar,
     };
   },
 });

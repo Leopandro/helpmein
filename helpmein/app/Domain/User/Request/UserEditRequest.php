@@ -16,7 +16,7 @@ class UserEditRequest extends FormRequest
         return [
             'login' => 'sometimes|unique:users|string|max:255',
             'email' => 'required|unique:users,email,'.$user->id.'|string|email|max:255',
-
+            'avatar' => 'sometimes|nullable|mimes:jpg,bmp,png|file|max:2048',
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
         ];
@@ -25,7 +25,8 @@ class UserEditRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => 'Имя'
+            'name' => 'Имя',
+            'avatar' => 'Аватар',
         ];
     }
 }

@@ -14,6 +14,7 @@ export interface User {
 export const useAuthStore = defineStore("auth", () => {
     const errors = ref("");
     const messages = ref("");
+    const avatar = ref("/media/avatars/300-1.jpg");
     const status = ref(500);
     const user = ref<User>({} as User);
     const permissions = ref("");
@@ -33,6 +34,7 @@ export const useAuthStore = defineStore("auth", () => {
     }
     function setUserData(authUser: User) {
         user.value = authUser;
+        avatar.value = authUser.avatar.url;
         errors.value = "";
     }
 
@@ -160,6 +162,7 @@ export const useAuthStore = defineStore("auth", () => {
     }
 
     return {
+        avatar,
         errors,
         messages,
         roles,

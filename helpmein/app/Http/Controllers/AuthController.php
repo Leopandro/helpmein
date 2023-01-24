@@ -10,6 +10,7 @@ use App\Domain\User\Request\RegisterRequest;
 use App\Domain\User\Request\RemindPasswordRequest;
 use App\Domain\User\Service\AuthenticationService;
 use App\Domain\User\UseCase\PasswordChanged\PasswordChangedEmail;
+use App\Infrastructure\Http\Resource\MediaResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -61,6 +62,7 @@ class AuthController extends Controller
         $token = $request->bearerToken();
         $userAttributes = $user->attributesToArray();
         $userAttributes['token'] = $token;
+        $userAttributes['avatar'] = new MediaResource($user->getFirstMedia('avatars'));
         return $this->getSuccessResponse($userAttributes);
     }
 

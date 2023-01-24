@@ -13,7 +13,7 @@ class UserCreateRequest extends FormRequest
         return [
             'login' => 'sometimes|unique:users|string|max:255',
             'email' => 'required|unique:users|string|email|max:255',
-            'avatar' => 'sometimes|base64dimensions:min_width=100,min_height=200,max_width=1980,max_height:1080|base64max:1000',
+            'avatar' => 'sometimes|mimes:jpg,bmp,png|file|size:2048',
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
         ];

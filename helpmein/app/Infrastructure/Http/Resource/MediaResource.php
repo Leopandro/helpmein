@@ -42,7 +42,6 @@ class MediaResource extends JsonResource
         return [
             'id' => $media->id,
             'name' => $media->file_name,
-            'size' => $media->getHumanReadableSizeAttribute(),
             'url' => implode('/', $urlParts),
         ];
     }

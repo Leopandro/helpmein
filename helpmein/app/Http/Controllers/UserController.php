@@ -42,6 +42,14 @@ class UserController extends Controller
         $user->surname = $request->get('surname');
 
         if ($user->save()) {
+            if ($request->file('avatar')) {
+                $user
+                    ->clearMediaCollection('avatars');
+                $user
+                    ->addMediaFromRequest('avatar')
+                    ->toMediaCollection('avatars');
+                $user->save();
+            }
             return $this->getSuccessResponse([]);
         } else {
             return $this->getSingleErrorResponse("Ошибка");
@@ -72,9 +80,9 @@ class UserController extends Controller
             ]);
             Mail::to($user->email)->send(new UserInvationEmail($user, $token));
             if ($file = $request->file('avatar')) {
-                $name = $user->id.'.'.$file->getExtension();
-                $file->storeAs('avatars', $name, ['disk' => 'public']);
-                $user->avatar = $name;
+                $user
+                    ->addMediaFromRequest('avatar')
+                    ->toMediaCollection('avatars');
                 $user->save();
             }
             return $this->getSuccessResponse([]);
@@ -97,9 +105,11 @@ class UserController extends Controller
                 ]]);
         if ($user->save()) {
             if ($file = $request->file('avatar')) {
-                $name = $user->id.'.'.$file->getClientOriginalExtension();
-                $file->storeAs('avatars', $name, ['disk' => 'public']);
-                $user->avatar = $name;
+                $user
+                    ->clearMediaCollection('avatars');
+                $user
+                    ->addMediaFromRequest('avatar')
+                    ->toMediaCollection('avatars');
                 $user->save();
             }
             return $this->getSuccessResponse([]);
