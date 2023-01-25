@@ -19,7 +19,7 @@ class ProfileResource extends JsonResource
             'name' => $user->name,
             'surname' => $user->surname,
             'email' => $user->email,
-            'avatar' => new MediaResource($user->getFirstMedia('avatars'))
+            'avatar' => $user->getFirstMedia('avatars') ? new MediaResource($user->getFirstMedia('avatars')) : $user->getFirstMedia('avatars')
         ];
     }
 }

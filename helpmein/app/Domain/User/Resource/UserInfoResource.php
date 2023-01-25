@@ -20,7 +20,7 @@ class UserInfoResource extends JsonResource
             'active' => $user->teachers->first()->pivot->active,
             'surname' => $user->teachers->first()->pivot->surname,
             'email' => $user->email,
-            'avatar' => new MediaResource($user->getFirstMedia('avatars'))
+            'avatar' => $user->getFirstMedia('avatars') ? new MediaResource($user->getFirstMedia('avatars')) : $user->getFirstMedia('avatars')
         ];
     }
 }

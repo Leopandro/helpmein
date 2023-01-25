@@ -190,7 +190,7 @@ export default {
             if (question.type === 'radio') {
                 return "Выберите один из вариантов:";
             } else {
-                return "Выберите один или несколько вариантов:";
+                return "Правильными могут быть несколько вариантов:";
             }
         },
         setRadioCheck(index, answerIndex) {
