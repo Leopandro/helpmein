@@ -55,7 +55,7 @@ const routes: Array<RouteRecordRaw> = [
                 path: "/task/solve-task/:id",
                 name: "task-solve-task",
                 component: () => {
-                    return import("@/views/client-task/task-types/ClientTaskSolveTypeTask.vue")
+                    return import("@/views/client-task/test/ClientTaskSolveTypeTest.vue")
                 },
                 meta: {
                     pageTitle: "Решение задачи",
@@ -69,7 +69,7 @@ const routes: Array<RouteRecordRaw> = [
                 path: "/task/solve-task-result/:id",
                 name: "task-solve-task-result",
                 component: () => {
-                    return import("@/views/client-task/task-types/ClientTaskSolveTypeTaskResult.vue")
+                    return import("@/views/client-task/test/ClientTaskTestView.vue")
                 },
                 meta: {
                     pageTitle: "Результат решения задачи",
@@ -82,7 +82,7 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: "/task/solve-essay/:id",
                 name: "task-solve-essay",
-                component: () => import("@/views/client-task/task-types/ClientTaskSolveTypeEssay.vue"),
+                component: () => import("@/views/client-task/essay/ClientTaskSolveTypeEssay.vue"),
                 meta: {
                     pageTitle: "Решение задачи",
                     breadcrumbs: [{
@@ -94,7 +94,7 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: "/task/view/:id",
                 name: "task-view",
-                component: () => import("@/views/client-task/ClientTaskView.vue"),
+                component: () => import("@/views/client-task/essay/ClientTaskView.vue"),
                 meta: {
                     pageTitle: "Решение задачи",
                     breadcrumbs: [{
@@ -115,7 +115,7 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: "/task-category/list",
                 name: "task-category-list",
-                component: () => import("@/views/task-category/TaskCategoryList.vue"),
+                component: () => import("@/views/task-category/manage/TaskCategoryList.vue"),
                 meta: {
                     pageTitle: "Категории и задачи",
                     breadcrumbs: ["Категории и задачи"],
@@ -124,7 +124,7 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: "/task-category/assignment",
                 name: "task-category-assignment",
-                component: () => import("@/views/task-category/TaskCategoryAssignment.vue"),
+                component: () => import("@/views/task-category/assign/TaskCategoryAssignment.vue"),
                 meta: {
                     pageTitle: "Назначение задач",
                     breadcrumbs: ["Назначение задач"],
@@ -183,7 +183,7 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: "/admin/task/list",
                 name: "admin-task-list",
-                component: () => import("@/views/task-category/TaskList.vue"),
+                component: () => import("@/views/task-category/manage/TaskList.vue"),
                 meta: {
                     pageTitle: "Список задач",
                     breadcrumbs: [

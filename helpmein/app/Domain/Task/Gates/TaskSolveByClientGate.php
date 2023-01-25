@@ -39,7 +39,7 @@ class TaskSolveByClientGate extends BaseGate
                 ->where('task_id',$taskId)
                 ->first())
         {
-            return in_array($answer->status,['assigned', 'reassigned', 'in_review']);
+            return in_array($answer->status,['assigned', 'reassigned', 'in_review', 'finished']);
         }
         return (bool) $client;
     }

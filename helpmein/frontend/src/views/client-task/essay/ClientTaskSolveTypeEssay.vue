@@ -13,7 +13,7 @@
                 <p class=""><b>Описание задачи: </b>{{model.description}}</p>
             </div>
             <div class="row p-3" v-if="model.comment_client">
-                {{model.comment_client}}
+                <div>{{model.comment_client}}</div>
             </div>
             <div class="row p-3" v-if="model.answer.teacher_comment">
                 <p class=""><b>Комментарий преподавателя: </b>{{model.answer.teacher_comment}}</p>
@@ -33,8 +33,6 @@
             </div>
             <div class="box justify-content-start pt-1">
                 <div class="col-auto p-1">
-                </div>
-                <div class="col-auto p-1">
                     <button
                         v-on:click="submitForm"
                         href="javascript:;"
@@ -51,8 +49,8 @@
                         <button
                             href="javascript:;"
                             type="submit"
-                            class="btn btn-warning shadow btn btn-sm me-1">
-                            <span class="indicator-label"> Назад к списку задач </span>
+                            class="btn btn-secondary shadow btn btn-sm me-1">
+                            <span class="indicator-label"> К списку задач </span>
                             <span class="indicator-progress">
                             Пожалуйста подождите...
                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
@@ -162,19 +160,7 @@ export default {
             this.$refs.submitButton.setAttribute("data-kt-indicator", "on");
             await ApiService.post("client/task/solve/"+this.model.id, this.model)
                 .then(() => {
-                    Swal.fire({
-                        text: "Ответ успешно сохранен",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ок!",
-                        heightAuto: false,
-                        customClass: {
-                            confirmButton: "btn fw-semobold btn-light-primary",
-                        },
-                    }).then(() => {
-                        // Go to page after successfully login
-                        this.$router.push({name: "task-list"});
-                    });
+                    this.$router.push({name: "task-list"});
                 })
                 .catch(({response}) => {
                     this.errors = response.data.errors;

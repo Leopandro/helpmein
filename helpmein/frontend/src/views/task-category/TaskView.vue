@@ -88,7 +88,7 @@
                                     <label class="col-lg-2 col-form-label fw-semobold fs-6">
                                         Вопрос №{{ index + 1 }}
                                     </label>
-                                    <div class="col-lg-8 fv-row">
+                                    <div class="col-lg-8 p-0">
                                         <input type="text" v-model="model.questions[index].title"
                                                placeholder="Введите название вопроса"
                                                class="form-control form-control-lg form-control-solid" disabled>
@@ -103,17 +103,17 @@
                                 <div class="form-group row">
 
                                     <div class="col-2">Правильных ответов</div>
-                                    <div class="col-8">
+                                    <div class="col-8 p-0">
                                         <div class="radio-inline radio-box col-8">
                                             <div class="form-check form-check-custom form-check-solid">
-                                                <label class="form-check-label" :for="'input_'+index+'_radio'">
+                                                <label class="form-check-label m-0" :for="'input_'+index+'_radio'">
                                                     <input class="form-check-input" type="radio" :id="'input_'+index+'_radio'"
                                                            v-model="model.questions[index].type" v-bind:value="'radio'" disabled>
                                                     Один
                                                 </label>
                                             </div>
                                             <div class="form-check form-check-custom form-check-solid">
-                                                <label class="form-check-label" :for="'input_'+index+'_checkbox'">
+                                                <label class="form-check-label m-0" :for="'input_'+index+'_checkbox'">
                                                     <input class="form-check-input" type="radio" :id="'input_'+index+'_checkbox'"
                                                            v-model="model.questions[index].type" v-bind:value="'checkbox'" disabled>
                                                     Несколько
@@ -144,7 +144,7 @@
                                                     <input type="text"
                                                            :ref="'answer_'+index+'_'+answerIndex"
                                                            class="form-control form-control-sm form-control-solid"
-                                                           placeholder="название ответа"
+                                                           placeholder="текст ответа"
                                                            v-model="model.questions[index].answers[answerIndex].title" disabled
                                                     >
                                                 </div>
@@ -182,8 +182,8 @@
                     <button
                         href="javascript:;"
                         type="submit"
-                        class="btn-warning shadow btn">
-                        <span class="indicator-label"> Назад к списку задач </span>
+                        class="btn-secondary shadow btn">
+                        <span class="indicator-label"> К списку задач </span>
                         <span class="indicator-progress">
                         Пожалуйста подождите...
                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span>

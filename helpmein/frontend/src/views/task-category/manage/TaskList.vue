@@ -8,7 +8,7 @@
         <div class="col-12 px-0 p-1 task-list-item" v-for="(task, name, index) in task_categories">
             <div class="card h-100">
 
-                <div class="card-header flex-nowrap border-0 p-3 px-5">
+                <div class="card-header flex-nowrap border-0 p-3">
                     <!--begin::Card title-->
                     <div class="card-title m-0">
                         <!--begin::Icon-->
@@ -52,7 +52,7 @@
                         № {{task.id}}
                     </div>
                 </div>
-                <div class="card-body d-flex flex-column p-3 px-5">
+                <div class="card-body d-flex flex-column px-4 p-0">
                     <!--begin::Heading-->
                     <div class="row">
                         <h6><b>{{task.name}}</b></h6>
@@ -143,10 +143,14 @@ export default {
 
         getEditLink(task) {
             return '/task/edit/' + task.id;
+        },
+
+        getViewLink(task) {
+            return '/admin/task/view/' + task.id;
         }
     },
-    mounted() {
-        const nodeStore = this.store;
+    async mounted() {
+        const nodeStore = useNodeStore();
         this.task_category = nodeStore.selectedNode;
         await this.loadData();
         this.emitter.on("pick-folder", (item) => {
@@ -166,12 +170,12 @@ export default {
     unmounted() {
         this.emitter.off("pick-folder");
         this.emitter.off("change-page");
+        this.emitter.off("change-count");
     }
 }
 </script>
 <style>
 .task-list-item {
-    max-height: 203px;
     overflow: hidden;
 }
 </style>

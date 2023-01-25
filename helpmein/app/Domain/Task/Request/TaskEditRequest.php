@@ -49,7 +49,7 @@ class TaskEditRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'questions.*.answers.*.title' => 'Название ответа',
+            'questions.*.answers.*.title' => 'Текст ответа',
             'questions.*.answers' => 'Ответы на вопрос',
             'questions.*.title' => 'Название вопроса',
         ];

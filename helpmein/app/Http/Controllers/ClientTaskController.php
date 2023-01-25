@@ -77,7 +77,7 @@ class ClientTaskController extends Controller
                 $mistakes = $userTaskService->getMistakesCount($task, $request->get('questions'));
                 $answer->mistakes = $mistakes;
                 if ($mistakes > 0) {
-                    $answer->status = UserTaskStatus::IN_REVIEW;
+                    $answer->status = UserTaskStatus::REASSIGNED;
                 } else {
                     $answer->status = UserTaskStatus::FINISHED;
                 }

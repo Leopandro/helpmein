@@ -13,7 +13,7 @@
                 <p class=""><b>Описание задачи: </b>{{model.description}}</p>
             </div>
             <div class="row p-2" v-if="model.comment_client">
-                {{model.comment_client}}
+                <div>{{model.comment_client}}</div>
             </div>
             <div class="row p-2" v-if="model.answer.teacher_comment">
                 <span class=""><span class="fw-bold">Комментарий преподавателя: </span>{{model.answer.teacher_comment}}</span>
@@ -26,11 +26,28 @@
             <div class="row p-2">
                 <div class="">{{model.answer.answer}}</div>
             </div>
+
+            <div class="box justify-content-start pt-1">
+                <div class="col-auto p-1">
+                    <router-link to="/task/list">
+                        <button
+                            href="javascript:;"
+                            type="submit"
+                            class="btn btn-secondary shadow btn btn-sm me-1">
+                            <span class="indicator-label"> К списку задач </span>
+                            <span class="indicator-progress">
+                                Пожалуйста подождите...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                    </router-link>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 <script>
-import ApiService from "../../core/services/ApiService";
+import ApiService from "../../../core/services/ApiService";
 import Swal from "sweetalert2";
 
 export default {

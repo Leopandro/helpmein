@@ -48,7 +48,7 @@
             <div class="col-12 px-0 p-1 task-list-item" v-for="(task, name, index) in tasks">
                 <div class="card h-100">
 
-                    <div class="card-header flex-nowrap border-0 p-3 px-5">
+                    <div class="card-header flex-nowrap border-0 p-3">
                         <!--begin::Card title-->
                         <div class="card-title m-0">
                             <div class="col-auto">
@@ -292,7 +292,6 @@ export default {
 </script>
 <style scoped>
 .task-list-item {
-    max-height: 203px;
     overflow: hidden;
 }
 .card .card-header {
