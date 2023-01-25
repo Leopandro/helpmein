@@ -1,59 +1,13 @@
 <template>
     <div class="col-lg-8 col-md-10 col-sm-12">
-        <table class="table table-row-dashed fs-6 gy-5 my-0" v-if="tasks?.length > 0">
-<!--                <thead>-->
-<!--                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">-->
-<!--                        <th class="min-w-125px">Статус</th>-->
-<!--                        <th class="min-w-125px">Название</th>-->
-<!--                        <th class="min-w-125px">Описание</th>-->
-<!--                        <th class="min-w-125px">Тип задачи</th>-->
-<!--                        <th class="min-w-125px text-end">Действия</th>-->
-<!--                    </tr>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                    <tr v-for="task in tasks">-->
-<!--                        <td class="text-dark text-gray-800 align-middle">-->
-<!--                            <GetSvgByStatus :status="task.status.id"></GetSvgByStatus>-->
-<!--                        </td>-->
-<!--                        <td class="text-dark text-gray-800 align-middle">-->
-<!--                            <router-link :to="'/task/view/' + task.id" class="text-gray-800 text-hover-primary mb-1">-->
-<!--                                {{task.name}}-->
-<!--                            </router-link>-->
-<!--                        </td>-->
-<!--                        <td class="text-dark text-gray-800 align-middle">{{task.description}}</td>-->
-<!--                        <td class="text-dark text-gray-800 align-middle">{{task.type.title}}</td>-->
-<!--                        <td class="text-end">-->
-
-<!--                            <div class="dropdown">-->
-<!--                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">-->
-<!--                                    Действия-->
-<!--                                </button>-->
-<!--                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">-->
-<!--                                    <li>-->
-<!--                                        <template v-if="task.type.id === 'essay'">-->
-<!--                                            <router-link v-if="['reassigned','in_review','finished'].includes(task.status.id)" :to="'/task/view/'+task.id" class="dropdown-item">-->
-<!--                                                Просмотр ответа-->
-<!--                                            </router-link>-->
-<!--                                            <router-link v-if="['assigned','reassigned'].includes(task.status.id)" :to="getEditLink(task)" class="dropdown-item">-->
-<!--                                                Отправить ответ-->
-<!--                                            </router-link>-->
-<!--                                        </template>-->
-<!--                                        <template v-if="task.type.id === 'task'">-->
-<!--                                            <router-link v-if="!['assigned'].includes(task.status.id)" :to="getResultLink(task)" class="dropdown-item">-->
-<!--                                                Просмотр решения-->
-<!--                                            </router-link>-->
-<!--                                            <router-link v-if="['assigned'].includes(task.status.id)" :to="getEditLink(task)" class="dropdown-item">-->
-<!--                                                Отправить решение-->
-<!--                                            </router-link>-->
-<!--                                        </template>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </div>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                </tbody>-->
-        </table>
-
+        <div class="card-title">
+            <button
+                    v-on:click="setStatus(index)"
+                    v-for="(taskStatusItem, index) in taskStatuses"
+                    :class="{'btn-secondary': taskStatus === index}"
+                    type="button"
+                    class="btn btn-sm btn-light">{{ taskStatusItem.title }}</button>
+        </div>
         <div class="col-lg-12 p-1 task-list-item" v-for="(task, name, index) in tasks">
             <div class="card h-100">
 
@@ -109,7 +63,7 @@
             </div>
         </div>
 
-        <div class="col-12 p-0" v-if="tasks && tasks.length > 0">
+        <div class="col-12 p-1" v-if="tasks && tasks.length > 0">
             <PaginationTemplate :per-page="perPage" :count="pagesCount" :current-page="currentPage"></PaginationTemplate>
         </div>
 
@@ -146,16 +100,25 @@ export default{
             return '/task/solve-' + task.type.id + '-result/'+ task.id;
         },
         async loadData() {
+            let filter  = {
+            };
+            this.taskStatus ? filter[this.taskStatus] = true : filter[this.taskStatus];
             await ApiService.query('/client/task/list', {
                 params: {
+                    filter: filter,
                     page: this.currentPage,
-                    count: this.perPage
+                    count: this.perPage,
                 }
             }).then((response) => {
                 this.tasks = response.data.data.items;
                 this.pagesCount = response.data.data.meta.pages_count;
             })
-        }
+        },
+        async setStatus(status) {
+            this.taskStatus = status;
+            this.currentPage = 1;
+            await this.loadData();
+        },
     },
     data() {
         return {
@@ -168,6 +131,21 @@ export default{
             currentPage: 1,
             perPage: 10,
             pagesCount: null,
+            taskStatus: 'all',
+            taskStatuses: {
+                'new': {
+                    title: 'Новые',
+                    errorMessage: 'Нет новых задач',
+                },
+                '10day': {
+                    title: 'За 10 дней',
+                    errorMessage: 'Нет задач за последние 10 дней',
+                },
+                'all': {
+                    title: 'Все',
+                    errorMessage: 'Нет задач',
+                },
+            },
         }
     },
     beforeMount() {

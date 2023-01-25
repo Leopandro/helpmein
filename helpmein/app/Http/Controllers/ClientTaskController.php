@@ -12,11 +12,13 @@ use App\Domain\Task\Service\UserTaskService;
 use App\Domain\User\Model\User;
 use App\Domain\UserAnswer\Model\Answer;
 use App\Enum\UserTaskStatus;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class ClientTaskController extends Controller
@@ -102,12 +104,21 @@ class ClientTaskController extends Controller
         /** @var Builder $query */
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters([
-//                AllowedFilter::callback('task_category_id', static function (Builder $query, $value) {
-//                    return $query->where('task_category_id', '=',$value);
-//                }),
+                AllowedFilter::callback('new', static function (Builder $query, $value) {
+                    return $query->withWhereHas('answer', fn ($query) =>
+                        $query->where('answer.status','=',UserTaskStatus::ASSIGNED)
+                    );
+                }),
+                AllowedFilter::callback('10day', static function (Builder $query, $value) {
+                    return $query->withWhereHas('answer', fn ($query) =>
+                        $query->whereDate('answer.updated_at', '>', Carbon::now()->subDays(10))
+                    );
+                }),
+                AllowedFilter::callback('all', static function (Builder $query, $value) {
+                    return $query;
+                }),
             ])
-            ->with('answer')
-            ->whereHas('answer', function ($query) use ($user) {
+            ->withWhereHas('answer', function ($query) use ($user) {
                 $query->where('user_task.user_id', '=', $user->getAttribute('id'));
             })
             ->orderBy('id')
