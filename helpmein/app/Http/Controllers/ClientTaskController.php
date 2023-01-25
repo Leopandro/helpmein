@@ -104,24 +104,25 @@ class ClientTaskController extends Controller
         /** @var Builder $query */
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters([
-                AllowedFilter::callback('new', static function (Builder $query, $value) {
+                AllowedFilter::callback('new', static function (Builder $query) {
                     return $query->withWhereHas('answer', fn ($query) =>
                         $query->where('answer.status','=',UserTaskStatus::ASSIGNED)
                     );
                 }),
-                AllowedFilter::callback('10day', static function (Builder $query, $value) {
+                AllowedFilter::callback('10day', static function (Builder $query) {
                     return $query->withWhereHas('answer', fn ($query) =>
                         $query->whereDate('answer.updated_at', '>', Carbon::now()->subDays(10))
                     );
                 }),
-                AllowedFilter::callback('all', static function (Builder $query, $value) {
+                AllowedFilter::callback('all', static function (Builder $query) {
                     return $query;
                 }),
             ])
-            ->withWhereHas('answer', function ($query) use ($user) {
-                $query->where('user_task.user_id', '=', $user->getAttribute('id'));
-            })
-            ->orderBy('id')
+            ->select('task.*')
+            ->leftJoin('user_task','user_task.task_id','=','task.id')
+            ->leftJoin('answer','answer.user_task_id','=','user_task.id')
+            ->where('user_task.user_id', '=', $user->getAttribute('id'))
+            ->orderBy('answer.created_at')
             ->paginate($request->get('count'));
         return $this->getListItemsResponse($tasks, ClientTaskInfoResource::class, $request);
     }
