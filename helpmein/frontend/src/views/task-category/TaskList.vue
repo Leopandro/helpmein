@@ -88,6 +88,7 @@
 <script type="ts">
 import ApiService from "@/core/services/ApiService";
 import PaginationTemplate from "@/components/table/PaginationTemplate.vue";
+import {useNodeStore} from "@/stores/node-tree";
 export default {
     name: 'TaskCategoryList',
     components: {
@@ -142,13 +143,12 @@ export default {
 
         getEditLink(task) {
             return '/task/edit/' + task.id;
-        },
-
-        getViewLink(task) {
-            return '/admin/task/view/' + task.id;
         }
     },
     mounted() {
+        const nodeStore = this.store;
+        this.task_category = nodeStore.selectedNode;
+        await this.loadData();
         this.emitter.on("pick-folder", (item) => {
             this.task_category = item;
             this.loadData();
@@ -166,7 +166,6 @@ export default {
     unmounted() {
         this.emitter.off("pick-folder");
         this.emitter.off("change-page");
-        this.emitter.off("change-count");
     }
 }
 </script>

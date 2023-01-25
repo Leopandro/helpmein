@@ -138,7 +138,6 @@ export default {
         },
         folderClick(item) {
             this.store.selectedNode = item;
-            console.log(this.store.selectedNode.id);
             this.emitter.emit("pick-folder", item);
         }
     },
