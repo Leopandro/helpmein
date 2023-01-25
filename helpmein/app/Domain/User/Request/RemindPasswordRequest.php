@@ -23,4 +23,18 @@ class RemindPasswordRequest extends FormRequest
 
         return $data;
     }
+
+    public function attributes(): array
+    {
+        return [
+            'email' => 'e-mail',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.email' => 'Значение для поля :attribute некорректно'
+        ];
+    }
 }
