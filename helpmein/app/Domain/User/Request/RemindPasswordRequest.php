@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\User\Request;
 
+use App\Infrastructure\Lang\Translator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
@@ -12,7 +13,7 @@ class RemindPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|exists:users|string|email|max:255',
+            'email' => 'required|email|exists:users|string|max:255',
         ];
     }
 
@@ -34,7 +35,12 @@ class RemindPasswordRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.email' => 'Значение для поля :attribute некорректно'
+            'email.exists' => Translator::translate('Значение для поля :attribute некорректно', [
+                'attribute' => 'e-mail'
+            ]),
+            'email.email' => Translator::translate('Значение для поля :attribute некорректно', [
+                'attribute' => 'e-mail'
+            ])
         ];
     }
 }

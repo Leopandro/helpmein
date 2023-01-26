@@ -26,7 +26,7 @@ abstract class BaseGate
      */
     public function isSuperAdmin(User $user): bool
     {
-        if ($user->email === 'admin_0@example.net' || $user->hasRole(Role::ROLE_ADMIN)) {
+        if ($user->email === 'teacher@example.com') {
             return true;
         }
 

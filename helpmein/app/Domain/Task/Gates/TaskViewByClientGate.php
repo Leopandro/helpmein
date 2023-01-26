@@ -21,6 +21,9 @@ class TaskViewByClientGate extends BaseGate
 
     public function __invoke(User $user, string $taskId): bool
     {
+        if ($this->isSuperAdmin($user)) {
+            return true;
+        }
         $task = Client::query()
             ->with('tasks')
             ->whereHas('tasks', function(Builder $query) use ($taskId){

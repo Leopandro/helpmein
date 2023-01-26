@@ -21,9 +21,9 @@ class TaskEditByUserGate extends BaseGate
     public function __invoke(User $user, string $taskId): bool
     {
         // TODO: add roles
-//        if ($this->isSuperAdmin($user)) {
-//            return true;
-//        }
+        if ($this->isSuperAdmin($user)) {
+            return true;
+        }
         /** @var Task $task */
         $task = Task::query()->where('user_id','=',$user->id)->find($taskId);
 

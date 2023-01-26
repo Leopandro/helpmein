@@ -20,9 +20,9 @@ class ClientEditByUserGate extends BaseGate
     public function __invoke(User $user, string $userId): bool
     {
         // TODO: add roles
-//        if ($this->isSuperAdmin($user)) {
-//            return true;
-//        }
+        if ($this->isSuperAdmin($user)) {
+            return true;
+        }
         $teachers = User::query()->find($userId)->teachers()->where('user_id', $user->id)->get();
         return (bool) $teachers->count();
     }

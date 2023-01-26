@@ -128,7 +128,6 @@ export default {
             task_category: '',
             tasks: [],
             tasksErrorMessage: '',
-            selectedUser: '',
             difficultLevel: '',
             difficultLevels: [
                 {
@@ -151,6 +150,9 @@ export default {
         };
     },
     computed: {
+        selectedUser() {
+            return this.store.selectedUser;
+        },
         count() {
             var len = 0;
 
@@ -225,7 +227,9 @@ export default {
         acceptAssignments() {
             this.uploadMassAssignment();
         },
-        async changeUser() {
+        async changeUser(e) {
+            console.log(e.target.value);
+            this.store.selectedUser = e.target.value;
             this.selectedItems = {};
             await this.loadData();
         },

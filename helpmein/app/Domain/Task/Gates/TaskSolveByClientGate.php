@@ -23,6 +23,9 @@ class TaskSolveByClientGate extends BaseGate
 
     public function __invoke(User $user, string $taskId): bool
     {
+        if ($this->isSuperAdmin($user)) {
+            return true;
+        }
         /** @var Client $task */
         $client = Client::query()
             ->with('tasks')
