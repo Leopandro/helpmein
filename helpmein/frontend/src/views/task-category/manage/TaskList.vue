@@ -1,6 +1,6 @@
 <template>
     <div v-if="task_category.id">
-        <div class="col-12">
+        <div class="col-12 px-0 p-1">
             <router-link :to="getCreateLink()">
                 <button type="button" class="btn btn-primary">Добавить задачу</button>
             </router-link>

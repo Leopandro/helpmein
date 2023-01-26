@@ -85,20 +85,21 @@
 
                             <div class="card-body">
                                 <div class="row">
-                                    <label class="col-lg-2 col-form-label fw-semobold fs-6">
+                                    <label class="col-2 col-form-label fw-semobold fs-6">
                                         Вопрос №{{ index + 1 }}
                                     </label>
-                                    <div class="col-lg-8 p-0">
-                                        <input type="text" v-model="model.questions[index].title"
-                                               placeholder="Введите название вопроса"
-                                               class="form-control form-control-lg form-control-solid">
-                                        <div v-if="errors['questions.'+index+'.title']" class="fv-plugins-message-container invalid-feedback">
-                                            <div>
-                                                {{errors['questions.'+index+'.title'][0]}}
+                                    <div class="col-10 radio-inline radio-box row">
+                                        <div class="col-8 p-0">
+                                            <input type="text" v-model="model.questions[index].title"
+                                                   placeholder="Введите название вопроса"
+                                                   class="form-control form-control-lg form-control-solid">
+                                            <div v-if="errors['questions.'+index+'.title']" class="fv-plugins-message-container invalid-feedback">
+                                                <div>
+                                                    {{errors['questions.'+index+'.title'][0]}}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-2" v-on:click="removeQuestion(index)">
+                                        <div class="col-2" v-on:click="removeQuestion(index)">
                                         <span class="svg-icon svg-icon-muted svg-icon-2hx" role="button">
                                             <svg width="24" height="24" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="#E7505A"/>
@@ -106,6 +107,7 @@
                                                 <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="#E7505A"/>
                                             </svg>
                                         </span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group row min-h-50px align-items-center">
@@ -138,24 +140,24 @@
                                 <div class="form-group row">
 
                                     <div class="col-2 pt-3">Варианты ответов</div>
-                                    <div class="col-8 radio-inline radio-box row">
+                                    <div class="col-10 radio-inline radio-box row">
                                         <template v-for="(answerItem, answerIndex) of model.questions[index].answers">
-                                            <div class="row">
                                                 <div
-                                                    class="form-check-custom form-check-inline form-check-solid me-5 form-flex p-1 px-0">
-                                                    <input
-                                                        class="form-check-input"
-                                                        type="checkbox"
-                                                        :id="'model_question_answer_'+index+'_'+answerIndex"
-                                                        v-model="model.questions[index].answers[answerIndex].checkBoxValue"
-                                                        v-bind:value="true">
-                                                    <input type="text"
-                                                           :ref="'answer_'+index+'_'+answerIndex"
-                                                           class="form-control form-control-sm form-control-solid"
-                                                           placeholder="текст ответа"
-                                                           v-model="model.questions[index].answers[answerIndex].title"
-                                                    >
-                                                    <span class="svg-icon svg-icon-muted svg-icon-2hx"
+                                                    class="form-check-custom form-check-inline form-check-solid me-5 form-flex p-1 px-0 col-12">
+                                                    <div class="col-8 p-0 d-flex">
+                                                        <input
+                                                            class="form-check-input"
+                                                            type="checkbox"
+                                                            :id="'model_question_answer_'+index+'_'+answerIndex"
+                                                            v-model="model.questions[index].answers[answerIndex].checkBoxValue">
+                                                        <input type="text"
+                                                               :ref="'answer_'+index+'_'+answerIndex"
+                                                               class="form-control form-control-sm form-control-solid"
+                                                               placeholder="текст ответа"
+                                                               v-model="model.questions[index].answers[answerIndex].title">
+                                                    </div>
+                                                    <div class="col-auto p-0">
+                                                        <span class="svg-icon svg-icon-muted svg-icon-2hx"
                                                           v-on:click="removeAnswer(index, answerIndex)"
                                                           role="button">
                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -167,6 +169,7 @@
                                                                   transform="rotate(45 7.41422 6)" fill="#E7505A"/>
                                                         </svg>
                                                     </span>
+                                                    </div>
                                                 </div>
                                                 <div v-if="errors['questions.'+index+'.answers.'+answerIndex+'.title']"  class="fv-plugins-message-container invalid-feedback m-0">
                                                     <div>
@@ -178,7 +181,6 @@
                                                         {{errors['questions.'+index+'.answers.'+answerIndex+'.checkBoxValue'][0]}}
                                                     </div>
                                                 </div>
-                                            </div>
                                         </template>
 
                                         <div v-if="errors['questions.'+index+'.answers']" class="fv-plugins-message-container invalid-feedback">

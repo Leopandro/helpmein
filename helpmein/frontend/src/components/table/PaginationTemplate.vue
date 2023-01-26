@@ -2,7 +2,7 @@
     <div class="card h-100">
         <div class="p-3">
             <div class="row">
-                <div class="col-7 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start">
+                <div class="col-7 col-md-6 d-flex align-items-center justify-content-md-start">
                     Страницы:
                     <ul class="pagination pagination-outline">
                         <li class="page-item m-1"
@@ -15,7 +15,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-xl-auto col-lg-12 col-md-auto col-sm-12 ms-auto d-flex align-items-center">
+                <div class="col-xl-auto col-lg-12 col-md-auto col-sm-12 ms-lg-auto d-flex align-items-center">
                     <div class="col-auto">Задач на странице по:</div>
                     <select class="form-select form-select-sm form-select-solid m-1 w-70px"
                             :value="perPage"

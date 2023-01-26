@@ -1,6 +1,6 @@
 <template>
     <div class="card row">
-        <div class="card-body" v-if="isVisible">
+        <div class="card-body pe-none" v-if="isVisible">
             <div class="row mb-6">
                 <div class="col-6">
                     <div class="row fv-row">
@@ -85,16 +85,18 @@
 
                             <div class="card-body">
                                 <div class="row">
-                                    <label class="col-lg-2 col-form-label fw-semobold fs-6">
+                                    <label class="col-2 col-form-label fw-semobold fs-6">
                                         Вопрос №{{ index + 1 }}
                                     </label>
-                                    <div class="col-lg-8 p-0">
-                                        <input type="text" v-model="model.questions[index].title"
-                                               placeholder="Введите название вопроса"
-                                               class="form-control form-control-lg form-control-solid" disabled>
-                                        <div class="fv-plugins-message-container invalid-feedback">
-                                            <div v-if="errors['questions.'+index+'.title']">
-                                                {{errors['questions.'+index+'.title'][0]}}
+                                    <div class="col-10 radio-inline radio-box row">
+                                        <div class="col-8 p-0">
+                                            <input type="text" v-model="model.questions[index].title"
+                                                   placeholder="Введите название вопроса"
+                                                   class="form-control form-control-lg form-control-solid">
+                                            <div v-if="errors['questions.'+index+'.title']" class="fv-plugins-message-container invalid-feedback">
+                                                <div>
+                                                    {{errors['questions.'+index+'.title'][0]}}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -107,20 +109,20 @@
                                             <div class="form-check form-check-custom form-check-solid">
                                                 <label class="form-check-label m-0" :for="'input_'+index+'_radio'">
                                                     <input class="form-check-input" type="radio" :id="'input_'+index+'_radio'"
-                                                           v-model="model.questions[index].type" v-bind:value="'radio'" disabled>
+                                                           v-model="model.questions[index].type" v-bind:value="'radio'">
                                                     Один
                                                 </label>
                                             </div>
                                             <div class="form-check form-check-custom form-check-solid">
-                                                <label class="form-check-label m-0" :for="'input_'+index+'_checkbox'">
+                                                <label class="form-check-label ms-3" :for="'input_'+index+'_checkbox'">
                                                     <input class="form-check-input" type="radio" :id="'input_'+index+'_checkbox'"
-                                                           v-model="model.questions[index].type" v-bind:value="'checkbox'" disabled>
+                                                           v-model="model.questions[index].type" v-bind:value="'checkbox'">
                                                     Несколько
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="fv-plugins-message-container invalid-feedback">
-                                            <div v-if="errors['questions.'+index+'.type']">
+                                        <div v-if="errors['questions.'+index+'.type']" class="fv-plugins-message-container invalid-feedback">
+                                            <div>
                                                 {{errors['questions.'+index+'.type'][0]}}
                                             </div>
                                         </div>
@@ -129,39 +131,37 @@
                                 <div class="form-group row">
 
                                     <div class="col-2 pt-3">Варианты ответов</div>
-                                    <div class="col-8 radio-inline radio-box row">
+                                    <div class="col-10 radio-inline radio-box row">
                                         <template v-for="(answerItem, answerIndex) of model.questions[index].answers">
-                                            <div class="row">
-                                                <div
-                                                    class="form-check-custom form-check-inline form-check-solid me-5 form-flex p-1 px-0">
+                                            <div
+                                                class="form-check-custom form-check-inline form-check-solid me-5 form-flex p-1 px-0 col-12">
+                                                <div class="col-8 p-0 d-flex">
                                                     <input
                                                         class="form-check-input"
                                                         type="checkbox"
                                                         :id="'model_question_answer_'+index+'_'+answerIndex"
-                                                        v-model="model.questions[index].answers[answerIndex].checkBoxValue"
-                                                        v-bind:value="true" disabled>
+                                                        v-model="model.questions[index].answers[answerIndex].checkBoxValue">
                                                     <input type="text"
                                                            :ref="'answer_'+index+'_'+answerIndex"
                                                            class="form-control form-control-sm form-control-solid"
                                                            placeholder="текст ответа"
-                                                           v-model="model.questions[index].answers[answerIndex].title" disabled
-                                                    >
+                                                           v-model="model.questions[index].answers[answerIndex].title">
                                                 </div>
-                                                <div class="fv-plugins-message-container invalid-feedback m-0">
-                                                    <div v-if="errors['questions.'+index+'.answers.'+answerIndex+'.title']">
-                                                        {{errors['questions.'+index+'.answers.'+answerIndex+'.title'][0]}}
-                                                    </div>
+                                            </div>
+                                            <div v-if="errors['questions.'+index+'.answers.'+answerIndex+'.title']"  class="fv-plugins-message-container invalid-feedback m-0">
+                                                <div>
+                                                    {{errors['questions.'+index+'.answers.'+answerIndex+'.title'][0]}}
                                                 </div>
-                                                <div class="fv-plugins-message-container invalid-feedback m-0">
-                                                    <div v-if="errors['questions.'+index+'.answers.'+answerIndex+'.checkBoxValue']">
-                                                        {{errors['questions.'+index+'.answers.'+answerIndex+'.checkBoxValue'][0]}}
-                                                    </div>
+                                            </div>
+                                            <div v-if="errors['questions.'+index+'.answers.'+answerIndex+'.checkBoxValue']" class="fv-plugins-message-container invalid-feedback m-0">
+                                                <div>
+                                                    {{errors['questions.'+index+'.answers.'+answerIndex+'.checkBoxValue'][0]}}
                                                 </div>
                                             </div>
                                         </template>
 
-                                        <div class="fv-plugins-message-container invalid-feedback">
-                                            <div v-if="errors['questions.'+index+'.answers']">
+                                        <div v-if="errors['questions.'+index+'.answers']" class="fv-plugins-message-container invalid-feedback">
+                                            <div>
                                                 {{errors['questions.'+index+'.answers'][0]}}
                                             </div>
                                         </div>

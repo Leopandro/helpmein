@@ -265,6 +265,7 @@ export default {
         await this.loadUsers();
         const nodeStore = this.store;
         this.task_category = nodeStore.selectedNode;
+        await this.loadData();
         this.emitter.on("pick-folder", (item) => {
             this.task_category = item;
             this.task_category = nodeStore.selectedNode;
