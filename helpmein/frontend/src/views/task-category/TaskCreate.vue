@@ -197,7 +197,9 @@
                 </div>
             </div>
             <div class="row">
-                <button :class="{'disabled': model.type !== 'task'}" type="button" v-on:click="addQuestion" class="btn btn-success shadow btn-sm col-2">Добавить вопрос</button>
+                <div class="row ms-20">
+                    <button :class="{'disabled': model.type !== 'task'}" type="button" v-on:click="addQuestion" class="btn btn-success shadow btn-sm col-2">Добавить вопрос</button>
+                </div>
             </div>
             <br>
         </div>
