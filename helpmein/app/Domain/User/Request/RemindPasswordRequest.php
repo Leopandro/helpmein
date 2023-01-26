@@ -35,7 +35,7 @@ class RemindPasswordRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.exists' => Translator::translate('Значение для поля :attribute некорректно', [
+            'email.exists' => Translator::translate('Пользователь с таким :attribute не зарегистрирован', [
                 'attribute' => 'e-mail'
             ]),
             'email.email' => Translator::translate('Значение для поля :attribute некорректно', [

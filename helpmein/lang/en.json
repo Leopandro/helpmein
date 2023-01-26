@@ -2,6 +2,7 @@
     "(and :count more errors)": "(and :count more errors)",
     "(and :count more error)": "(and one more error)",
     "Значение для поля :attribute некорректно": "The value for the :attribute field is incorrect",
+    "Пользователь с таким :attribute не зарегистрирован": "User with that :attribute not registered",
     "first_name": "Name",
     "last_name": "Surname",
     "email": "e-mail",

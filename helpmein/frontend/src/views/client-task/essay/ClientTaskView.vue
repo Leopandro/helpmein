@@ -9,18 +9,14 @@
                     <b>{{model.name}}</b>
                 </div>
             </div>
-            <div class="row p-2">
-                <p class=""><b>Описание задачи: </b>{{model.description}}</p>
+            <div class="row p-2" v-if="model.description">
+                <div class="">{{model.description}}</div>
             </div>
             <div class="row p-2" v-if="model.comment_client">
                 <div>{{model.comment_client}}</div>
             </div>
             <div class="row p-2" v-if="model.answer.teacher_comment">
                 <span class=""><span class="fw-bold">Комментарий преподавателя: </span>{{model.answer.teacher_comment}}</span>
-            </div>
-
-            <div class="row p-2">
-                <div class="fw-bold fs-6">Решение задачи</div>
             </div>
 
             <div class="row p-2">

@@ -97,10 +97,9 @@
                                                 {{errors['questions.'+index+'.title'][0]}}
                                             </div>
                                         </div>
-                                        <span class="form-text text-muted">Название вопроса</span>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row min-h-50px align-items-center">
 
                                     <div class="col-2">Правильных ответов</div>
                                     <div class="col-8 p-0">
@@ -129,12 +128,12 @@
                                 </div>
                                 <div class="form-group row">
 
-                                    <div class="col-2">Варианты ответов</div>
+                                    <div class="col-2 pt-3">Варианты ответов</div>
                                     <div class="col-8 radio-inline radio-box row">
                                         <template v-for="(answerItem, answerIndex) of model.questions[index].answers">
                                             <div class="row">
                                                 <div
-                                                    class="form-check-custom form-check-inline form-check-solid me-5 form-flex p-1">
+                                                    class="form-check-custom form-check-inline form-check-solid me-5 form-flex p-1 px-0">
                                                     <input
                                                         class="form-check-input"
                                                         type="checkbox"

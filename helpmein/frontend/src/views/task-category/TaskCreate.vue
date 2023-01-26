@@ -92,12 +92,11 @@
                                         <input type="text" v-model="model.questions[index].title"
                                                placeholder="Введите название вопроса"
                                                class="form-control form-control-lg form-control-solid">
-                                        <div class="fv-plugins-message-container invalid-feedback">
-                                            <div v-if="errors['questions.'+index+'.title']">
+                                        <div v-if="errors['questions.'+index+'.title']" class="fv-plugins-message-container invalid-feedback">
+                                            <div>
                                                 {{errors['questions.'+index+'.title'][0]}}
                                             </div>
                                         </div>
-                                        <span class="form-text text-muted">Название вопроса</span>
                                     </div>
                                     <div class="col-lg-2" v-on:click="removeQuestion(index)">
                                         <span class="svg-icon svg-icon-muted svg-icon-2hx" role="button">
@@ -109,7 +108,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row min-h-50px align-items-center">
 
                                     <div class="col-2">Правильных ответов</div>
                                     <div class="col-8 p-0">
@@ -122,15 +121,15 @@
                                                 </label>
                                             </div>
                                             <div class="form-check form-check-custom form-check-solid">
-                                                <label class="form-check-label m-0" :for="'input_'+index+'_checkbox'">
+                                                <label class="form-check-label ms-3" :for="'input_'+index+'_checkbox'">
                                                     <input class="form-check-input" type="radio" :id="'input_'+index+'_checkbox'"
                                                            v-model="model.questions[index].type" v-bind:value="'checkbox'">
                                                     Несколько
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="fv-plugins-message-container invalid-feedback">
-                                            <div v-if="errors['questions.'+index+'.type']">
+                                        <div v-if="errors['questions.'+index+'.type']" class="fv-plugins-message-container invalid-feedback">
+                                            <div>
                                                 {{errors['questions.'+index+'.type'][0]}}
                                             </div>
                                         </div>
@@ -138,12 +137,12 @@
                                 </div>
                                 <div class="form-group row">
 
-                                    <div class="col-2">Варианты ответов</div>
+                                    <div class="col-2 pt-3">Варианты ответов</div>
                                     <div class="col-8 radio-inline radio-box row">
                                         <template v-for="(answerItem, answerIndex) of model.questions[index].answers">
                                             <div class="row">
                                                 <div
-                                                    class="form-check-custom form-check-inline form-check-solid me-5 form-flex p-1">
+                                                    class="form-check-custom form-check-inline form-check-solid me-5 form-flex p-1 px-0">
                                                     <input
                                                         class="form-check-input"
                                                         type="checkbox"
@@ -169,21 +168,21 @@
                                                         </svg>
                                                     </span>
                                                 </div>
-                                                <div class="fv-plugins-message-container invalid-feedback m-0">
-                                                    <div v-if="errors['questions.'+index+'.answers.'+answerIndex+'.title']">
+                                                <div v-if="errors['questions.'+index+'.answers.'+answerIndex+'.title']"  class="fv-plugins-message-container invalid-feedback m-0">
+                                                    <div>
                                                         {{errors['questions.'+index+'.answers.'+answerIndex+'.title'][0]}}
                                                     </div>
                                                 </div>
-                                                <div class="fv-plugins-message-container invalid-feedback m-0">
-                                                    <div v-if="errors['questions.'+index+'.answers.'+answerIndex+'.checkBoxValue']">
+                                                <div v-if="errors['questions.'+index+'.answers.'+answerIndex+'.checkBoxValue']" class="fv-plugins-message-container invalid-feedback m-0">
+                                                    <div>
                                                         {{errors['questions.'+index+'.answers.'+answerIndex+'.checkBoxValue'][0]}}
                                                     </div>
                                                 </div>
                                             </div>
                                         </template>
 
-                                        <div class="fv-plugins-message-container invalid-feedback">
-                                            <div v-if="errors['questions.'+index+'.answers']">
+                                        <div v-if="errors['questions.'+index+'.answers']" class="fv-plugins-message-container invalid-feedback">
+                                            <div>
                                                 {{errors['questions.'+index+'.answers'][0]}}
                                             </div>
                                         </div>
@@ -447,6 +446,7 @@ export default {
 </script>
 
 <style scoped>
+
 .box {
     display: flex;
     align-items: center;

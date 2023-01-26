@@ -35,7 +35,7 @@
 
                     <div class="form-group row p-3">
 
-                        <div class="col-12 p-0">Выберите один из вариантов:</div>
+                        <div class="col-12 p-0">Правильными могут быть несколько вариантов:</div>
                         <div class="radio-inline radio-box col-9 row" :class="{
                             'alert-danger': getQuestionAnswerResult(index) === false,
                             'alert-success': getQuestionAnswerResult(index) === true
