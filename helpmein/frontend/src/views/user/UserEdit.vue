@@ -97,7 +97,7 @@ export default {
             .then((response) => {
                 console.log(response);
                 this.model = response.data.data;
-                this.model.avatar = response.data.data.avatar.url;
+                this.model.avatar = response.data.data?.avatar?.url;
                 console.log(this.model.avatar);
 
             })

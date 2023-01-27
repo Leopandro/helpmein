@@ -89,7 +89,6 @@
 </template>
 
 <script>
-import Datatable from "@/components/kt-datatable/KTDataTable.vue";
 import ExportCustomerModal from "@/components/modals/forms/ExportCustomerModal.vue";
 import AddCustomerModal from "@/components/modals/forms/AddCustomerModal.vue";
 import ApiService from "@/core/services/ApiService";

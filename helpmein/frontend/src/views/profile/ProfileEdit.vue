@@ -98,7 +98,7 @@ export default {
         ApiService.get("user/profile/info/")
             .then((response) => {
                 this.model = response.data.data;
-                this.model.avatar = response.data.data.avatar.url;
+                this.model.avatar = response.data.data?.avatar?.url;
             })
     },
     computed: {
