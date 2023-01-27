@@ -89,8 +89,6 @@
 </template>
 
 <script>
-import ExportCustomerModal from "@/components/modals/forms/ExportCustomerModal.vue";
-import AddCustomerModal from "@/components/modals/forms/AddCustomerModal.vue";
 import ApiService from "@/core/services/ApiService";
 import GetSvgByStatus from "@/views/client-task/_helpers/GetSvgByStatus.vue";
 import PaginationTemplate from "@/components/table/PaginationTemplate.vue";
@@ -103,9 +101,6 @@ export default {
     name: "UserTaskList",
     components: {
         PaginationTemplate,
-        Datatable,
-        ExportCustomerModal,
-        AddCustomerModal,
         GetSvgByStatus
     },
     data() {
