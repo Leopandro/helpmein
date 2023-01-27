@@ -111,18 +111,21 @@ class ClientTaskController extends Controller
                 }),
                 AllowedFilter::callback('10day', static function (Builder $query) {
                     return $query->withWhereHas('answer', fn ($query) =>
-                        $query->whereDate('answer.updated_at', '>', Carbon::now()->subDays(10))
+                        $query
+                            ->whereDate('answer.updated_at', '>', Carbon::now()->subDays(10))
                     );
                 }),
                 AllowedFilter::callback('all', static function (Builder $query) {
-                    return $query;
+                    return $query->withWhereHas('answer', fn ($query) =>
+                        $query
+                    );
                 }),
             ])
             ->select('task.*')
             ->leftJoin('user_task','user_task.task_id','=','task.id')
             ->leftJoin('answer','answer.user_task_id','=','user_task.id')
             ->where('user_task.user_id', '=', $user->getAttribute('id'))
-            ->orderBy('answer.created_at')
+            ->orderBy('answer.created_at', 'desc')
             ->paginate($request->get('count'));
         return $this->getListItemsResponse($tasks, ClientTaskInfoResource::class, $request);
     }

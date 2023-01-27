@@ -46,7 +46,6 @@ import KTSidebar from "@/layouts/main-layout/sidebar/Sidebar.vue";
 import KTContent from "@/layouts/main-layout/content/Content.vue";
 import KTToolbar from "@/layouts/main-layout/toolbar/Toolbar.vue";
 import KTFooter from "@/layouts/main-layout/footer/Footer.vue";
-import KTDrawers from "@/layouts/main-layout/drawers/Drawers.vue";
 import KTModals from "@/layouts/main-layout/modals/Modals.vue";
 import KTScrollTop from "@/layouts/main-layout/extras/ScrollTop.vue";
 import { useRoute } from "vue-router";
@@ -61,7 +60,6 @@ export default defineComponent({
     KTContent,
     KTToolbar,
     KTFooter,
-    KTDrawers,
     KTScrollTop,
     KTModals,
   },

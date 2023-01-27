@@ -69,13 +69,14 @@ class UserTaskService
         foreach ($taskQuestions as $key => $question) {
             $countMistakes = 0;
             if ($question['type'] === 'radio') {
-                if ($question['radioValue'] !== $answers[$key]['radioValue']) {
-                    $countMistakes = 1;
+                foreach ($question['answers'] as $answerKey => $answer) {
+                    if ($answer['checkBoxValue'] !== $answers[$key]['answers'][$answerKey]['checkBoxValue']) {
+                        $countMistakes = 1;
+                    }
                 }
             }
             if ($question['type'] === 'checkbox') {
                 foreach ($question['answers'] as $answerKey => $answer) {
-                    $x = 1;
                     if ($answer['checkBoxValue'] !== $answers[$key]['answers'][$answerKey]['checkBoxValue']) {
                         $countMistakes++;
                     }

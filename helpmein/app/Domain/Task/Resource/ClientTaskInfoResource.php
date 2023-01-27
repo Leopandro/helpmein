@@ -19,8 +19,8 @@ class ClientTaskInfoResource extends JsonResource
         $type = new EnumResource($task->type);
         $questions = $task->questions;
         $resultQuestions = [];
-        if (isset($task->clients->first()->pivot->answer->status)) {
-            $status = new EnumResource($task->clients->first()->pivot->answer->status);
+        if (isset($task->answer->status)) {
+            $status = new EnumResource($task->answer->status);
         } else {
             $status = new EnumResource(new UserTaskStatus(UserTaskStatus::ASSIGNED));
         }
@@ -40,7 +40,7 @@ class ClientTaskInfoResource extends JsonResource
             'id' => $task->id,
             'name' => $task->name,
             'status' => $status,
-            'answer' => $task->clients()?->first()?->pivot?->answer()->first(),
+            'answer' => $task->answer()->first(),
             'description' => $task->description,
             'task_category_id' => $task->task_category_id,
             'comment' => $task->comment,

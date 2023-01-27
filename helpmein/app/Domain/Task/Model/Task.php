@@ -59,7 +59,8 @@ class Task extends Model
             'user_task_id',
             'id',
             'id'
-        );
+        )
+            ->where('user_task.user_id','=',auth('sanctum')->id());
     }
 
     public function answers(): HasManyThrough
