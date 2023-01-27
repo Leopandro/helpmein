@@ -99,7 +99,7 @@
       name="Kitona Johnson"
       position="Web Designer at Nextop Ltd."
       :online="false"
-      avatar="/media/avatars/300-1.jpg"
+      avatar="/media/icons/duotune/communication/com006.svg"
       :connected="true"
       avg-earnings="$14,560"
       total-sales="$236,400"

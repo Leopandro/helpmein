@@ -11,7 +11,7 @@
           <div class="d-flex flex-center flex-column mb-5">
             <!--begin::Avatar-->
             <div class="symbol symbol-100px symbol-circle mb-7">
-              <img src="/media/avatars/300-1.jpg" alt="image" />
+              <img src="/media/icons/duotune/communication/com006.svg" alt="image" />
             </div>
             <!--end::Avatar-->
 

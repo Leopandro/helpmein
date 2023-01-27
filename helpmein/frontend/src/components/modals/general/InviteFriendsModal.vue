@@ -197,19 +197,19 @@ export default defineComponent({
         access: "1",
       },
       {
-        avatar: "/media/avatars/300-1.jpg",
+        avatar: "/media/icons/duotune/communication/com006.svg",
         name: "Max Smith",
         email: "max@kt.com",
         access: "3",
       },
       {
-        avatar: "/media/avatars/300-1.jpg",
+        avatar: "/media/icons/duotune/communication/com006.svg",
         name: "Sean Bean",
         email: "sean@dellito.com",
         access: "2",
       },
       {
-        avatar: "/media/avatars/300-25.jpg",
+        avatar: "/media/icons/duotune/communication/com006.svg",
         name: "Brian Cox",
         email: "brian@exchange.com",
         access: "3",

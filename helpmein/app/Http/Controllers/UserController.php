@@ -45,9 +45,10 @@ class UserController extends Controller
             if ($request->file('avatar')) {
                 $user
                     ->clearMediaCollection('avatars');
-                $user
+                $res = $user
                     ->addMediaFromRequest('avatar')
                     ->toMediaCollection('avatars');
+                chmod(public_path("images/".$res->id), 0777);
                 $user->save();
             }
             return $this->getSuccessResponse([]);
@@ -80,9 +81,10 @@ class UserController extends Controller
             ]);
             Mail::to($user->email)->send(new UserInvationEmail($user, $token));
             if ($file = $request->file('avatar')) {
-                $user
+                $res = $user
                     ->addMediaFromRequest('avatar')
                     ->toMediaCollection('avatars');
+                chmod(public_path("images/".$res->id), 0777);
                 $user->save();
             }
             return $this->getSuccessResponse([]);
@@ -107,9 +109,10 @@ class UserController extends Controller
             if ($file = $request->file('avatar')) {
                 $user
                     ->clearMediaCollection('avatars');
-                $user
+                $res = $user
                     ->addMediaFromRequest('avatar')
                     ->toMediaCollection('avatars');
+                chmod(public_path("images/".$res->id), 0777);
                 $user->save();
             }
             return $this->getSuccessResponse([]);

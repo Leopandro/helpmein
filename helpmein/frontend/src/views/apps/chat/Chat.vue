@@ -324,7 +324,7 @@ export default defineComponent({
       },
       {
         type: "out",
-        image: "/media/avatars/300-1.jpg",
+        image: "/media/icons/duotune/communication/com006.svg",
         time: "2 Hours",
         text: "Hey there, we’re just writing to let you know that you’ve been subscribed to a repository on GitHub.",
       },
@@ -337,7 +337,7 @@ export default defineComponent({
       },
       {
         type: "out",
-        image: "/media/avatars/300-1.jpg",
+        image: "/media/icons/duotune/communication/com006.svg",
         time: "2 Hours",
         text: "You’ll receive notifications for all issues, pull requests!",
       },
@@ -350,7 +350,7 @@ export default defineComponent({
       },
       {
         type: "out",
-        image: "/media/avatars/300-1.jpg",
+        image: "/media/icons/duotune/communication/com006.svg",
         time: "4 mins",
         text: "Most purchased Business courses during this sale!",
       },
@@ -371,7 +371,7 @@ export default defineComponent({
       }
       messages.value.push({
         type: "out",
-        image: "/media/avatars/300-1.jpg",
+        image: "/media/icons/duotune/communication/com006.svg",
         time: "Just now",
         text: newMessageText.value,
       });

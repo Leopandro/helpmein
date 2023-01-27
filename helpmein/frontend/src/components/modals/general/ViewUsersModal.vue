@@ -175,14 +175,14 @@ export default defineComponent({
         sales: "50,500",
       },
       {
-        avatar: "/media/avatars/300-1.jpg",
+        avatar: "/media/icons/duotune/communication/com006.svg",
         name: "Max Smith",
         email: "max@kt.com",
         position: "Software Enginer",
         sales: "75,900",
       },
       {
-        avatar: "/media/avatars/300-1.jpg",
+        avatar: "/media/icons/duotune/communication/com006.svg",
         name: "Sean Bean",
         email: "sean@dellito.com",
         position: "Web Developer",

@@ -10,7 +10,7 @@
                 <label class="col-lg-4 col-form-label fw-semobold fs-6">Аватар</label>
                 <div class="col-lg-8">
                     <div class="image-input image-input-outline" data-kt-image-input="true"
-                         style="background-image: url(&quot;/metronic8/vue/demo1//media/avatars/blank.png&quot;);">
+                         style="background-image: url(&quot;/media/icons/duotune/communication/com006.svg&quot;);">
                         <div class="image-input-wrapper w-125px h-125px"
                              v-bind:style="imageUrl"></div>
                         <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -83,11 +83,12 @@ export default {
     name: "ProfileEdit",
     data() {
         return {
-            errors: {},
+            errors: [],
             model: {
                 email: '',
-                avatar: '',
+                avatar: '/metronic8/vue/demo1//media/avatars/blank.png',
                 name: '',
+                image: '',
                 surname: ''
             }
         }
@@ -147,6 +148,7 @@ export default {
         deleteImage() {
             console.log('delete')
             this.model.avatar = '';
+            this.model.image = '';
         },
         handleImage(e) {
             const selectedImage = e.target.files[0];

@@ -203,7 +203,7 @@ export default defineComponent({
       },
       {
         user: {
-          avatar: "/media/avatars/300-1.jpg",
+          avatar: "/media/icons/duotune/communication/com006.svg",
           name: "Max Smith",
           email: "max@kt.com",
         },

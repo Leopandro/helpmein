@@ -2314,7 +2314,7 @@ export default defineComponent({
     });
 
     const profileDetails = ref<ProfileDetails>({
-      avatar: "/media/avatars/300-1.jpg",
+      avatar: "/media/icons/duotune/communication/com006.svg",
       name: "Max",
       surname: "Smith",
       company: "Keenthemes",

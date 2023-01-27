@@ -6,7 +6,7 @@ const contacts = [
     color: "danger",
   },
   {
-    image: "/media/avatars/300-1.jpg",
+    image: "/media/icons/duotune/communication/com006.svg",
     name: "Max Smith",
     email: "max@kt.com",
     time: "5 hrs",

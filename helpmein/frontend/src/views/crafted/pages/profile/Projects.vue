@@ -219,7 +219,7 @@ export default defineComponent({
   setup() {
     const users1 = [
       { name: "Emma Smith", src: "/media/avatars/300-6.jpg" },
-      { name: "Rudy Stone", src: "/media/avatars/300-1.jpg" },
+      { name: "Rudy Stone", src: "/media/icons/duotune/communication/com006.svg" },
       { name: "Susan Redwood", initials: "S", state: "primary" },
     ];
 
@@ -230,7 +230,7 @@ export default defineComponent({
 
     const users3 = [
       { name: "Mad Masy", src: "/media/avatars/300-6.jpg" },
-      { name: "Cris Willson", src: "/media/avatars/300-1.jpg" },
+      { name: "Cris Willson", src: "/media/icons/duotune/communication/com006.svg" },
       { name: "Mike Garcie", initials: "M", state: "info" },
     ];
 
@@ -247,7 +247,7 @@ export default defineComponent({
 
     const users6 = [
       { name: "Emma Smith", src: "/media/avatars/300-6.jpg" },
-      { name: "Rudy Stone", src: "/media/avatars/300-1.jpg" },
+      { name: "Rudy Stone", src: "/media/icons/duotune/communication/com006.svg" },
       { name: "Susan Redwood", initials: "S", state: "primary" },
     ];
 
@@ -258,7 +258,7 @@ export default defineComponent({
 
     const users8 = [
       { name: "Emma Smith", src: "/media/avatars/300-6.jpg" },
-      { name: "Rudy Stone", src: "/media/avatars/300-1.jpg" },
+      { name: "Rudy Stone", src: "/media/icons/duotune/communication/com006.svg" },
       { name: "Susan Redwood", initials: "S", state: "primary" },
     ];
 
