@@ -190,12 +190,9 @@ export default defineComponent({
         };
         const setRole = (role: string) => {
             store.setCurrentRole(role);
-            console.log(role)
-            console.log(permission.getUrlByRole(role))
-            window.location.href = permission.getUrlByRole(role);
-            // router.push({path: permission.getUrlByRole(role)}).then(() => {
-            //     window.location.reload();
-            // });
+            router.push({path: permission.getUrlByRole(role)}).then(() => {
+                window.location.reload();
+            });
         };
 
         const roleList = computed(() => {
