@@ -2,12 +2,12 @@
     <div class="card">
         <div class="card-header">
             <div class="card-title">
-                Редактировать клиента
+                {{$t('Редактировать клиента')}}
             </div>
         </div>
         <div class="card-body">
             <div class="row mb-6">
-                <label class="col-lg-4 col-form-label fw-semobold fs-6">Аватар</label>
+                <label class="col-lg-4 col-form-label fw-semobold fs-6">{{$t('Аватар')}}</label>
                 <div class="col-lg-8">
                     <div class="image-input image-input-outline" data-kt-image-input="true"
                          style="background-image: url(&quot;/metronic8/vue/demo1//media/avatars/blank.png&quot;);">
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="row mb-6">
-                <label class="col-lg-4 col-form-label required fw-semobold fs-6">E-mail</label>
+                <label class="col-lg-4 col-form-label required fw-semobold fs-6">{{$t('E-mail')}}</label>
                 <div class="col-lg-8 fv-row">
                     <input v-model="model.email" type="text" class="form-control" placeholder="name@example.com">
                     <div v-if="errors.email" class="fv-plugins-message-container invalid-feedback">

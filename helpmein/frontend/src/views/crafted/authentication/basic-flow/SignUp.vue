@@ -199,6 +199,7 @@ import { useRouter } from "vue-router";
 import { PasswordMeterComponent } from "@/assets/ts/components";
 import Swal from "sweetalert2";
 import {usePermissionStore} from "@/stores/permission";
+import i18n from "@/core/plugins/i18n";
 
 export default {
   name: "SignUp",
@@ -253,10 +254,10 @@ export default {
       console.log(error);
       if (!message) {
         Swal.fire({
-          text: this.$t("Вы успешно авторизовались!"),
+          text: i18n.global.t("Вы успешно авторизовались!"),
           icon: "success",
           buttonsStyling: false,
-          confirmButtonText: "Ок!",
+          confirmButtonText: i18n.global.t("Ок!"),
           heightAuto: false,
           customClass: {
             confirmButton: "btn fw-semobold btn-light-primary",
@@ -270,7 +271,7 @@ export default {
           text: message,
           icon: "error",
           buttonsStyling: false,
-          confirmButtonText: this.$t("Ок!"),
+          confirmButtonText: i18n.global.t("Ок!"),
           heightAuto: false,
           customClass: {
             confirmButton: "btn fw-semobold btn-light-danger",
