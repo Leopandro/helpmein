@@ -5,6 +5,9 @@ import {
 } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { useConfigStore } from "@/stores/config";
+import {computed} from "vue";
+import {useI18n} from "vue-i18n";
+import i18n from "@/core/plugins/i18n";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -98,7 +101,7 @@ router.beforeEach((to, from, next) => {
   const configStore = useConfigStore();
 
   // current page view title
-  document.title = `${to.meta.pageTitle} - ${import.meta.env.VITE_APP_NAME}`;
+  document.title = i18n.global.t(to.meta.pageTitle) + ` - ${import.meta.env.VITE_APP_NAME}`
 
   // reset config to initial state
   configStore.resetLayoutConfig();

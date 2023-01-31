@@ -8,7 +8,7 @@
                         <div class="col-8 fv-row">
                             <select class="form-select" v-model="model[formType['type'].name]">
                                 <option v-if="formType['type'].placeholder" value="">{{ formType['type'].placeholder }}</option>
-                                <option v-for="option in formType['type'].options" :value="option.value">{{ option.title }}</option>
+                                <option v-for="option in formType['type'].options" :value="option.value">{{ $t(option.title) }}</option>
                             </select>
                             <div v-if="errors[formType['type'].name]" class="fv-plugins-message-container invalid-feedback">
                                 <div data-validator="notEmpty">{{

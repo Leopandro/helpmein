@@ -7,7 +7,7 @@
         </div>
         <div class="card-body">
             <div class="row mb-6">
-                <label class="col-lg-4 col-form-label fw-semobold fs-6">Аватар</label>
+                <label class="col-lg-4 col-form-label fw-semobold fs-6">{{ $t('Аватар') }}</label>
                 <div class="col-lg-8">
                     <div class="image-input image-input-outline" data-kt-image-input="true"
                          style="background-image: url(&quot;/media/icons/duotune/communication/com006.svg&quot;);">

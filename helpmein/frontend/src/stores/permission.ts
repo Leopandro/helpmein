@@ -9,7 +9,7 @@ export const usePermissionStore = defineStore("permissions", () => {
                 'Client': '/task/list',
                 'Guest':'/greetings',
                 '':'/greetings',
-            }[role[0]];
+            }[role];
         } else {
             return '/greetings';
         }

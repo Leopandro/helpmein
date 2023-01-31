@@ -264,7 +264,7 @@ export default {
           },
         }).then(function () {
           // Go to page after successfully login
-            router.push({ path: permissionStore.getUrlByRole(store.roles) });
+            router.push({ path: permissionStore.getUrlByRole(store.currentRole) });
         });
       } else {
         Swal.fire({

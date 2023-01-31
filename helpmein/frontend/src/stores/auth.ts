@@ -18,14 +18,28 @@ export const useAuthStore = defineStore("auth", () => {
     const status = ref(500);
     const user = ref<User>({} as User);
     const permissions = ref("");
-    let roles
+    const roles = ref("");
+    const currentRole = ref("Guest");
     try {
-        roles = ref(JSON.parse(localStorage.getItem('roles') ?? ""));
+        currentRole.value = JSON.parse(localStorage.getItem('currentRole') ?? "");
     } catch(e) {
-        roles = ref("")
+        currentRole.value = "Guest";
+    }
+    try {
+        roles.value = JSON.parse(localStorage.getItem('roles') ?? "");
+    } catch(e) {
+        roles.value = "";
     }
     const isAuthenticated = ref(!!JwtService.getToken());
 
+    function setCurrentRole(value: any) {
+        if (value) {
+            localStorage.setItem('currentRole', JSON.stringify(value));
+            currentRole.value = value;
+        } else {
+            currentRole.value = 'Guest';
+        }
+    }
     function setAuth(authUser: User) {
         isAuthenticated.value = true;
         user.value = authUser;
@@ -82,6 +96,7 @@ export const useAuthStore = defineStore("auth", () => {
                 setAuth(data);
                 verifyAuth();
                 setRoles(data.roles);
+                setCurrentRole(data.roles[0]);
                 setMessage('');
                 setPermissions(data.permissions);
             })
@@ -170,6 +185,8 @@ export const useAuthStore = defineStore("auth", () => {
         permissions,
         user,
         isAuthenticated,
+        currentRole,
+        setCurrentRole,
         login,
         logout,
         register,

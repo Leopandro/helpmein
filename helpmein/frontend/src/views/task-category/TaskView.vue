@@ -4,11 +4,11 @@
             <div class="row mb-6">
                 <div class="col-6">
                     <div class="row fv-row">
-                        <label class="col-4 col-form-label fw-semobold fs-6">{{ formType['type'].title }}</label>
+                        <label class="col-4 col-form-label fw-semobold fs-6">{{ $t(formType['type'].title) }}</label>
                         <div class="col-8 fv-row">
                             <select class="form-select" v-model="model[formType['type'].name]" disabled>
                                 <option v-if="formType['type'].placeholder" value="">{{ formType['type'].placeholder }}</option>
-                                <option v-for="option in formType['type'].options" :value="option.value">{{ option.title }}</option>
+                                <option v-for="option in formType['type'].options" :value="option.value">{{ $t(option.title) }}</option>
                             </select>
                             <div v-if="errors[formType['type'].name]" class="fv-plugins-message-container invalid-feedback">
                                 <div data-validator="notEmpty">{{
@@ -21,11 +21,11 @@
                 </div>
                 <div class="col-6">
                     <div class="row fv-row">
-                        <label class="col-4 col-form-label fw-semobold fs-6">{{ formType['difficult_level'].title }}</label>
+                        <label class="col-4 col-form-label fw-semobold fs-6">{{ $t(formType['difficult_level'].title) }}</label>
                         <div class="col-8 fv-row">
                             <select class="form-select" v-model="model[formType['difficult_level'].name]" disabled>
                                 <option v-if="formType['difficult_level'].placeholder" value="">{{ formType['difficult_level'].placeholder }}</option>
-                                <option v-for="option in formType['difficult_level'].options" :value="option.value">{{ option.title }}</option>
+                                <option v-for="option in formType['difficult_level'].options" :value="option.value">{{ $t(option.title) }}</option>
                             </select>
                             <div v-if="errors[formType['difficult_level'].name]" class="fv-plugins-message-container invalid-feedback">
                                 <div data-validator="notEmpty">{{
@@ -40,7 +40,7 @@
             <div class="row mb-6" v-for="(value, name, index) in form">
                 <template
                     v-if="value.type === 'text' || value.type === 'select'  || value.type === 'textarea' || value.type === 'datetime' ">
-                    <label class="col-lg-2 col-form-label fw-semobold fs-6">{{ value.title }}</label>
+                    <label class="col-lg-2 col-form-label fw-semobold fs-6">{{ $t(value.title) }}</label>
                     <div v-if="value.type === 'text'" class="col-lg-10 fv-row">
                         <input v-model="model[value.name]" type="text" class="form-control" disabled>
                         <div v-if="errors[value.name]" class="fv-plugins-message-container invalid-feedback">
@@ -62,7 +62,7 @@
                     <div v-if="value.type === 'select'" class="col-lg-10 fv-row">
                         <select class="form-select" v-model="model[value.name]" disabled>
                             <option v-if="value.placeholder" value="">{{ value.placeholder }}</option>
-                            <option v-for="option in value.options" :value="option.value">{{ option.title }}</option>
+                            <option v-for="option in value.options" :value="option.value">{{ $t(option.title) }}</option>
                         </select>
                         <div v-if="errors[value.name]" class="fv-plugins-message-container invalid-feedback">
                             <div data-validator="notEmpty">{{
@@ -73,7 +73,7 @@
                     </div>
                 </template>
             </div>
-            <div :class="{'disabled': model.type !== 'task'}">
+            <div v-if="model.type == 'task'" :class="{'disabled': model.type !== 'task'}">
                 <div class="card">
                     <div class="card-header">
                         <div>
@@ -203,12 +203,39 @@ export default {
     data() {
         return {
             errors: {},
+            form: [
+                {
+                    name: 'name',
+                    type: 'text',
+                    title: 'Название'
+                },
+                {
+                    name: 'description',
+                    type: 'textarea',
+                    title: 'Описание задачи'
+                },
+                {
+                    name: 'comment_client',
+                    type: 'textarea',
+                    title: 'Комментарий (для клиента)'
+                },
+                {
+                    name: 'comment',
+                    type: 'textarea',
+                    title: 'Комментарий (для преподавателя)'
+                },
+                {
+                    name: 'questions',
+                    type: 'questions',
+                    title: 'Вопросы'
+                },
+            ],
             formType: {
                 type: {
                     name: 'type',
                     type: 'select',
                     placeholder: '-- Не выбрано --',
-                    title: this.$t('Тип задачи'),
+                    title: 'Тип задачи',
                     options: [
                         {
                             value: 'essay',
@@ -241,7 +268,7 @@ export default {
                             title: 'B2'
                         },
                     ],
-                    title: this.$t('Уровень сложности')
+                    title: 'Уровень сложности'
                 },
             },
             model: {

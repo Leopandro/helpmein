@@ -24,7 +24,7 @@ class UserTaskAllInfoResource extends JsonResource
             'id' => $task->id,
             'name' => $task->name,
 //            'status' => new EnumResource($task->answer->status),
-            'answer_count' => $task->answer_count,
+            'answer_count' => $task->answers_count,
             'description' => $task->description,
             'task_category_id' => $task->task_category_id,
             'task_category' => $categoriesText,

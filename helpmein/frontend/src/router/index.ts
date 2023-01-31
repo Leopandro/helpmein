@@ -8,6 +8,7 @@ import {useConfigStore} from "@/stores/config";
 import {usePermissionStore} from "@/stores/permission";
 import {useRouterStore} from "@/stores/router";
 import i18n from "@/core/plugins/i18n";
+import {computed} from "vue";
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -19,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
             // or { path: 'profile'}
             const auth = useAuthStore();
             const permission = usePermissionStore();
-            return permission.getUrlByRole(auth.roles);
+            return permission.getUrlByRole(auth.currentRole);
         },
         component: () => import("@/layouts/main-layout/MainLayout.vue"),
         meta: {
@@ -167,7 +168,7 @@ const routes: Array<RouteRecordRaw> = [
                     breadcrumbs: [{
                         "name": "Задачи",
                         "path": "/task-category/list"
-                    }, "Просмотр задачу"],
+                    }, "Просмотреть задачу"],
                 },
             },
             {
@@ -179,7 +180,7 @@ const routes: Array<RouteRecordRaw> = [
                     breadcrumbs: [{
                         "name": "Задачи",
                         "path": "/task-category/list"
-                    }, "Просмотр задачу"],
+                    }, "Просмотреть задачу"],
                 },
             },
             {
@@ -301,7 +302,8 @@ router.beforeEach((to, from, next) => {
     // current page view title
     let toPageTitle = '';
     toPageTitle = to.meta.pageTitle;
-    document.title = `${toPageTitle} - ${import.meta.env.VITE_APP_NAME}`;
+
+    document.title = i18n.global.t(to.meta.pageTitle) + ` - ${import.meta.env.VITE_APP_NAME}`
 
     const store = useRouterStore();
     store.currentTitle = toPageTitle;

@@ -89,7 +89,7 @@ trait TeacherClientTaskLoaderTrait {
     public static function buildQueryForTeacherClientTaskWithoutAssignList(Request $request): LengthAwarePaginator
     {
         return QueryBuilder::for(Task::class)
-            ->withCount('answer')
+            ->withCount('answers')
             ->allowedFilters([
                 AllowedFilter::callback('task_category_id', static function (Builder $query, $value) {
                     return $query->where('task_category_id', '=',$value);

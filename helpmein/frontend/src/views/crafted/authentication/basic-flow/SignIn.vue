@@ -182,9 +182,7 @@ export default defineComponent({
             // Send login request
             await store.login(values);
             const message = store.messages;
-            const permissions = store.permissions;
-            const error = store.errors;
-            console.log(message);
+
             if (!message) {
                 Swal.fire({
                     text: i18n.global.t("Вы успешно авторизовались!"),
@@ -196,7 +194,7 @@ export default defineComponent({
                         confirmButton: "btn fw-semobold btn-light-primary",
                     },
                 }).then(() => {
-                    router.push({path: permissionStore.getUrlByRole(store.roles)});
+                    router.push({path: permissionStore.getUrlByRole(store.currentRole)});
                 });
             } else {
                 Swal.fire({

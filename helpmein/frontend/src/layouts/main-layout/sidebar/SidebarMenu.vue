@@ -176,10 +176,8 @@ export default defineComponent({
         const store = useAuthStore();
         const scrollElRef = ref<null | HTMLElement>(null);
 
-        let currentRole = store.roles[0]
+        let currentRole = store.currentRole;
         let menuConfig = null;
-        console.log(currentRole);
-        console.log(MainMenuConfig);
         if (currentRole) {
             menuConfig = [MainMenuConfig[0][currentRole]]
         } else {
