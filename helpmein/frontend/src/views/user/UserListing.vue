@@ -139,6 +139,7 @@ export default defineComponent({
                 if (result.isConfirmed) {
                 } else if (result.isDenied) {
                     await ApiService.post('/user/delete/'+user.id).then((data: any) => {
+                        this.searchItems()
                         // Swal.fire('Changes are not saved', '', 'info')
                     })
                 }
