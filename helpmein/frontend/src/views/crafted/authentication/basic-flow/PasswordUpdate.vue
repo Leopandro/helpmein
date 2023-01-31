@@ -11,12 +11,12 @@
             <!--begin::Heading-->
             <div class="text-center mb-10">
                 <!--begin::Title-->
-                <h1 class="text-dark mb-3">Установить пароль</h1>
+                <h1 class="text-dark mb-3">{{$t('Установить пароль')}}</h1>
                 <!--end::Title-->
 
                 <!--begin::Link-->
                 <div class="text-gray-400 fw-semobold fs-4">
-                    Пароль должен быть не менее 4 символов, желательно содержать символы и цифры
+                    {{$t('Пароль должен быть не менее 4 символов, желательно содержать символы и цифры')}}
                 </div>
                 <!--end::Link-->
             </div>
@@ -24,14 +24,14 @@
 
             <!--begin::Input group-->
             <div class="mb-10">
-                <label class="form-label">Пароль</label>
+                <label class="form-label">{{$t('Пароль')}}</label>
                 <input v-model="model.password" type="password" class="form-control" placeholder="">
                 <div v-if="errors.password" class="fv-plugins-message-container invalid-feedback">
                     <div data-field="daterangepicker_input" data-validator="notEmpty">{{ errors.password[0] }}</div>
                 </div>
             </div>
             <div class="mb-10">
-                <label class="form-label">Пароль(повторно)</label>
+                <label class="form-label">{{$t('Пароль(повторно)')}}</label>
                 <input v-model="model.password_confirm" type="password" class="form-control" placeholder="">
                 <div v-if="errors.password_confirm" class="fv-plugins-message-container invalid-feedback">
                     <div data-field="daterangepicker_input" data-validator="notEmpty">{{
@@ -51,9 +51,9 @@
                         id="kt_password_reset_submit"
                         class="btn btn-lg btn-primary fw-bold me-4"
                     >
-                        <span class="indicator-label"> Подтвердить </span>
+                        <span class="indicator-label"> {{$t('Подтвердить')}} </span>
                         <span class="indicator-progress">
-            Please wait...
+            {{$t('Пожалуйста подождите...')}}
             <span
                 class="spinner-border spinner-border-sm align-middle ms-2"
             ></span>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="col-auto p-1">
                     <router-link to="/sign-in" class="btn btn-lg btn-light-primary fw-bold"
-                    >Отмена
+                    >{{$t('Отмена')}}
                     </router-link>
                 </div>
             </div>

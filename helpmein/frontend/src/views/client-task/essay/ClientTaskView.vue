@@ -16,7 +16,7 @@
                 <div>{{model.comment_client}}</div>
             </div>
             <div class="row p-2" v-if="model.answer.teacher_comment">
-                <span class=""><span class="fw-bold">Комментарий преподавателя: </span>{{model.answer.teacher_comment}}</span>
+                <span class=""><span class="fw-bold">{{$t('Комментарий преподавателя:')}} </span>{{model.answer.teacher_comment}}</span>
             </div>
 
             <div class="row p-2">
@@ -30,9 +30,9 @@
                             href="javascript:;"
                             type="submit"
                             class="btn btn-secondary shadow btn btn-sm me-1">
-                            <span class="indicator-label"> К списку задач </span>
+                            <span class="indicator-label"> {{$t('К списку задач')}} </span>
                             <span class="indicator-progress">
-                                Пожалуйста подождите...
+                                {{$t('Пожалуйста подождите...')}}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                             </span>
                         </button>
@@ -51,52 +51,6 @@ export default {
     data() {
         return {
             errors: {},
-            form: [
-                {
-                    name: 'name',
-                    type: 'text',
-                    title: 'Название'
-                },
-                {
-                    name: 'description',
-                    type: 'textarea',
-                    title: 'Описание задачи'
-                },
-                {
-                    name: 'comment_client',
-                    type: 'textarea',
-                    title: 'Комментарий'
-                },
-                {
-                    name: 'questions',
-                    type: 'questions',
-                    title: 'Вопросы'
-                },
-                {
-                    name: 'difficult_level',
-                    type: 'select',
-                    placeholder: '-- Выберите сложность --',
-                    options: [
-                        {
-                            value: 'A1',
-                            title: 'A1'
-                        },
-                        {
-                            value: 'A2',
-                            title: 'A2'
-                        },
-                        {
-                            value: 'B1',
-                            title: 'B1'
-                        },
-                        {
-                            value: 'B2',
-                            title: 'B2'
-                        },
-                    ],
-                    title: 'Уровень сложности'
-                },
-            ],
             model: {
                 id: '',
                 type: '',
@@ -132,10 +86,10 @@ export default {
             await ApiService.post("client/task/solve/"+this.model.id, this.model)
                 .then(() => {
                     Swal.fire({
-                        text: "Ответ успешно сохранен",
+                        text: this.$t("Ответ успешно сохранен"),
                         icon: "success",
                         buttonsStyling: false,
-                        confirmButtonText: "Ок!",
+                        confirmButtonText: this.$t("Ок!"),
                         heightAuto: false,
                         customClass: {
                             confirmButton: "btn fw-semobold btn-light-primary",
@@ -151,7 +105,7 @@ export default {
                         text: response.data.message,
                         icon: "error",
                         buttonsStyling: false,
-                        confirmButtonText: "Ок!",
+                        confirmButtonText: this.$t("Ок!"),
                         heightAuto: false,
                         customClass: {
                             confirmButton: "btn fw-semobold btn-light-danger",
@@ -202,13 +156,6 @@ export default {
             }
             return true;
         },
-        title() {
-            if (this.$route.params.id) {
-                return this.$t("task.editTitle");
-            } else {
-                return this.$t("task.createTitle");
-            }
-        }
     },
     mounted() {
         if (this.$route.params.id) {

@@ -77,7 +77,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div>
-                            <h1>Вопросы</h1>
+                            <h1>{{$t('Вопросы')}}</h1>
                         </div>
                     </div>
                     <div class="card-body">
@@ -86,12 +86,12 @@
                             <div class="card-body">
                                 <div class="row">
                                     <label class="col-2 col-form-label fw-semobold fs-6">
-                                        Вопрос №{{ index + 1 }}
+                                        {{$t('Вопрос №')}}{{ index + 1 }}
                                     </label>
                                     <div class="col-10 radio-inline radio-box row">
                                         <div class="col-8 p-0">
                                             <input type="text" v-model="model.questions[index].title"
-                                                   placeholder="Введите название вопроса"
+                                                   :placeholder="$t('Введите название вопроса')"
                                                    class="form-control form-control-lg form-control-solid">
                                             <div v-if="errors['questions.'+index+'.title']" class="fv-plugins-message-container invalid-feedback">
                                                 <div>
@@ -112,21 +112,21 @@
                                 </div>
                                 <div class="form-group row min-h-50px align-items-center">
 
-                                    <div class="col-2">Правильных ответов</div>
+                                    <div class="col-2">{{$t('Правильных ответов')}}</div>
                                     <div class="col-8 p-0">
                                         <div class="radio-inline radio-box col-8">
                                             <div class="form-check form-check-custom form-check-solid">
                                                 <label class="form-check-label m-0" :for="'input_'+index+'_radio'">
                                                     <input class="form-check-input" type="radio" :id="'input_'+index+'_radio'"
                                                            v-model="model.questions[index].type" v-bind:value="'radio'">
-                                                    Один
+                                                    {{$t('Один')}}
                                                 </label>
                                             </div>
                                             <div class="form-check form-check-custom form-check-solid">
                                                 <label class="form-check-label ms-3" :for="'input_'+index+'_checkbox'">
                                                     <input class="form-check-input" type="radio" :id="'input_'+index+'_checkbox'"
                                                            v-model="model.questions[index].type" v-bind:value="'checkbox'">
-                                                    Несколько
+                                                    {{$t('Несколько')}}
                                                 </label>
                                             </div>
                                         </div>
@@ -139,12 +139,12 @@
                                 </div>
                                 <div class="form-group row">
 
-                                    <div class="col-2 pt-3">Варианты ответов</div>
+                                    <div class="col-2 pt-3">{{$t('Варианты ответов')}}</div>
                                     <div class="col-10 radio-inline radio-box row">
                                         <template v-for="(answerItem, answerIndex) of model.questions[index].answers">
                                                 <div
                                                     class="form-check-custom form-check-inline form-check-solid me-5 form-flex p-1 px-0 col-12">
-                                                    <div class="col-8 p-0 d-flex">
+                                                    <div class="col-8 p-0 d-flex align-items-center">
                                                         <input
                                                             class="form-check-input"
                                                             type="checkbox"
@@ -153,7 +153,7 @@
                                                         <input type="text"
                                                                :ref="'answer_'+index+'_'+answerIndex"
                                                                class="form-control form-control-sm form-control-solid"
-                                                               placeholder="текст ответа"
+                                                               :placeholder="$t('текст ответа')"
                                                                v-model="model.questions[index].answers[answerIndex].title">
                                                     </div>
                                                     <div class="col-auto p-0">
@@ -189,7 +189,7 @@
                                             </div>
                                         </div>
                                         <button class="shadow btn-primary btn btn-sm col-5" type="button"
-                                                v-on:click="addAnswer(index)">Добавить ответ
+                                                v-on:click="addAnswer(index)">{{$t('Добавить ответ')}}
                                         </button>
                                     </div>
                                 </div>
@@ -200,7 +200,7 @@
             </div>
             <div class="row">
                 <div class="row ms-20">
-                    <button :class="{'disabled': model.type !== 'task'}" type="button" v-on:click="addQuestion" class="btn btn-success shadow btn-sm col-2">Добавить вопрос</button>
+                    <button :class="{'disabled': model.type !== 'task'}" type="button" v-on:click="addQuestion" class="btn btn-success shadow btn-sm col-2">{{$t('Добавить вопрос')}}</button>
                 </div>
             </div>
             <br>
@@ -213,9 +213,9 @@
                         v-on:click="submitForm"
                         type="submit"
                         class="btn-success shadow btn">
-                    <span class="indicator-label"> Сохранить </span>
+                    <span class="indicator-label"> {{$t('Сохранить')}} </span>
                     <span class="indicator-progress">
-                        Пожалуйста подождите...
+                        {{$t('Пожалуйста подождите...')}}
                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                     </span>
                 </button>
@@ -226,9 +226,9 @@
                         href="javascript:;"
                         type="submit"
                         class="btn-warning shadow btn">
-                        <span class="indicator-label"> Отмена </span>
+                        <span class="indicator-label"> {{$t('Отмена')}} </span>
                         <span class="indicator-progress">
-                        Пожалуйста подождите...
+                        {{$t('Пожалуйста подождите...')}}
                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                     </span>
                     </button>
@@ -251,8 +251,8 @@ export default {
                 type: {
                     name: 'type',
                     type: 'select',
-                    placeholder: '-- Не выбрано --',
-                    title: 'Тип задачи',
+                    placeholder: this.$t('-- Не выбрано --'),
+                    title: this.$t('Тип задачи'),
                     options: [
                         {
                             value: 'essay',
@@ -285,34 +285,34 @@ export default {
                             title: 'B2'
                         },
                     ],
-                    title: 'Уровень сложности'
+                    title: this.$t('Уровень сложности')
                 },
             },
             form: [
                 {
                     name: 'name',
                     type: 'text',
-                    title: 'Название'
+                    title: this.$t('Название')
                 },
                 {
                     name: 'description',
                     type: 'textarea',
-                    title: 'Описание задачи'
+                    title: this.$t('Описание задачи')
                 },
                 {
                     name: 'comment_client',
                     type: 'textarea',
-                    title: 'Комментарий (для клиента)'
+                    title: this.$t('Комментарий (для клиента)')
                 },
                 {
                     name: 'comment',
                     type: 'textarea',
-                    title: 'Комментарий (для преподавателя)'
+                    title: this.$t('Комментарий (для преподавателя)')
                 },
                 {
                     name: 'questions',
                     type: 'questions',
-                    title: 'Вопросы'
+                    title: this.$t('Вопросы')
                 },
             ],
             model: {
@@ -353,10 +353,10 @@ export default {
             await ApiService.post(this.model.id ? "admin/task/edit/"+this.model.id : "admin/task/create", parsedModel)
                 .then(() => {
                     Swal.fire({
-                        text: this.model.id ? "Задача успешно обновлена" : "Задача успешно создана",
+                        text: this.model.id ? this.$t('Задача успешно обновлена') : this.$t('Задача успешно создана'),
                         icon: "success",
                         buttonsStyling: false,
-                        confirmButtonText: "Ок!",
+                        confirmButtonText: this.$t('"Ок!"'),
                         heightAuto: false,
                         customClass: {
                             confirmButton: "btn fw-semobold btn-light-primary",
@@ -429,13 +429,6 @@ export default {
             }
             return true;
         },
-        title() {
-            if (this.$route.params.id) {
-                return this.$t("task.editTitle");
-            } else {
-                return this.$t("task.createTitle");
-            }
-        }
     },
     mounted() {
         if (this.$route.params.id) {

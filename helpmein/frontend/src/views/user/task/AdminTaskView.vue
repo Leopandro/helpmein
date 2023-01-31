@@ -16,18 +16,18 @@
                 {{model.comment_client}}
             </div>
             <div class="row p-5" v-if="model.answer.teacher_comment">
-                <div class=""><b>Комментарий преподавателя: </b>{{model.answer.teacher_comment}}</div>
+                <div class=""><b>{{$t('Комментарий преподавателя:')}}</b>{{model.answer.teacher_comment}}</div>
             </div>
 
             <div class="row p-5">
-                <div class="fw-semibold fs-6">Решение задачи</div>
+                <div class="fw-semibold fs-6">{{$t('Решение задачи')}}</div>
             </div>
 
             <div class="row p-5">
                 <div class="">{{model.answer.answer}}</div>
             </div>
             <div class="row p-5">
-                <label for="exampleFormControlTextarea1" class="form-label">Комментарий для клиента</label>
+                <label for="exampleFormControlTextarea1" class="form-label">{{$t('Комментарий для клиента:') }}</label>
                 <textarea class="form-control"
                           v-model="response.teacher_comment"
                           id="exampleFormControlTextarea1"
@@ -50,9 +50,9 @@
                         type="submit"
                         ref="acceptButton"
                         class="btn btn-success shadow btn btn-sm me-1">
-                        <span class="indicator-label"> Принять ответ </span>
+                        <span class="indicator-label">{{ $t('Принять ответ') }}</span>
                         <span class="indicator-progress">
-                            Пожалуйста подождите...
+                            {{$t('Пожалуйста подождите...')}}
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                         </span>
                     </button>
@@ -62,9 +62,9 @@
                         type="submit"
                         ref="declineButton"
                         class="btn btn-warning shadow btn btn-sm me-1">
-                        <span class="indicator-label"> Отправить на пересдачу </span>
+                        <span class="indicator-label">{{ $t('Отправить на пересдачу') }}</span>
                         <span class="indicator-progress">
-                            Пожалуйста подождите...
+                            {{$t('Пожалуйста подождите...')}}
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                         </span>
                     </button>
@@ -86,27 +86,27 @@ export default {
                 {
                     name: 'name',
                     type: 'text',
-                    title: 'Название'
+                    title: this.$t('Название')
                 },
                 {
                     name: 'description',
                     type: 'textarea',
-                    title: 'Описание задачи'
+                    title: this.$t('Описание задачи')
                 },
                 {
                     name: 'comment_client',
                     type: 'textarea',
-                    title: 'Комментарий'
+                    title: this.$t('Комментарий')
                 },
                 {
                     name: 'questions',
                     type: 'questions',
-                    title: 'Вопросы'
+                    title: this.$t('Вопросы')
                 },
                 {
                     name: 'difficult_level',
                     type: 'select',
-                    placeholder: '-- Выберите сложность --',
+                    placeholder: this.$t('-- Выберите сложность --'),
                     options: [
                         {
                             value: 'A1',
@@ -125,7 +125,7 @@ export default {
                             title: 'B2'
                         },
                     ],
-                    title: 'Уровень сложности'
+                    title: this.$t('Уровень сложности')
                 },
             ],
             response: {
@@ -172,7 +172,7 @@ export default {
             this.$refs.acceptButton.setAttribute("data-kt-indicator", "on");
             await ApiService.post('/admin/user-task/accept/'+this.model.answer.id).then((response) => {
                 Swal.fire({
-                    text: "Эссе успешно принято",
+                    text: this.$t('Эссе успешно принято'),
                     icon: "success",
                     buttonsStyling: false,
                     confirmButtonText: "Ок!",
@@ -204,10 +204,10 @@ export default {
             this.$refs.declineButton.setAttribute("data-kt-indicator", "on");
             await ApiService.post('/admin/user-task/decline/'+this.model.answer.id, this.response).then((response) => {
                 Swal.fire({
-                    text: "Эссе отправлено на доработку",
+                    text: this.$t('Эссе отправлено на доработку'),
                     icon: "success",
                     buttonsStyling: false,
-                    confirmButtonText: "Ок!",
+                    confirmButtonText: this.$t("Ок!"),
                     heightAuto: false,
                     customClass: {
                         confirmButton: "btn fw-semobold btn-light-primary",
@@ -221,7 +221,7 @@ export default {
                     text: response.data.message,
                     icon: "error",
                     buttonsStyling: false,
-                    confirmButtonText: "Ок!",
+                    confirmButtonText: this.$t("Ок!"),
                     heightAuto: false,
                     customClass: {
                         confirmButton: "btn fw-semobold btn-light-danger",
@@ -256,13 +256,6 @@ export default {
             }
             return true;
         },
-        title() {
-            if (this.$route.params.id) {
-                return this.$t("task.editTitle");
-            } else {
-                return this.$t("task.createTitle");
-            }
-        }
     },
     mounted() {
         if (this.$route.params.id) {

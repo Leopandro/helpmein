@@ -3,7 +3,6 @@ import { createPinia } from "pinia";
 import { Tooltip } from "bootstrap";
 import App from "./App.vue";
 import mitt from 'mitt';
-import VueTranslate from 'vue-translate-plugin';
 const emitter = mitt();
 /*
 TIP: To get started with clean router change path to @/router/clean.ts.
@@ -21,6 +20,7 @@ import "@/core/plugins/prismjs";
 import {vue3Debounce} from "vue-debounce";
 const app = createApp(App);
 
+app.use(i18n);
 app.config.globalProperties.emitter = emitter;
 app.use(createPinia());
 app.use(router);
@@ -31,7 +31,6 @@ initApexCharts(app);
 initInlineSvg(app);
 initVeeValidate();
 
-app.use(i18n);
 app.directive('debounce', vue3Debounce({ lock: true }))
 app.directive("tooltip", (el) => {
   new Tooltip(el);

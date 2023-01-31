@@ -42,11 +42,11 @@ class UserController extends Controller
         $user->surname = $request->get('surname');
 
         if ($user->save()) {
-            if ($request->file('avatar')) {
+            if ($request->file('image')) {
                 $user
                     ->clearMediaCollection('avatars');
                 $res = $user
-                    ->addMediaFromRequest('avatar')
+                    ->addMediaFromRequest('image')
                     ->toMediaCollection('avatars');
                 chmod(public_path("images/".$res->id), 0777);
                 $user->save();

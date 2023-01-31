@@ -84,7 +84,7 @@
               <!--end::Image input-->
 
               <!--begin::Hint-->
-              <div class="form-text">Разрешены расширения: png, jpg, jpeg.</div>
+              <div class="form-text">{{$t('Разрешены расширения: png, jpg, jpeg.')}}</div>
               <!--end::Hint-->
             </div>
             <!--end::Col-->
@@ -1195,7 +1195,7 @@
           >
             <span class="indicator-label"> Save Changes </span>
             <span class="indicator-progress">
-              Please wait...
+              {{$t('Пожалуйста подождите...')}}
               <span
                 class="spinner-border spinner-border-sm align-middle ms-2"
               ></span>
@@ -1304,7 +1304,7 @@
                 >
                   <span class="indicator-label"> Update Email </span>
                   <span class="indicator-progress">
-                    Please wait...
+                    {{$t('Пожалуйста подождите...')}}
                     <span
                       class="spinner-border spinner-border-sm align-middle ms-2"
                     ></span>
@@ -1434,7 +1434,7 @@
                 >
                   <span class="indicator-label"> Update Password </span>
                   <span class="indicator-progress">
-                    Please wait...
+                    {{$t('Пожалуйста подождите...')}}
                     <span
                       class="spinner-border spinner-border-sm align-middle ms-2"
                     ></span>
@@ -1633,7 +1633,7 @@
         >
           <span class="indicator-label"> Save Changes </span>
           <span class="indicator-progress">
-            Please wait...
+            {{$t('Пожалуйста подождите...')}}
             <span
               class="spinner-border spinner-border-sm align-middle ms-2"
             ></span>
@@ -1880,7 +1880,7 @@
           >
             <span class="indicator-label"> Save Changes </span>
             <span class="indicator-progress">
-              Please wait...
+              {{$t('Пожалуйста подождите...')}}
               <span
                 class="spinner-border spinner-border-sm align-middle ms-2"
               ></span>
@@ -2128,7 +2128,7 @@
           >
             <span class="indicator-label"> Save Changes </span>
             <span class="indicator-progress">
-              Please wait...
+              {{$t('Пожалуйста подождите...')}}
               <span
                 class="spinner-border spinner-border-sm align-middle ms-2"
               ></span>
@@ -2227,7 +2227,7 @@
           >
             <span class="indicator-label"> Deactivate Account </span>
             <span class="indicator-progress">
-              Please wait...
+              {{$t('Пожалуйста подождите...')}}
               <span
                 class="spinner-border spinner-border-sm align-middle ms-2"
               ></span>

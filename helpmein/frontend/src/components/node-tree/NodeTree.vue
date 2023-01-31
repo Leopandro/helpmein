@@ -10,12 +10,12 @@
                     </svg>
                 </div>
                 <div class="node-tree-button-add-text p-1 px-3">
-                        Добавить корневую папку
+                    {{$t('Добавить корневую папку')}}
                 </div>
             </button>
             <div class="how-to p-1">
                 <router-link to="/how-to-node">
-                 Как перемещать создавать и редактировать папки
+                    {{$t('Как перемещать создавать и редактировать папки')}}
                 </router-link>
             </div>
         </div>
@@ -44,7 +44,7 @@
                     </div>
                     <div ref="div"
                          class="node-tree-folder-name p-1 h6 d-flex aligns-items-center m-0"
-                         :style="{display: showEditInput ? 'none' : 'block'}"
+                         v-if="!showEditInput"
                          :id="'node_item_'+item.id+'_input'">
                         <div>{{ item.name }}</div>
                     </div>

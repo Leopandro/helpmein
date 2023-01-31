@@ -16,7 +16,7 @@
                 <div>{{model.comment_client}}</div>
             </div>
             <div class="row p-2" v-if="model.answer.teacher_comment">
-                <div class=""><span class="fw-bold">Комментарий преподавателя: </span>{{model.answer.teacher_comment}}</div>
+                <div class=""><span class="fw-bold">{{$t('Комментарий преподавателя:')}} </span>{{model.answer.teacher_comment}}</div>
             </div>
 
             <div class="row p-4">
@@ -25,7 +25,7 @@
                     type="text"
                     rows="8"
                     class="form-control"
-                    placeholder="Решение задачи"></textarea>
+                    :placeholder="$t('Комментарий преподавателя:')"></textarea>
             </div>
             <div class="box justify-content-start pt-1">
                 <div class="col-auto p-1">
@@ -35,9 +35,9 @@
                         type="submit"
                         ref="submitButton"
                         class="btn btn-success shadow btn btn-sm me-1">
-                        <span class="indicator-label"> Отправить решение </span>
+                        <span class="indicator-label"> {{$t('Отправить решение')}} </span>
                         <span class="indicator-progress">
-                            Пожалуйста подождите...
+                            {{$t('Пожалуйста подождите...')}}
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                         </span>
                     </button>
@@ -46,9 +46,9 @@
                             href="javascript:;"
                             type="submit"
                             class="btn btn-secondary shadow btn btn-sm me-1">
-                            <span class="indicator-label"> К списку задач </span>
+                            <span class="indicator-label"> {{$t('К списку задач')}} </span>
                             <span class="indicator-progress">
-                            Пожалуйста подождите...
+                            {{$t('Пожалуйста подождите...')}}
                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                         </span>
                         </button>
@@ -67,52 +67,6 @@ export default {
     data() {
         return {
             errors: {},
-            form: [
-                {
-                    name: 'name',
-                    type: 'text',
-                    title: 'Название'
-                },
-                {
-                    name: 'description',
-                    type: 'textarea',
-                    title: 'Описание задачи'
-                },
-                {
-                    name: 'comment_client',
-                    type: 'textarea',
-                    title: 'Комментарий'
-                },
-                {
-                    name: 'questions',
-                    type: 'questions',
-                    title: 'Вопросы'
-                },
-                {
-                    name: 'difficult_level',
-                    type: 'select',
-                    placeholder: '-- Выберите сложность --',
-                    options: [
-                        {
-                            value: 'A1',
-                            title: 'A1'
-                        },
-                        {
-                            value: 'A2',
-                            title: 'A2'
-                        },
-                        {
-                            value: 'B1',
-                            title: 'B1'
-                        },
-                        {
-                            value: 'B2',
-                            title: 'B2'
-                        },
-                    ],
-                    title: 'Уровень сложности'
-                },
-            ],
             model: {
                 id: '',
                 type: '',
@@ -130,7 +84,6 @@ export default {
     async beforeRouteEnter(to,from,next) {
         console.log(to,from,next)
         await ApiService.get("/client/task/info/" + to.params.id).then((response) => {
-            // this.model = this.mappingFieldsFromTask(response.data.data);
             next((vm) => {
                 vm.model = vm.mappingFieldsFromTask(response.data.data)
             })
@@ -189,13 +142,6 @@ export default {
             }
             return true;
         },
-        title() {
-            if (this.$route.params.id) {
-                return this.$t("task.editTitle");
-            } else {
-                return this.$t("task.createTitle");
-            }
-        }
     },
     async created() {
         console.log(this.$route.params.id);

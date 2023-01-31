@@ -25,7 +25,7 @@
                     </div>
                     <div ref="div"
                          class="node-tree-folder-name p-1 h6 d-flex aligns-items-center m-0"
-                         :style="{display: showEditInput ? 'none' : 'block'}"
+                         v-if="!showEditInput"
                          :id="'node_item_'+item.id+'_input'">
                         <div>{{ item.name }}</div>
                     </div>

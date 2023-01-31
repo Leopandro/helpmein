@@ -10,13 +10,13 @@
                                 v-model="selectedUser"
                                 @change="changeUser">
                                 <option value="">
-                                    Выбрать клиента
+                                    {{$t('Выбрать клиента')}}
                                 </option>
                                 <option :value="client.id" v-for="client in clients">
                                     {{client.name + ' ' + client.surname}}
                                 </option>
                             </select>
-                            <label for="floatingSelect">Кому</label>
+                            <label for="floatingSelect">{{ $t('Кому') }}</label>
                         </div>
                     </div>
                     <div class="mw-200px">
@@ -26,13 +26,13 @@
                                 v-model="difficultLevel"
                                 @change="loadData">
                                 <option value="">
-                                    Все
+                                    {{$t('Все')}}
                                 </option>
                                 <option :value="levels.id" v-for="levels in difficultLevels">
                                     {{levels.name}}
                                 </option>
                             </select>
-                            <label for="floatingSelect2">Фильтр по уровню</label>
+                            <label for="floatingSelect2">{{$t('Фильтр по уровню')}}</label>
                         </div>
                     </div>
                 </div>
@@ -87,12 +87,12 @@
                         </div>
                         <div class="row" v-if="task.comment_client">
                             <p class="text-break">
-                                <b>Комментарий для клиента:</b> {{task.comment_client}}
+                                <b>{{ $t('Комментарий для клиента:') }}</b> {{task.comment_client}}
                             </p>
                         </div>
                         <div class="row" v-if="task.comment">
                             <p class="text-break">
-                                <b>Комментарий для себя:</b> {{task.comment}}
+                                <b>{{ $t('Комментарий для себя:') }}</b> {{task.comment}}
                             </p>
                         </div>
                     </div>
@@ -167,23 +167,23 @@ export default {
     methods: {
         getErrorMessage() {
             if (this.loading === true) {
-                return "Загрузка...";
+                return this.$t('Загрузка...');
             }
             if (this.tasks.length === 0) {
                 if (this.tasksErrorMessage) {
                     return this.tasksErrorMessage;
                 }
-                return "Задач нет";
+                return this.$t('Задач нет');
             }
         },
         getButtonText() {
             let message = "";
             if (this.count === 0) {
-                message = "Не выбраны задачи для назначения"
+                message = this.$t('Не выбраны задачи для назначения')
             } else {
-                message = "Назначить задачи"
+                message = this.$t('Назначить задачи')
             }
-            message = "Назначить задачи"
+            message = this.$t('Назначить задачи')
             return message;
         },
         async loadUsers() {
@@ -201,7 +201,7 @@ export default {
                     text: response.data.data.message,
                     icon: "success",
                     buttonsStyling: false,
-                    confirmButtonText: "Ок!",
+                    confirmButtonText: this.$t("Ок!"),
                     heightAuto: false,
                     customClass: {
                         confirmButton: "btn btn-primary",
@@ -214,7 +214,7 @@ export default {
                     text: error.response.data.message,
                     icon: "error",
                     buttonsStyling: false,
-                    confirmButtonText: "Ок!",
+                    confirmButtonText: this.$t("Ок!"),
                     heightAuto: false,
                     customClass: {
                         confirmButton: "btn btn-danger",

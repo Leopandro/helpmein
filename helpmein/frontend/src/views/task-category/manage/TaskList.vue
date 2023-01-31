@@ -2,7 +2,7 @@
     <div v-if="task_category.id">
         <div class="col-12 px-0 p-1">
             <router-link :to="getCreateLink()">
-                <button type="button" class="btn btn-primary">Добавить задачу</button>
+                <button type="button" class="btn btn-primary">{{ $t('Добавить задачу') }}</button>
             </router-link>
         </div>
         <div class="col-12 px-0 p-1 task-list-item" v-for="(task, name, index) in task_categories">
@@ -61,12 +61,12 @@
                     </div>
                     <div class="row">
                         <p class="text-break" v-if="task.comment_client">
-                            <b>Комментарий для клиента:</b> {{task.comment_client}}
+                            <b>{{ $t('Комментарий для клиента:') }}</b> {{task.comment_client}}
                         </p>
                     </div>
                     <div class="row">
                         <p class="text-break" v-if="task.comment">
-                            <b>Комментарий для себя:</b> {{task.comment}}
+                            <b>{{ $t('Комментарий для себя:') }}</b> {{task.comment}}
                         </p>
                     </div>
                 </div>
@@ -107,10 +107,10 @@ export default {
     methods: {
         getErrorMessage() {
             if (this.loading === true) {
-                return "Загрузка...";
+                return this.$t('Загрузка...');
             }
             if (this.task_categories.length === 0) {
-                return "Задач нет";
+                return this.$t('Задач нет');
             }
         },
         async loadData() {
@@ -134,7 +134,7 @@ export default {
             return '/task/edit' + '?task_category_id=' + this.task_category.id;
         },
         async deleteTask(item) {
-            if (confirm('Удалить задачу?')) {
+            if (confirm(this.$t('Удалить задачу?'))) {
                 await ApiService.post('/admin/task/delete/'+item.id).then((response) => {
                     this.loadData();
                 })

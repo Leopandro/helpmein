@@ -14,6 +14,7 @@ class UserInfoResource extends JsonResource
     {
         /** @var Client $user */
         $user = $this->resource;
+        $avatar = $user->getFirstMedia('avatars') ? new MediaResource($user->getFirstMedia('avatars')) : $user->getFirstMedia('avatars');
         return [
             'id' => $user->id,
             'name' => $user->teachers->first()->pivot->name,

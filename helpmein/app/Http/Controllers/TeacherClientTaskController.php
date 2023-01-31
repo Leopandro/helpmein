@@ -21,7 +21,7 @@ class TeacherClientTaskController extends Controller
         return $this->getSuccessResponse((new AdminTaskInfoResource($task))->toArray($request));
     }
 
-    /** Вывод списка всех задач клиента */
+    /** Прием ответа клиента */
     public function accept(Request $request, Answer $answer): JsonResponse {
         /** @var LengthAwarePaginator $tasks */
         $answer->status = UserTaskStatus::FINISHED;

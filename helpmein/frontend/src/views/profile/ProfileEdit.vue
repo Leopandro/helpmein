@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-header">
             <div class="card-title">
-                Редактировать профиль
+                {{ $t('Редактировать профиль') }}
             </div>
         </div>
         <div class="card-body">
@@ -17,7 +17,7 @@
 
                                data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar"><i
                             class="bi bi-pencil-fill fs-7"></i>
-                            <input type="file" @change="handleImage" name="avatar" accept=".png, .jpg, .jpeg">
+                            <input type="file" ref="fileInput" @change="handleImage" name="avatar" accept=".png, .jpg, .jpeg">
                             <input type="hidden" name="avatar_remove">
                         </label>
                         <span
@@ -26,7 +26,7 @@
                             data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
                             <i class="bi bi-x fs-2"></i>
                         </span></div>
-                    <div class="form-text">Разрешены расширения: png, jpg, jpeg.</div>
+                    <div class="form-text">{{$t('Разрешены расширения: png, jpg, jpeg.')}}</div>
 
                     <div v-if="errors.avatar" class="fv-plugins-message-container invalid-feedback">
                         <div data-field="daterangepicker_input" data-validator="notEmpty">{{ errors.avatar[0] }}</div>
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="row mb-6">
-                <label class="col-lg-4 col-form-label required fw-semobold fs-6">Имя</label>
+                <label class="col-lg-4 col-form-label required fw-semobold fs-6">{{ $t('Имя') }}</label>
                 <div class="col-lg-8 fv-row">
                     <input v-model="model.name" type="text" class="form-control" placeholder="">
                     <div v-if="errors.name" class="fv-plugins-message-container invalid-feedback">
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="row mb-6">
-                <label class="col-lg-4 col-form-label required fw-semobold fs-6">Фамилия</label>
+                <label class="col-lg-4 col-form-label required fw-semobold fs-6">{{ $t('Фамилия') }}</label>
                 <div class="col-lg-8 fv-row">
                     <input v-model="model.surname" type="text" class="form-control" placeholder="">
                     <div v-if="errors.surname" class="fv-plugins-message-container invalid-feedback">
@@ -62,9 +62,9 @@
             </div>
             <button ref="submitButton" href="javascript:;" v-on:click="submitForm" type="submit" class="btn btn-success">
 
-                <span class="indicator-label"> Сохранить </span>
+                <span class="indicator-label"> {{$t("Сохранить")}} </span>
                 <span class="indicator-progress">
-                    Please wait...
+                    {{$t("Пожалуйста подождите...")}}
                     <span
                         class="spinner-border spinner-border-sm align-middle ms-2"
                     ></span>
@@ -86,7 +86,7 @@ export default {
             errors: [],
             model: {
                 email: '',
-                avatar: '/metronic8/vue/demo1//media/avatars/blank.png',
+                avatar: '/media/avatars/blank.png',
                 name: '',
                 image: '',
                 surname: ''
@@ -95,10 +95,13 @@ export default {
     },
     mounted() {
         const store = useAuthStore();
+        store.errors = "";
         ApiService.get("user/profile/info/")
             .then((response) => {
                 this.model = response.data.data;
-                this.model.avatar = response.data.data?.avatar?.url;
+                console.log(response.data.data)
+                this.model.avatar = response.data.data?.avatar == undefined ? '/media/avatars/blank.png' : response.data.data.avatar.url;
+                this.model.image = '';
             })
     },
     computed: {
@@ -110,17 +113,17 @@ export default {
         submitForm() {
             const store = useAuthStore();
             let formData = new FormData();
-            formData.set('avatar', this.model.image)
+            formData.set('image', this.model.image)
             formData.set('email', this.model.email)
             formData.set('name', this.model.name)
             formData.set('surname', this.model.surname)
             ApiService.post("user/profile/edit/", formData)
                 .then(() => {
                     Swal.fire({
-                        text: "Профиль успешно изменен",
+                        text: this.$t("Профиль успешно изменен"),
                         icon: "success",
                         buttonsStyling: false,
-                        confirmButtonText: "Ок!",
+                        confirmButtonText: this.$t("Ок!"),
                         heightAuto: false,
                         customClass: {
                             confirmButton: "btn fw-semobold btn-light-primary",
@@ -146,9 +149,9 @@ export default {
                 });
         },
         deleteImage() {
-            console.log('delete')
-            this.model.avatar = '';
+            this.model.avatar = '/media/avatars/blank.png';
             this.model.image = '';
+            this.$refs.fileInput.value = '';
         },
         handleImage(e) {
             const selectedImage = e.target.files[0];

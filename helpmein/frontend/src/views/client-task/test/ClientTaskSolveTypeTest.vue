@@ -3,7 +3,7 @@
         <div class="card-body" v-if="isVisible">
             <div class="row p-3">
                 <div class="col-5 p-0">
-                    <b>Ответьте на вопросы по теме</b>
+                    <b>{{$t('Ответьте на вопросы по теме')}}</b>
                 </div>
                 <div class="col-auto ms-auto p-0 text-secondary">
                     <b>№ {{ model.id }}</b>
@@ -80,9 +80,9 @@
                             v-on:click="submitForm"
                             type="submit"
                             class="btn-color-success shadow btn btn-sm">
-                        <span class="indicator-label"> Отправить решение </span>
+                        <span class="indicator-label">{{$t('Отправить решение')}}</span>
                         <span class="indicator-progress">
-                            Пожалуйста подождите...
+                            {{$t('Пожалуйста подождите...')}}
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                         </span>
                     </button>
@@ -93,9 +93,9 @@
                             href="javascript:;"
                             type="submit"
                             class="btn-color-dark shadow btn btn-sm">
-                            <span class="indicator-label"> Отмена </span>
+                            <span class="indicator-label"> {{$t('Отмена')}} </span>
                             <span class="indicator-progress">
-                                Пожалуйста подождите...
+                                {{$t('Пожалуйста подождите...')}}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                             </span>
                         </button>
@@ -115,52 +115,6 @@ export default {
     data() {
         return {
             errors: {},
-            form: [
-                {
-                    name: 'name',
-                    type: 'text',
-                    title: 'Название'
-                },
-                {
-                    name: 'description',
-                    type: 'textarea',
-                    title: 'Описание задачи'
-                },
-                {
-                    name: 'comment_client',
-                    type: 'textarea',
-                    title: 'Комментарий'
-                },
-                {
-                    name: 'questions',
-                    type: 'questions',
-                    title: 'Вопросы'
-                },
-                {
-                    name: 'difficult_level',
-                    type: 'select',
-                    placeholder: '-- Выберите сложность --',
-                    options: [
-                        {
-                            value: 'A1',
-                            title: 'A1'
-                        },
-                        {
-                            value: 'A2',
-                            title: 'A2'
-                        },
-                        {
-                            value: 'B1',
-                            title: 'B1'
-                        },
-                        {
-                            value: 'B2',
-                            title: 'B2'
-                        },
-                    ],
-                    title: 'Уровень сложности'
-                },
-            ],
             question_answers: [],
             model: {
                 id: '',
@@ -299,13 +253,6 @@ export default {
             }
             return true;
         },
-        title() {
-            if (this.$route.params.id) {
-                return this.$t("task.editTitle");
-            } else {
-                return this.$t("task.createTitle");
-            }
-        }
     },
     async created() {
         console.log(this.question_answers);

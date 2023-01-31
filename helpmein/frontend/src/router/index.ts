@@ -7,6 +7,8 @@ import {useAuthStore} from "@/stores/auth";
 import {useConfigStore} from "@/stores/config";
 import {usePermissionStore} from "@/stores/permission";
 import {useRouterStore} from "@/stores/router";
+import i18n from "@/core/plugins/i18n";
+
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -88,7 +90,7 @@ const routes: Array<RouteRecordRaw> = [
                     breadcrumbs: [{
                         "name": "Задачи",
                         "path": "/task/list"
-                    }, "Решить задачу"],
+                    }, "Создать задачу"],
                 },
             },
             {

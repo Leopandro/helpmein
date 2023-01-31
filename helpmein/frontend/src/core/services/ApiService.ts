@@ -3,6 +3,7 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import JwtService from "@/core/services/JwtService";
 import type { AxiosResponse } from "axios";
+import i18n from "@/core/plugins/i18n";
 
 /**
  * @description service to call HTTP request via Axios
@@ -41,8 +42,9 @@ class ApiService {
     ApiService.vueInstance.axios.defaults.headers.common[
       "Authorization"
     ] = `Bearer ${JwtService.getToken()}`;
-    ApiService.vueInstance.axios.defaults.headers.common["Accept"] =
-      "application/json";
+    ApiService.vueInstance.axios.defaults.headers.common["Accept"] = "application/json";
+      console.log(i18n.global.locale.value)
+    ApiService.vueInstance.axios.defaults.headers.common["Accept-Language"] = i18n.global.locale.value;
   }
 
   /**
@@ -52,6 +54,7 @@ class ApiService {
    * @returns Promise<AxiosResponse>
    */
   public static query(resource: string, params: any): Promise<AxiosResponse> {
+      ApiService.setHeader();
     return ApiService.vueInstance.axios.get(resource, params);
   }
 
@@ -65,6 +68,7 @@ class ApiService {
     resource: string,
     slug = "" as string
   ): Promise<AxiosResponse> {
+      ApiService.setHeader();
     return ApiService.vueInstance.axios.get(`${resource}/${slug}`);
   }
 
@@ -75,6 +79,7 @@ class ApiService {
    * @returns Promise<AxiosResponse>
    */
   public static post(resource: string, params: any = []): Promise<AxiosResponse> {
+      ApiService.setHeader();
     return ApiService.vueInstance.axios.post(`${resource}`, params);
   }
 
@@ -90,6 +95,7 @@ class ApiService {
     slug: string,
     params: any
   ): Promise<AxiosResponse> {
+      ApiService.setHeader();
     return ApiService.vueInstance.axios.put(`${resource}/${slug}`, params);
   }
 
@@ -100,6 +106,7 @@ class ApiService {
    * @returns Promise<AxiosResponse>
    */
   public static put(resource: string, params: any): Promise<AxiosResponse> {
+      ApiService.setHeader();
     return ApiService.vueInstance.axios.put(`${resource}`, params);
   }
 
@@ -109,6 +116,7 @@ class ApiService {
    * @returns Promise<AxiosResponse>
    */
   public static delete(resource: string): Promise<AxiosResponse> {
+      ApiService.setHeader();
     return ApiService.vueInstance.axios.delete(resource);
   }
 }

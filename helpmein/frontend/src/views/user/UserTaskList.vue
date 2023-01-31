@@ -2,9 +2,9 @@
     <div class="card">
         <div class="card-header border-0 pt-6">
             <div class="card-title">
-                <button :class="{'btn-primary': taskStatus === 'all'}" v-on:click="setStatus('all')" type="button" class="btn btn-sm btn-light">Все задачи</button>
-                <button :class="{'btn-primary': taskStatus === 'assigned'}" v-on:click="setStatus('assigned')" type="button" class="btn btn-sm btn-light">В работе</button>
-                <button :class="{'btn-primary': taskStatus === 'in_review'}" v-on:click="setStatus('in_review')" type="button" class="btn btn-sm btn-light">На проверку</button>
+                <button :class="{'btn-primary': taskStatus === 'all'}" v-on:click="setStatus('all')" type="button" class="btn btn-sm btn-light">{{$t('Все  задачи')}}</button>
+                <button :class="{'btn-primary': taskStatus === 'assigned'}" v-on:click="setStatus('assigned')" type="button" class="btn btn-sm btn-light">{{$t('В работе')}}</button>
+                <button :class="{'btn-primary': taskStatus === 'in_review'}" v-on:click="setStatus('in_review')" type="button" class="btn btn-sm btn-light">{{$t('На проверку')}}</button>
             </div>
             <div class="card-toolbar">
                 <div
@@ -18,15 +18,15 @@
             <table class="table table-row-dashed fs-6 gy-5 my-0" v-if="tasks?.length > 0">
                 <thead>
                 <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                    <th class="min-w-25px">Статус</th>
-                    <th class="min-w-25px">Уровень</th>
-                    <th class="min-w-50px">Тип</th>
-                    <th class="min-w-125px">Тема</th>
-                    <th class="min-w-50px">Название задачи</th>
-                    <th class="min-w-125px">Комментарий</th>
-                    <th class="min-w-75px">Назначена</th>
-                    <th class="min-w-25px text-end">Действия</th>
-                    <th class="w-25px">Id</th>
+                    <th class="min-w-25px">{{$t('Статус')}}</th>
+                    <th class="min-w-25px">{{$t('Уровень')}}</th>
+                    <th class="min-w-50px">{{$t('Тип')}}</th>
+                    <th class="min-w-125px">{{$t('Тема')}}</th>
+                    <th class="min-w-50px">{{$t('Название задачи')}}</th>
+                    <th class="min-w-125px">{{$t('Комментарий')}}</th>
+                    <th class="min-w-75px">{{$t('Назначена')}}</th>
+                    <th class="min-w-25px text-end">{{$t('Действия')}}</th>
+                    <th class="w-25px">{{$t('Id')}}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -58,19 +58,19 @@
 
                         <div class="dropdown">
                             <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                Действия
+                                {{$t('Действия')}}
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <template v-if="task.type.id === 'essay'">
                                     <li v-if="['reassigned','in_review','finished'].includes(task.status.id)">
                                         <router-link class="dropdown-item" :to="viewTask(task)">
-                                            Просмотр ответа
+                                            {{$t('Просмотр ответа')}}
                                         </router-link>
                                     </li>
                                 </template>
                                 <li v-if="task.status.id === 'assigned'" v-on:click="removeTask(task.id)">
                                     <a class="dropdown-item" href="javascript:;">
-                                        Удалить
+                                        {{$t('Удалить')}}
                                     </a>
                                 </li>
                             </ul>
@@ -83,7 +83,7 @@
             <div class="col-12">
                 <PaginationTemplate v-if="tasks?.length > 0" :count="pagesCount" :current-page="currentPage" :per-page="perPage" :values="[10,50]"></PaginationTemplate>
             </div>
-            <div v-if="tasks?.length == 0" class="alert alert-primary">{{getErrorMessage()}}</div>
+            <div v-if="tasks?.length == 0 || tasks == undefined" class="alert alert-primary">{{getErrorMessage()}}</div>
         </div>
     </div>
 </template>
@@ -119,16 +119,16 @@ export default {
             loading: null,
             taskStatuses: {
                 'all': {
-                    title: 'Все задачи',
-                    errorMessage: 'Нет назначенных задач',
+                    title: this.$t('Все задачи'),
+                    errorMessage: this.$t('Нет назначенных задач'),
                 },
                 'assigned': {
-                    title: 'В работе',
-                    errorMessage: 'Нет задач в работе',
+                    title: this.$t('В работе'),
+                    errorMessage: this.$t('Нет задач в работе'),
                 },
                 'in_review': {
-                    title: 'На проверку',
-                    errorMessage: 'Нет задач на проверку',
+                    title: this.$t('На проверку'),
+                    errorMessage: this.$t('Нет задач на проверку'),
                 },
             },
         }
@@ -139,11 +139,9 @@ export default {
     methods: {
         getErrorMessage() {
             if (this.loading === true) {
-                return "Загрузка...";
+                return this.$t("Загрузка...");
             }
-            if (this.tasks.length === 0) {
-                return this.taskStatuses[this.taskStatus].errorMessage;
-            }
+            return this.taskStatuses[this.taskStatus].errorMessage;
         },
         viewTask(task) {
             return '/admin/task/view-' + task.type.id + '-result/'+ task.id;
@@ -181,9 +179,12 @@ export default {
         },
         setTasks(items) {
             this.tasks = items;
+        },
+        setUser(user) {
             const store = useRouterStore();
-            this.client = items[0]['clients'][0];
-            store.currentTitle = "Список задач клиента " + this.client.surname + ' ' + this.client.name;
+            this.client = user;
+            console.log(user)
+            store.currentTitle = this.$t('Список задач клиента') + ' ' + this.client.surname + ' ' + this.client.name;
         },
         async setStatus(status) {
             this.taskStatus = status;
@@ -196,6 +197,11 @@ export default {
             user_id: to.params.id,
             all: true
         };
+        await ApiService.query("/user/info/"+to.params.id).then((response) => {
+            next((vm) => {
+                vm.setUser(response.data.data);
+            })
+        })
         await ApiService.query("/admin/user-task/list", {
             params: {
                 filter: filter,

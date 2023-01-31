@@ -13,7 +13,7 @@
                             v-on:change="searchItems"
                             v-model="filter.active">
                         <label class="form-check-label p-1" for="filter_active">
-                            Показывать только активных клиентов
+                            {{$t('Показывать только активных клиентов')}}
                         </label>
                     </div>
                     <div>
@@ -38,7 +38,7 @@
                         <span class="svg-icon svg-icon-2">
                           <inline-svg src="/media/icons/duotune/arrows/arr075.svg"/>
                         </span>
-                            Добавить клиента
+                            {{$t('Добавить клиента')}}
                         </button>
                     </router-link>
 
@@ -50,11 +50,11 @@
                 <thead>
                 <tr class="fw-semibold fs-6 text-muted">
                     <th></th>
-                    <th>Фамилия Имя</th>
-                    <th>На проверке</th>
-                    <th>Активные</th>
-                    <th>За 3 дня</th>
-                    <th>За 10 дней</th>
+                    <th>{{$t('Фамилия Имя')}}</th>
+                    <th>{{$t('На проверке')}}</th>
+                    <th>{{$t('Активные')}}</th>
+                    <th>{{$t('За 3 дня')}}</th>
+                    <th>{{$t('За 10 дней')}}</th>
                     <th>-</th>
                 </tr>
                 </thead>

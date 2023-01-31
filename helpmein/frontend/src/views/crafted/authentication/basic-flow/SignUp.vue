@@ -11,15 +11,15 @@
       <!--begin::Heading-->
       <div class="mb-10 text-center">
         <!--begin::Title-->
-        <h1 class="text-dark mb-3">Создать аккаунт</h1>
+        <h1 class="text-dark mb-3">{{$t('Создать аккаунт')}}</h1>
         <!--end::Title-->
 
         <!--begin::Link-->
         <div class="text-gray-400 fw-semobold fs-4">
-          Уже зарегистрированы?
+            {{$t('Уже зарегистрированы?')}}
 
           <router-link to="/sign-in" class="link-primary fw-bold">
-            Войти в аккаунт
+              {{$t('Войти в аккаунт')}}
           </router-link>
         </div>
         <!--end::Link-->
@@ -29,7 +29,7 @@
       <!--begin::Separator-->
       <div class="d-flex align-items-center mb-10">
         <div class="border-bottom border-gray-300 mw-50 w-100"></div>
-        <span class="fw-semobold text-gray-400 fs-7 mx-2">или</span>
+        <span class="fw-semobold text-gray-400 fs-7 mx-2">{{$t('или')}}</span>
         <div class="border-bottom border-gray-300 mw-50 w-100"></div>
       </div>
       <!--end::Separator-->
@@ -38,7 +38,7 @@
       <div class="row fv-row mb-7">
         <!--begin::Col-->
         <div class="col-xl-6">
-          <label class="form-label fw-bold text-dark fs-6">Имя</label>
+          <label class="form-label fw-bold text-dark fs-6">{{ $t('Имя') }}</label>
           <Field
             class="form-control form-control-lg form-control-solid"
             type="text"
@@ -56,7 +56,7 @@
 
         <!--begin::Col-->
         <div class="col-xl-6">
-          <label class="form-label fw-bold text-dark fs-6">Фамилия</label>
+          <label class="form-label fw-bold text-dark fs-6">{{ $t('Фамилия') }}</label>
           <Field
             class="form-control form-control-lg form-control-solid"
             type="text"
@@ -76,7 +76,7 @@
 
       <!--begin::Input group-->
       <div class="fv-row mb-7">
-        <label class="form-label fw-bold text-dark fs-6">E-mail</label>
+        <label class="form-label fw-bold text-dark fs-6">{{$t('E-mail')}}</label>
         <Field
           class="form-control form-control-lg form-control-solid"
           type="email"
@@ -97,7 +97,7 @@
         <!--begin::Wrapper-->
         <div class="mb-1">
           <!--begin::Label-->
-          <label class="form-label fw-bold text-dark fs-6"> Пароль </label>
+          <label class="form-label fw-bold text-dark fs-6"> {{$t('Пароль')}} </label>
           <!--end::Label-->
 
           <!--begin::Input wrapper-->
@@ -139,7 +139,7 @@
         <!--end::Wrapper-->
         <!--begin::Hint-->
         <div class="text-muted">
-          Используйте 4 или больше букв с набором слов, цифр и символов.
+            {{$t('Используйте 4 или больше букв с набором слов, цифр и символов.')}}
         </div>
         <!--end::Hint-->
       </div>
@@ -148,7 +148,7 @@
       <!--begin::Input group-->
       <div class="fv-row mb-5">
         <label class="form-label fw-bold text-dark fs-6"
-          >Повторите пароль</label
+          >{{$t('Повторите пароль')}}</label
         >
         <Field
           class="form-control form-control-lg form-control-solid"
@@ -174,9 +174,9 @@
           type="submit"
           class="btn btn-lg btn-primary"
         >
-          <span class="indicator-label"> Подтвердить </span>
+          <span class="indicator-label"> {{$t('Подтвердить')}} </span>
           <span class="indicator-progress">
-            Подождите ...
+            {{$t('Подождите ...')}}
             <span
               class="spinner-border spinner-border-sm align-middle ms-2"
             ></span>
@@ -220,6 +220,7 @@ export default {
     },
   setup() {
     const store = useAuthStore();
+    store.errors = "";
     const router = useRouter();
     let errors = store.errors;
     const submitButton = ref<HTMLButtonElement | null>(null);
@@ -252,7 +253,7 @@ export default {
       console.log(error);
       if (!message) {
         Swal.fire({
-          text: "Вы успешно авторизовались!",
+          text: this.$t("Вы успешно авторизовались!"),
           icon: "success",
           buttonsStyling: false,
           confirmButtonText: "Ок!",
@@ -269,7 +270,7 @@ export default {
           text: message,
           icon: "error",
           buttonsStyling: false,
-          confirmButtonText: "Ок!",
+          confirmButtonText: this.$t("Ок!"),
           heightAuto: false,
           customClass: {
             confirmButton: "btn fw-semobold btn-light-danger",

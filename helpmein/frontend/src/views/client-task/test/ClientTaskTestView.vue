@@ -3,7 +3,7 @@
         <div class="card-body" v-if="isVisible">
             <div class="row p-3">
                 <div class="col-auto p-0">
-                    <b>Ответьте на вопросы по теме</b>
+                    <b>{{$t('Ответьте на вопросы по теме')}}</b>
                 </div>
                 <div class="col-auto ms-auto text-secondary p-0">
                     <b>№ {{ model.id }}</b>
@@ -35,7 +35,7 @@
 
                     <div class="form-group row p-3">
 
-                        <div class="col-12 p-0">Правильными могут быть несколько вариантов:</div>
+                        <div class="col-12 p-0">{{$t('Правильными могут быть несколько вариантов:')}}</div>
                         <div class="radio-inline radio-box col-9 row" :class="{
                             'alert-danger': getQuestionAnswerResult(index) === false,
                             'alert-success': getQuestionAnswerResult(index) === true
@@ -100,7 +100,7 @@
                             class="btn btn-danger shadow btn btn-sm me-1">
                             <span class="indicator-label"> Пересдать </span>
                             <span class="indicator-progress">
-                                Пожалуйста подождите...
+                                {{$t('Пожалуйста подождите...')}}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                             </span>
                         </button>
@@ -111,9 +111,9 @@
                             href="javascript:;"
                             type="submit"
                             class="btn btn-secondary shadow btn btn-sm me-1">
-                            <span class="indicator-label"> К списку задач </span>
+                            <span class="indicator-label"> {{$t('К списку задач')}} </span>
                             <span class="indicator-progress">
-                                Пожалуйста подождите...
+                                {{$t('Пожалуйста подождите...')}}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                             </span>
                         </button>
@@ -133,52 +133,6 @@ export default {
     data() {
         return {
             errors: {},
-            form: [
-                {
-                    name: 'name',
-                    type: 'text',
-                    title: 'Название'
-                },
-                {
-                    name: 'description',
-                    type: 'textarea',
-                    title: 'Описание задачи'
-                },
-                {
-                    name: 'comment_client',
-                    type: 'textarea',
-                    title: 'Комментарий'
-                },
-                {
-                    name: 'questions',
-                    type: 'questions',
-                    title: 'Вопросы'
-                },
-                {
-                    name: 'difficult_level',
-                    type: 'select',
-                    placeholder: '-- Выберите сложность --',
-                    options: [
-                        {
-                            value: 'A1',
-                            title: 'A1'
-                        },
-                        {
-                            value: 'A2',
-                            title: 'A2'
-                        },
-                        {
-                            value: 'B1',
-                            title: 'B1'
-                        },
-                        {
-                            value: 'B2',
-                            title: 'B2'
-                        },
-                    ],
-                    title: 'Уровень сложности'
-                },
-            ],
             question_answers: [],
             model: {
                 id: '',
@@ -277,13 +231,6 @@ export default {
             }
             return true;
         },
-        title() {
-            if (this.$route.params.id) {
-                return this.$t("task.editTitle");
-            } else {
-                return this.$t("task.createTitle");
-            }
-        }
     },
     async created() {
         console.log(this.question_answers);

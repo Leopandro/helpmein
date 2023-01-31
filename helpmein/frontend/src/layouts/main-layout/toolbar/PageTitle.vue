@@ -9,7 +9,7 @@
                 v-if="typeof pageTitle === 'string'"
                 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0"
             >
-                {{ currentTitle }}
+                {{ $t(currentTitle) }}
             </h1>
 
             <span
@@ -25,7 +25,8 @@
                 <!--begin::Item-->
                 <li class="breadcrumb-item text-muted">
                     <router-link to="/" class="text-muted text-hover-primary"
-                    >Главная
+                    >
+                        {{ $t('Главная') }}
                     </router-link
                     >
                 </li>
@@ -38,9 +39,9 @@
                     <!--end::Item-->
                     <!--begin::Item-->
                     <li v-if="item.path" class="breadcrumb-item text-muted">
-                        <router-link :to="item.path" class="router-link-active text-muted text-hover-primary">{{ item.name }} </router-link>
+                        <router-link :to="item.path" class="router-link-active text-muted text-hover-primary">{{ $t(item.name) }} </router-link>
                     </li>
-                    <li v-else class="breadcrumb-item text-muted">{{ item }}</li>
+                    <li v-else class="breadcrumb-item text-muted">{{ $t(item) }}</li>
                     <!--end::Item-->
                 </template>
             </ul>

@@ -12,15 +12,15 @@
             <!--begin::Heading-->
             <div class="text-center mb-10">
                 <!--begin::Title-->
-                <h1 class="text-dark mb-3">Войти</h1>
+                <h1 class="text-dark mb-3">{{ $t('Войти') }}</h1>
                 <!--end::Title-->
 
                 <!--begin::Link-->
                 <div class="text-gray-400 fw-semobold fs-4">
-                    Не зарегистрированы?
+                    {{ $t('Не зарегистрированы?') }}
 
                     <router-link to="/sign-up" class="link-primary fw-bold">
-                        Создать аккаунт
+                        {{ $t('Создать аккаунт') }}
                     </router-link>
                 </div>
                 <!--end::Link-->
@@ -30,7 +30,7 @@
             <!--begin::Input group-->
             <div class="fv-row mb-10">
                 <!--begin::Label-->
-                <label class="form-label fs-6 fw-bold text-dark">Почта</label>
+                <label class="form-label fs-6 fw-bold text-dark">{{ $t('Почта') }}</label>
                 <!--end::Label-->
 
                 <!--begin::Input-->
@@ -56,12 +56,12 @@
                 <!--begin::Wrapper-->
                 <div class="d-flex flex-stack mb-2">
                     <!--begin::Label-->
-                    <label class="form-label fw-bold text-dark fs-6 mb-0">Пароль</label>
+                    <label class="form-label fw-bold text-dark fs-6 mb-0">{{ $t('Пароль') }}</label>
                     <!--end::Label-->
 
                     <!--begin::Link-->
                     <router-link to="/password-reset" v-on:click="forgotPassword($e)" class="link-primary fs-6 fw-bold">
-                        Забыли пароль ?
+                        {{ $t('Забыли пароль ?') }}
                     </router-link>
                     <!--end::Link-->
                 </div>
@@ -95,10 +95,10 @@
                     id="kt_sign_in_submit"
                     class="btn btn-lg btn-primary w-100 mb-5"
                 >
-                    <span class="indicator-label"> Продолжить </span>
+                    <span class="indicator-label"> {{ $t('Продолжить') }} </span>
 
                     <span class="indicator-progress">
-            Подождите ...
+            {{ $t('Подождите ...') }}
             <span
                 class="spinner-border spinner-border-sm align-middle ms-2"
             ></span>
@@ -123,6 +123,7 @@ import Swal from "sweetalert2";
 import * as Yup from "yup";
 import {usePermissionStore} from "@/stores/permission";
 import {useLoginStore} from "@/stores/login";
+import i18n from "@/core/plugins/i18n";
 
 export default defineComponent({
     name: "sign-in",
@@ -156,7 +157,9 @@ export default defineComponent({
         }
     },
     setup() {
+        console.log(i18n.global.locale);
         const store = useAuthStore();
+        store.errors = "";
         const router = useRouter();
         const permissionStore = usePermissionStore();
         const submitButton = ref<HTMLButtonElement | null>(null);
@@ -184,7 +187,7 @@ export default defineComponent({
             console.log(message);
             if (!message) {
                 Swal.fire({
-                    text: "Вы успешно авторизовались!",
+                    text: i18n.global.t("Вы успешно авторизовались!"),
                     icon: "success",
                     buttonsStyling: false,
                     confirmButtonText: "Ок!",
@@ -200,7 +203,7 @@ export default defineComponent({
                     text: message,
                     icon: "error",
                     buttonsStyling: false,
-                    confirmButtonText: "Ок!",
+                    confirmButtonText: i18n.global.t("Ок!"),
                     heightAuto: false,
                     customClass: {
                         confirmButton: "btn fw-semobold btn-light-danger",

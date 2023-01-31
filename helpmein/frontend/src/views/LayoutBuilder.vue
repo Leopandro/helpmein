@@ -765,7 +765,7 @@
             >
               <span class="indicator-label"> Preview </span>
               <span class="indicator-progress">
-                Please wait...
+                {{$t('Пожалуйста подождите...')}}
                 <span
                   class="spinner-border spinner-border-sm align-middle ms-2"
                 ></span>

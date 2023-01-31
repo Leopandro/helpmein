@@ -33,7 +33,7 @@
     <!--begin::Menu item-->
     <div class="menu-item px-5" style="display: block">
       <router-link to="/profile" class="menu-link px-5">
-        Профиль
+        {{ $t('Профиль') }}
       </router-link>
     </div>
     <!--end::Menu item-->
@@ -51,19 +51,18 @@
       class="menu-item px-5"
       data-kt-menu-trigger="hover"
       data-kt-menu-placement="left-start"
-      style="display: none"
       data-kt-menu-flip="center, top"
     >
       <router-link to="/pages/profile/overview" class="menu-link px-5">
         <span class="menu-title position-relative">
-          Язык
+          {{$t('Язык')}}
           <span
             class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0"
           >
-            {{ currentLangugeLocale.name }}
+            {{ currentLanguageLocale.name }}
             <img
               class="w-15px h-15px rounded-1 ms-2"
-              :src="currentLangugeLocale.flag"
+              :src="currentLanguageLocale.flag"
               alt="metronic"
             />
           </span>
@@ -75,8 +74,26 @@
         <!--begin::Menu item-->
         <div class="menu-item px-3">
           <a
+            @click="setLang('ru')"
+            href="javascript:;"
+            class="menu-link d-flex px-5"
+            :class="{ active: currentLanguage === 'ru' }"
+          >
+            <span class="symbol symbol-20px me-4">
+              <img
+                class="rounded-1"
+                src="/media/flags/russia.svg"
+                alt="metronic"
+              />
+            </span>
+            Русский
+          </a>
+        </div>
+
+        <div class="menu-item px-3">
+          <a
             @click="setLang('en')"
-            href="#"
+            href="javascript:;"
             class="menu-link d-flex px-5"
             :class="{ active: currentLanguage === 'en' }"
           >
@@ -91,86 +108,6 @@
           </a>
         </div>
         <!--end::Menu item-->
-
-        <!--begin::Menu item-->
-        <div class="menu-item px-3">
-          <a
-            @click="setLang('es')"
-            href="#"
-            class="menu-link d-flex px-5"
-            :class="{ active: currentLanguage === 'es' }"
-          >
-            <span class="symbol symbol-20px me-4">
-              <img
-                class="rounded-1"
-                src="/media/flags/spain.svg"
-                alt="metronic"
-              />
-            </span>
-            Spanish
-          </a>
-        </div>
-        <!--end::Menu item-->
-
-        <!--begin::Menu item-->
-        <div class="menu-item px-3">
-          <a
-            @click="setLang('de')"
-            href="#"
-            class="menu-link d-flex px-5"
-            :class="{ active: currentLanguage === 'de' }"
-          >
-            <span class="symbol symbol-20px me-4">
-              <img
-                class="rounded-1"
-                src="/media/flags/germany.svg"
-                alt="metronic"
-              />
-            </span>
-            German
-          </a>
-        </div>
-        <!--end::Menu item-->
-
-        <!--begin::Menu item-->
-        <div class="menu-item px-3">
-          <a
-            @click="setLang('ja')"
-            href="#"
-            class="menu-link d-flex px-5"
-            :class="{ active: currentLanguage === 'ja' }"
-          >
-            <span class="symbol symbol-20px me-4">
-              <img
-                class="rounded-1"
-                src="/media/flags/japan.svg"
-                alt="metronic"
-              />
-            </span>
-            Japanese
-          </a>
-        </div>
-        <!--end::Menu item-->
-
-        <!--begin::Menu item-->
-        <div class="menu-item px-3">
-          <a
-            @click="setLang('fr')"
-            href="#"
-            class="menu-link d-flex px-5"
-            :class="{ active: currentLanguage === 'fr' }"
-          >
-            <span class="symbol symbol-20px me-4">
-              <img
-                class="rounded-1"
-                src="/media/flags/france.svg"
-                alt="metronic"
-              />
-            </span>
-            French
-          </a>
-        </div>
-        <!--end::Menu item-->
       </div>
       <!--end::Menu sub-->
     </div>
@@ -178,7 +115,7 @@
 
     <!--begin::Menu item-->
     <div class="menu-item px-5">
-      <a @click="signOut()" class="menu-link px-5"> Выход </a>
+      <a @click="signOut()" class="menu-link px-5"> {{$t('Выход')}} </a>
     </div>
     <!--end::Menu item-->
   </div>
@@ -190,19 +127,24 @@ import {defineComponent, computed, onUnmounted, onMounted} from "vue";
 import { useI18n } from "vue-i18n";
 import { useAuthStore } from "@/stores/auth";
 import { useRouter } from "vue-router";
+import i18n from "@/core/plugins/i18n";
 
 export default defineComponent({
   name: "kt-user-menu",
   components: {},
   setup() {
     const router = useRouter();
-    const i18n = useI18n();
+    const i18n2 = useI18n();
     const store = useAuthStore();
-    i18n.locale.value = localStorage.getItem("lang")
+    i18n2.locale.value = localStorage.getItem("lang")
       ? (localStorage.getItem("lang") as string)
       : "en";
 
     const countries = {
+      ru: {
+        flag: "/media/flags/russia.svg",
+        name: "Russian",
+      },
       en: {
         flag: "/media/flags/united-states.svg",
         name: "English",
@@ -232,15 +174,15 @@ export default defineComponent({
 
     const setLang = (lang: string) => {
       localStorage.setItem("lang", lang);
-      i18n.locale.value = lang;
+        i18n2.locale.value = lang;
     };
 
     const currentLanguage = computed(() => {
-      return i18n.locale.value;
+      return i18n2.locale.value;
     });
 
-    const currentLangugeLocale = computed(() => {
-      return countries[i18n.locale.value as keyof typeof countries];
+    const currentLanguageLocale = computed(() => {
+      return countries[i18n2.locale.value as keyof typeof countries];
     });
       const username = computed(() => {
           const store = useAuthStore();
@@ -264,7 +206,7 @@ export default defineComponent({
         username,
         email,
       currentLanguage,
-      currentLangugeLocale,
+      currentLanguageLocale,
       countries,
     };
   },

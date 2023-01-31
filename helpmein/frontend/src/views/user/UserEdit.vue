@@ -17,7 +17,8 @@
 
                                data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar"><i
                             class="bi bi-pencil-fill fs-7"></i>
-                            <input ref="fileInput" type="file" v-on:change="handleImage" name="avatar" accept=".png, .jpg, .jpeg">
+                            <input ref="fileInput" type="file" v-on:change="handleImage" name="avatar"
+                                   accept=".png, .jpg, .jpeg">
                             <input type="hidden" name="avatar_remove">
                         </label>
                         <span
@@ -26,7 +27,7 @@
                             data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
                             <i class="bi bi-x fs-2"></i>
                         </span></div>
-                    <div class="form-text">Разрешены расширения: png, jpg, jpeg.</div>
+                    <div class="form-text">{{ $t('Разрешены расширения: png, jpg, jpeg.') }}</div>
 
                     <div v-if="errors.avatar" class="fv-plugins-message-container invalid-feedback">
                         <div data-field="daterangepicker_input" data-validator="notEmpty">{{ errors.avatar[0] }}</div>
@@ -43,7 +44,7 @@
                 </div>
             </div>
             <div class="row mb-6">
-                <label class="col-lg-4 col-form-label required fw-semobold fs-6">Имя</label>
+                <label class="col-lg-4 col-form-label required fw-semobold fs-6">{{ $t('Имя') }}</label>
                 <div class="col-lg-8 fv-row">
                     <input v-model="model.name" type="text" class="form-control" placeholder="">
                     <div v-if="errors.name" class="fv-plugins-message-container invalid-feedback">
@@ -52,7 +53,7 @@
                 </div>
             </div>
             <div class="row mb-6">
-                <label class="col-lg-4 col-form-label required fw-semobold fs-6">Фамилия</label>
+                <label class="col-lg-4 col-form-label required fw-semobold fs-6">{{ $t('Фамилия') }}</label>
                 <div class="col-lg-8 fv-row">
                     <input v-model="model.surname" type="text" class="form-control" placeholder="">
                     <div v-if="errors.surname" class="fv-plugins-message-container invalid-feedback">
@@ -60,11 +61,12 @@
                     </div>
                 </div>
             </div>
-            <button ref="submitButton" href="javascript:;" v-on:click="submitForm" type="submit" class="btn btn-success">
+            <button ref="submitButton" href="javascript:;" v-on:click="submitForm" type="submit"
+                    class="btn btn-success">
 
-                <span class="indicator-label"> Сохранить </span>
+                <span class="indicator-label"> {{ $t('Сохранить') }} </span>
                 <span class="indicator-progress">
-                    Пожалуйста подождите...
+                    {{ $t('Пожалуйста подождите...') }}
                     <span
                         class="spinner-border spinner-border-sm align-middle ms-2"
                     ></span>
@@ -78,6 +80,7 @@
 import ApiService from "../../core/services/ApiService";
 import Swal from "sweetalert2";
 import {useRouter} from "vue-router";
+
 export default {
     name: "UserEdit",
     data() {
@@ -93,7 +96,7 @@ export default {
         }
     },
     mounted() {
-        ApiService.get("user/info/"+this.$route.params.id)
+        ApiService.get("user/info/" + this.$route.params.id)
             .then((response) => {
                 console.log(response);
                 this.model = response.data.data;
@@ -103,7 +106,7 @@ export default {
             })
     },
     computed: {
-        imageUrl: function() {
+        imageUrl: function () {
             return {'background-image': `url(${this.model.avatar})`}
         }
     },
@@ -114,7 +117,7 @@ export default {
             formData.set('email', this.model.email)
             formData.set('name', this.model.name)
             formData.set('surname', this.model.surname)
-            ApiService.post("user/edit/"+this.$route.params.id, formData)
+            ApiService.post("user/edit/" + this.$route.params.id, formData)
                 .then(() => {
                     Swal.fire({
                         text: "Клиент успешно изменен",
@@ -127,10 +130,10 @@ export default {
                         },
                     }).then(() => {
                         // Go to page after successfully login
-                        this.$router.push({ name: "user-list" });
+                        this.$router.push({name: "user-list"});
                     });
                 })
-                .catch(({ response }) => {
+                .catch(({response}) => {
                     console.log(response)
                     this.errors = response.data.errors;
                     Swal.fire({
@@ -146,7 +149,7 @@ export default {
                 });
         },
         deleteImage() {
-            this.model.avatar = '';
+            this.model.avatar = '/media/avatars/blank.png';
             this.model.image = '';
             this.$refs.fileInput.value = '';
         },

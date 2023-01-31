@@ -14,7 +14,7 @@ export interface User {
 export const useAuthStore = defineStore("auth", () => {
     const errors = ref("");
     const messages = ref("");
-    const avatar = ref("/media/icons/duotune/communication/com006.svg");
+    const avatar = ref("/media/avatars/blank.png");
     const status = ref(500);
     const user = ref<User>({} as User);
     const permissions = ref("");
@@ -34,7 +34,8 @@ export const useAuthStore = defineStore("auth", () => {
     }
     function setUserData(authUser: User) {
         user.value = authUser;
-        avatar.value = authUser.avatar.url;
+        console.log(authUser);
+        avatar.value = authUser.avatar?.url ?? "/media/avatars/blank.png";
         errors.value = "";
     }
 

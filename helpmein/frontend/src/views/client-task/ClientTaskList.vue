@@ -6,7 +6,7 @@
                     v-for="(taskStatusItem, index) in taskStatuses"
                     :class="{'btn-secondary': taskStatus === index}"
                     type="button"
-                    class="btn btn-sm btn-light">{{ taskStatusItem.title }}</button>
+                    class="btn btn-sm btn-light">{{ $t(taskStatusItem.title) }}</button>
         </div>
         <div class="col-lg-12 p-1 task-list-item" v-for="(task, name, index) in tasks">
             <div class="card h-100">
@@ -67,7 +67,10 @@
             <PaginationTemplate :per-page="perPage" :count="pagesCount" :current-page="currentPage"></PaginationTemplate>
         </div>
 
-        <div v-if="tasks?.length == 0" class="alert alert-primary">Пока задач нет, их скоро назначит преподаватель</div>
+
+        <div v-if="tasks?.length === 0" class="px-0 p-1">
+            <div class="alert alert-primary">{{$t('Пока задач нет, их скоро назначит преподаватель')}}</div>
+        </div>
     </div>
 </template>
 
