@@ -12,6 +12,7 @@ use App\Domain\Task\Service\UserTaskService;
 use App\Domain\User\Model\User;
 use App\Domain\UserAnswer\Model\Answer;
 use App\Enum\UserTaskStatus;
+use App\Infrastructure\Lang\Translator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
@@ -40,11 +41,11 @@ class ClientTaskController extends Controller
         $result = $task->questions[$index]['answers'] === $request->get('answers');
         if ($result) {
             return $this->getSuccessResponse([
-                'message' => 'Успешно',
+                'message' => Translator::translate("Успешно"),
             ]);
         } else {
             return $this->getSingleErrorResponse(
-                'Ошибка)))',
+                Translator::translate("Ошибка"),
             );
         }
     }

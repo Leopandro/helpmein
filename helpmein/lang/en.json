@@ -9,6 +9,7 @@
     "email": "e-mail",
     "surname": "Surname",
     "name": "Name",
+    "Ссылка для изменения пароля отправлена. Если письмо не появится в течение нескольких минут, проверьте папку \"спам\".": "The link to change the password has been sent. If the email does not appear within a few minutes, check the spam folder.",
     "The given data was invalid.": "The given data was invalid.",
     "description": "description"
 }

@@ -11,6 +11,7 @@ use App\Domain\Task\Request\TaskEditRequest;
 use App\Domain\Task\Resource\TaskInfoResource;
 use App\Domain\User\Model\User;
 use App\Enum\TaskType;
+use App\Infrastructure\Lang\Translator;
 use BenSampo\Enum\Rules\EnumKey;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
@@ -42,7 +43,7 @@ class TaskController extends Controller
         if ($result = $task->save()) {
             return $this->getSuccessResponse([]);
         } else {
-            return $this->getSingleErrorResponse("Ошибка");
+            return $this->getSingleErrorResponse(Translator::translate("Ошибка"));
         }
     }
 
@@ -62,7 +63,7 @@ class TaskController extends Controller
         if ($task->save()) {
             return $this->getSuccessResponse([]);
         } else {
-            return $this->getSingleErrorResponse("Ошибка");
+            return $this->getSingleErrorResponse(Translator::translate("Ошибка"));
         }
     }
 
@@ -72,7 +73,7 @@ class TaskController extends Controller
         if ($task->delete()) {
             return $this->getSuccessResponse([]);
         } else {
-            return $this->getSingleErrorResponse("Ошибка");
+            return $this->getSingleErrorResponse(Translator::translate("Ошибка"));
         }
     }
 

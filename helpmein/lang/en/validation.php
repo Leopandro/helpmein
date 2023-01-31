@@ -171,6 +171,26 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'answer' => 'Answer',
+        'address' => 'Address',
+        'city' => 'City',
+        'avatar' => 'Avatar',
+        'name' => 'Name',
+        'inn' => 'Inn',
+        "first_name" => "First Name",
+        "last_name" => "Last Name",
+        "email" => "Email",
+        "type" => "Type",
+        "comment" => "Comment",
+        "difficult_level" => "Difficult Level",
+        "description" => "Description",
+        "surname" => "Surname",
+        "selected_user" => "Selected User",
+        "password" => "Password",
+        "password_confirmation" => "Password Confirmation",
+        "password_confirm" => "Password Confirm",
+        "teacher_comment" => "Teacher Comment",
+    ],
 
 ];

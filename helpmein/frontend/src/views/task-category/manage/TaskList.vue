@@ -152,7 +152,9 @@ export default {
     async mounted() {
         const nodeStore = useNodeStore();
         this.task_category = nodeStore.selectedNode;
-        await this.loadData();
+        if (this.task_category.id) {
+            await this.loadData();
+        }
         this.emitter.on("pick-folder", (item) => {
             this.task_category = item;
             this.loadData();

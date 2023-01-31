@@ -11,6 +11,7 @@ use App\Domain\User\Request\RemindPasswordRequest;
 use App\Domain\User\Service\AuthenticationService;
 use App\Domain\User\UseCase\PasswordChanged\PasswordChangedEmail;
 use App\Infrastructure\Http\Resource\MediaResource;
+use App\Infrastructure\Lang\Translator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -85,7 +86,7 @@ class AuthController extends Controller
             $userData['roles'] = $user->getRoleNames();
             return $this->getSuccessResponse($userData);
         } else {
-            return $this->getErrorResponse(["Ошибка"],422);
+            return $this->getErrorResponse([Translator::translate("Ошибка")],422);
         }
     }
 
@@ -103,12 +104,10 @@ class AuthController extends Controller
         Mail::to($user->email)->send(new PasswordChangedEmail($user, $token));
         if ($result = $user->save()) {
             return $this->getSuccessResponse([
-                "message" => "Ссылка для изменения пароля отправлена.
-
-Если письмо не появится в течение нескольких минут, проверьте папку “спам”."
+                "message" =>  Translator::translate("Ссылка для изменения пароля отправлена. Если письмо не появится в течение нескольких минут, проверьте папку \"спам\".")
             ]);
         } else {
-            return $this->getSingleErrorResponse("Произошла ошибка отправки сообщения",422);
+            return $this->getSingleErrorResponse(Translator::translate("Произошла ошибка отправки сообщения"),422);
         }
     }
 
@@ -130,7 +129,7 @@ class AuthController extends Controller
             $userData['token'] = $token;
             return $this->getSuccessResponse($userData);
         } else {
-            return $this->getErrorResponse(["Ошибка"],422);
+            return $this->getErrorResponse([Translator::translate("Ошибка")],422);
         }
     }
 
@@ -140,7 +139,7 @@ class AuthController extends Controller
         $user = User::query()->where('id','=',auth('sanctum')->user()->id)->firstOrFail();
         if (!Hash::check($request->get('currentPassword'), $user->password)) {
             throw ValidationException::withMessages([
-                'currentPassword' => \App\Infrastructure\Lang\Translator::translate('Текущий пароль введен неверно'),
+                'currentPassword' => \App\Infrastructure\Lang\Translator::translate(Translator::translate('Текущий пароль введен неверно')),
             ]);
         }
         $user->password = bcrypt($request->get('newPassword'));

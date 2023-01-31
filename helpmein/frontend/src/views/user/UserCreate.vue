@@ -12,7 +12,7 @@
                     <div class="image-input image-input-outline" data-kt-image-input="true"
                          style="background-image: url(&quot;/metronic8/vue/demo1//media/avatars/blank.png&quot;);">
                         <div class="image-input-wrapper w-125px h-125px"
-                             :style="{'background-image': model.avatar ? model.avatar : 'url(&quot;/media/avatars/blank.png&quot;)'}"></div>
+                             v-bind:style="imageUrl"></div>
                         <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
 
                                data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar"><i
@@ -89,10 +89,16 @@ export default {
             errors: {},
             model: {
                 email: '',
-                avatar: '',
+                avatar: '/media/avatars/blank.png',
+                image: '',
                 name: '',
                 surname: ''
             }
+        }
+    },
+    computed: {
+        imageUrl: function () {
+            return {'background-image': `url(${this.model.avatar})`}
         }
     },
     methods: {
@@ -101,7 +107,7 @@ export default {
             // Activate indicator
             this.$refs.submitButton.setAttribute("data-kt-indicator", "on");
             let formData = new FormData();
-            formData.set('avatar', this.model.image)
+            formData.set('image', this.model.image)
             formData.set('email', this.model.email)
             formData.set('name', this.model.name)
             formData.set('surname', this.model.surname)
@@ -145,7 +151,6 @@ export default {
             this.$refs.fileInput.value = '';
         },
         handleImage(e) {
-            console.log('handleImage')
             const selectedImage = e.target.files[0];
             this.model.image = selectedImage;
             this.createBase64Image(selectedImage);
@@ -154,7 +159,7 @@ export default {
             const reader = new FileReader();
 
             reader.onload = (e) => {
-                this.model.avatar = 'url(' + e.target.result + ')';
+                this.model.avatar = e.target.result;
             }
 
             reader.readAsDataURL(fileObject);

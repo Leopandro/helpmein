@@ -13,6 +13,7 @@ use App\Domain\User\Resource\Admin\AdminUserInfoWithTaskStatsResource;
 use App\Domain\User\Resource\ProfileResource;
 use App\Domain\User\Resource\UserInfoResource;
 use App\Domain\User\UseCase\UserInvation\UserInvationEmail;
+use App\Infrastructure\Lang\Translator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -53,7 +54,7 @@ class UserController extends Controller
             }
             return $this->getSuccessResponse([]);
         } else {
-            return $this->getSingleErrorResponse("Ошибка");
+            return $this->getSingleErrorResponse(Translator::translate("Ошибка"));
         }
     }
     public function create(UserCreateRequest $request): JsonResponse
@@ -80,16 +81,16 @@ class UserController extends Controller
                 'token' => $token
             ]);
             Mail::to($user->email)->send(new UserInvationEmail($user, $token));
-            if ($file = $request->file('avatar')) {
+            if ($file = $request->file('image')) {
                 $res = $user
-                    ->addMediaFromRequest('avatar')
+                    ->addMediaFromRequest('image')
                     ->toMediaCollection('avatars');
                 chmod(public_path("images/".$res->id), 0777);
                 $user->save();
             }
             return $this->getSuccessResponse([]);
         } else {
-            return $this->getSingleErrorResponse("Ошибка");
+            return $this->getSingleErrorResponse(Translator::translate("Ошибка"));
         }
     }
 
@@ -106,18 +107,18 @@ class UserController extends Controller
                     'surname' => $request->get('surname')
                 ]]);
         if ($user->save()) {
-            if ($file = $request->file('avatar')) {
+            if ($file = $request->file('image')) {
                 $user
                     ->clearMediaCollection('avatars');
                 $res = $user
-                    ->addMediaFromRequest('avatar')
+                    ->addMediaFromRequest('image')
                     ->toMediaCollection('avatars');
                 chmod(public_path("images/".$res->id), 0777);
                 $user->save();
             }
             return $this->getSuccessResponse([]);
         } else {
-            return $this->getSingleErrorResponse("Ошибка");
+            return $this->getSingleErrorResponse(Translator::translate("Ошибка"));
         }
     }
 
@@ -127,7 +128,7 @@ class UserController extends Controller
         if ($user->delete()) {
             return $this->getSuccessResponse([]);
         } else {
-            return $this->getSingleErrorResponse("Ошибка");
+            return $this->getSingleErrorResponse(Translator::translate("Ошибка"));
         }
     }
 

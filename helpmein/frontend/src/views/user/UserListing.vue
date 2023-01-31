@@ -88,15 +88,24 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="col-12 px-0 p-1" v-if="users.length > 0">
+            <PaginationTemplate :per-page="perPage" :count="pagesCount" :current-page="currentPage"></PaginationTemplate>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, onMounted} from "vue";
+import {defineComponent} from "vue";
 import ApiService from "@/core/services/ApiService";
+import Swal from "sweetalert2";
+import PaginationTemplate from "@/components/table/PaginationTemplate.vue";
 
 export default defineComponent({
     name: "user-list",
+    components: {
+        PaginationTemplate
+    },
     init() {
     },
 
@@ -110,18 +119,30 @@ export default defineComponent({
                         },
                         search: this.filter.search,
                         page: this.currentPage,
-                        count: 10
+                        count: this.perPage
                     }
                 }).then((response) => {
                 this.users = response.data.data.items;
+                this.pagesCount = response.data.data.meta.pages_count;
             })
         },
         async deleteUser(user) {
-            if (confirm("Вы уверены")) {
-                await ApiService.post('/user/delete/'+user.id).then((data: any) => {
-                    this.searchItems();
-                })
-            }
+            Swal.fire({
+                title: this.$t('Вы уверены что хотите удалить ') + user.name + ' ' + user.surname,
+                showDenyButton: true,
+                showCancelButton: true,
+                showConfirmButton: false,
+                denyButtonText: this.$t('Удалить'),
+                cancelButtonText: this.$t('Отмена'),
+            }).then(async (result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                } else if (result.isDenied) {
+                    await ApiService.post('/user/delete/'+user.id).then((data: any) => {
+                        // Swal.fire('Changes are not saved', '', 'info')
+                    })
+                }
+            })
         }
     },
     data() {
@@ -142,7 +163,20 @@ export default defineComponent({
     },
     async mounted() {
         await this.searchItems();
+        this.emitter.on("change-page", (page) => {
+            this.currentPage = page;
+            this.searchItems();
+        });
+        this.emitter.on("change-count", (count) => {
+            this.perPage = count;
+            this.currentPage = 1;
+            this.searchItems();
+        });
     },
+    unmounted() {
+        this.emitter.off("change-page");
+        this.emitter.off("change-count");
+    }
 });
 </script>
 <style>

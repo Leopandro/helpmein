@@ -54,28 +54,4 @@ class AuthenticationService
     {
         $user->tokens()->delete();
     }
-
-    /**
-     * Метод для проверки возможности пользователя авторизоваться
-     * Система авторизует только пользователей со статусом "Подтвержден"
-     *
-     * @param User $user
-     * @throws AuthenticationException
-     */
-//    public function checkUserCanAuth(User $user): void
-//    {
-//        $this->commonCheckUserCanAuth($user);
-//
-//        if ($user->status->value === UserStatus::CONFIRMED_BUT_NEED_ADDITIONAL_CONFIRM) {
-//            throw new AuthenticationException(
-//                Translator::translate(
-//                    'В ближайшее время менеджер платформы свяжется с Вами для открытия доступа в личный кабинет.'
-//                )
-//            );
-//        }
-//
-//        if ($user->status->value !== UserStatus::CONFIRMED) {
-//            throw new AuthenticationException(Translator::translate('Аккаунт пользователя не подтвержден.'));
-//        }
-//    }
 }

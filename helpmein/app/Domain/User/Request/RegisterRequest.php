@@ -34,7 +34,7 @@ class RegisterRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => 'Имя'
+            'name' => __('first_name')
         ];
     }
 }

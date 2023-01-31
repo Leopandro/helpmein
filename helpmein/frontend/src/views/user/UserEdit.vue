@@ -88,7 +88,7 @@ export default {
             errors: {},
             model: {
                 email: '',
-                avatar: '',
+                avatar: '/media/avatars/blank.png',
                 image: '',
                 name: '',
                 surname: ''
@@ -100,8 +100,8 @@ export default {
             .then((response) => {
                 console.log(response);
                 this.model = response.data.data;
-                this.model.avatar = response.data.data?.avatar?.url;
-                console.log(this.model.avatar);
+                this.model.avatar = response.data.data?.avatar == undefined ? '/media/avatars/blank.png' : response.data.data.avatar.url;
+                this.model.image = '';
 
             })
     },
@@ -113,7 +113,7 @@ export default {
     methods: {
         submitForm() {
             let formData = new FormData();
-            formData.set('avatar', this.model.image)
+            formData.set('image', this.model.image)
             formData.set('email', this.model.email)
             formData.set('name', this.model.name)
             formData.set('surname', this.model.surname)

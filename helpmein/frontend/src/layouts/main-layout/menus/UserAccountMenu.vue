@@ -158,6 +158,18 @@ import {usePermissionStore} from "@/stores/permission";
 export default defineComponent({
     name: "kt-user-menu",
     components: {},
+    methods: {
+        setRole(role: string) {
+            const store = useAuthStore();
+            const permission = usePermissionStore();
+            store.setCurrentRole(role);
+            let resolve = this.$router.resolve({
+                path: permission.getUrlByRole(role)
+            });
+            window.location.href = "/#" + resolve.fullPath;
+            window.location.reload();
+        }
+    },
     setup() {
         const roleNameList = {
             'Teacher': 'Преподаватель',
@@ -187,12 +199,6 @@ export default defineComponent({
         const setLang = (lang: string) => {
             localStorage.setItem("lang", lang);
             i18n2.locale.value = lang;
-        };
-        const setRole = (role: string) => {
-            store.setCurrentRole(role);
-            router.push({path: permission.getUrlByRole(role)}).then(() => {
-                window.location.reload();
-            });
         };
 
         const roleList = computed(() => {
@@ -228,7 +234,6 @@ export default defineComponent({
         return {
             signOut,
             setLang,
-            setRole,
             roleNameList,
             currentRole,
             roleList,
