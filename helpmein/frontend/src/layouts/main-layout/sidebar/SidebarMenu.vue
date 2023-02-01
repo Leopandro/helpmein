@@ -178,8 +178,9 @@ export default defineComponent({
 
         let currentRole = store.currentRole;
         let menuConfig = null;
+        console.log(currentRole)
         if (currentRole) {
-            menuConfig = [MainMenuConfig[0][currentRole]]
+            menuConfig = [MainMenuConfig[0][currentRole.id]]
         } else {
             menuConfig = [MainMenuConfig[0]['Guest']];
         }

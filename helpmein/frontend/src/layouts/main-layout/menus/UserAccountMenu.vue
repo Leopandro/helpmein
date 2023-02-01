@@ -128,9 +128,9 @@
                         @click="setRole(role)"
                         href="javascript:;"
                         class="menu-link d-flex px-5"
-                        :class="{ active: currentRole === role }"
+                        :class="{ active: currentRole.id === role.id }"
                     >
-                        {{ $t(roleNameList[role]) }}
+                        {{ $t(role.title) }}
                     </a>
                 </div>
                 <!--end::Menu item-->
@@ -164,7 +164,7 @@ export default defineComponent({
             const permission = usePermissionStore();
             store.setCurrentRole(role);
             let resolve = this.$router.resolve({
-                path: permission.getUrlByRole(role)
+                path: permission.getUrlByRole(role.id)
             });
             window.location.href = "/#" + resolve.fullPath;
             window.location.reload();

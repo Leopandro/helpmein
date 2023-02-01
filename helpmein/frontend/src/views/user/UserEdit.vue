@@ -17,8 +17,7 @@
 
                                data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar"><i
                             class="bi bi-pencil-fill fs-7"></i>
-                            <input ref="fileInput" type="file" v-on:change="handleImage" name="avatar"
-                                   accept=".png, .jpg, .jpeg">
+                            <input ref="fileInput" type="file" v-on:change="handleImage" name="avatar" accept=".png, .jpg, .jpeg">
                             <input type="hidden" name="avatar_remove">
                         </label>
                         <span
@@ -29,8 +28,8 @@
                         </span></div>
                     <div class="form-text">{{ $t('Разрешены расширения: png, jpg, jpeg.') }}</div>
 
-                    <div v-if="errors.avatar" class="fv-plugins-message-container invalid-feedback">
-                        <div data-field="daterangepicker_input" data-validator="notEmpty">{{ errors.avatar[0] }}</div>
+                    <div v-if="errors.image" class="fv-plugins-message-container invalid-feedback">
+                        <div data-field="daterangepicker_input" data-validator="notEmpty">{{ errors.image[0] }}</div>
                     </div>
                 </div>
             </div>

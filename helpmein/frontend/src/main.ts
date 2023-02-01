@@ -18,13 +18,15 @@ import { initInlineSvg } from "@/core/plugins/inline-svg";
 import { initVeeValidate } from "@/core/plugins/vee-validate";
 import "@/core/plugins/prismjs";
 import {vue3Debounce} from "vue-debounce";
+import 'sweetalert2/dist/sweetalert2.min.css';
+import 'bootstrap';
 const app = createApp(App);
 
-app.use(i18n);
 app.config.globalProperties.emitter = emitter;
 app.use(createPinia());
 app.use(router);
 app.use(ElementPlus);
+app.use(i18n);
 
 ApiService.init(app);
 initApexCharts(app);

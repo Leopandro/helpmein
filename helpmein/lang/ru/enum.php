@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'RoleType' => [
+        'Teacher' => 'Преподаватель',
+        'Client' => 'Ученик',
+    ],
     'TaskType' => [
         'essay' => 'Эссе',
         'task' => 'Тест',

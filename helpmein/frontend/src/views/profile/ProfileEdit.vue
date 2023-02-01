@@ -28,8 +28,8 @@
                         </span></div>
                     <div class="form-text">{{$t('Разрешены расширения: png, jpg, jpeg.')}}</div>
 
-                    <div v-if="errors.avatar" class="fv-plugins-message-container invalid-feedback">
-                        <div data-field="daterangepicker_input" data-validator="notEmpty">{{ errors.avatar[0] }}</div>
+                    <div v-if="errors.image" class="fv-plugins-message-container invalid-feedback">
+                        <div data-field="daterangepicker_input" data-validator="notEmpty">{{ errors.image[0] }}</div>
                     </div>
                 </div>
             </div>

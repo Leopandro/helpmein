@@ -16,10 +16,10 @@ class CategoryTreeController extends Controller
             ->whereNull('parent_id')
             ->where('user_id','=',$user->id)
             ->firstOrCreate([], [
-                'name' => 'Эту папку не должно быть видно',
+                'name' => 'Коренная папка',
                 'user_id' => auth('sanctum')->id()
             ]);
-        $tree = TaskCategory::defaultOrder('asc')->descendantsAndSelf($categoryParent->id)->toTree()->first();;
+        $tree = TaskCategory::defaultOrder('asc')->descendantsAndSelf($categoryParent->id)->toTree()->first();
         return $tree->toArray();
     }
 

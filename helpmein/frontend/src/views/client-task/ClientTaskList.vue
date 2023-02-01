@@ -1,5 +1,5 @@
 <template>
-    <div class="col-lg-8 col-md-10 col-sm-12">
+    <div class="col-12">
         <div class="card-title">
             <button
                     v-on:click="setStatus(index)"

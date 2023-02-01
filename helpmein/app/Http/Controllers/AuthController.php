@@ -10,6 +10,9 @@ use App\Domain\User\Request\RegisterRequest;
 use App\Domain\User\Request\RemindPasswordRequest;
 use App\Domain\User\Service\AuthenticationService;
 use App\Domain\User\UseCase\PasswordChanged\PasswordChangedEmail;
+use App\Enum\RoleType;
+use App\Enum\UserTaskStatus;
+use App\Infrastructure\Http\Resource\EnumResource;
 use App\Infrastructure\Http\Resource\MediaResource;
 use App\Infrastructure\Lang\Translator;
 use Illuminate\Http\JsonResponse;
@@ -38,7 +41,11 @@ class AuthController extends Controller
 
         $userData = $user->attributesToArray();
         $userData['permissions'] = $user->getPermissionsViaRoles();
-        $userData['roles'] = $user->getRoleNames();
+        $roles = [];
+        foreach ($user->getRoleNames() as $role) {
+            $roles[] = new EnumResource(new RoleType($role));
+        }
+        $userData['roles'] = $roles;
         $userData['token'] = $token;
         return $userData;
     }

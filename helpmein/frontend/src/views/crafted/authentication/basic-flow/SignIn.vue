@@ -112,6 +112,7 @@
         <!--end::Form-->
     </div>
     <!--end::Wrapper-->
+    <SelectRoleModal ref="childComponent" :parent="this"></SelectRoleModal>
 </template>
 
 <script lang="ts">
@@ -123,7 +124,9 @@ import Swal from "sweetalert2";
 import * as Yup from "yup";
 import {usePermissionStore} from "@/stores/permission";
 import {useLoginStore} from "@/stores/login";
+import SelectRoleModal from "@/components/modal/SelectRoleModal.vue";
 import i18n from "@/core/plugins/i18n";
+import {Modal} from "bootstrap";
 
 export default defineComponent({
     name: "sign-in",
@@ -131,6 +134,7 @@ export default defineComponent({
         Field,
         VForm,
         ErrorMessage,
+        SelectRoleModal
     },
     computed: {
         errors() {
@@ -152,31 +156,29 @@ export default defineComponent({
         let store = useLoginStore();
         store.email = this.object.email;
     },
-    methods: {
-        forgotPassword() {
-        }
+    mounted() {
     },
-    setup() {
-        console.log(i18n.global.locale);
-        const store = useAuthStore();
-        store.errors = "";
-        const router = useRouter();
-        const permissionStore = usePermissionStore();
-        const submitButton = ref<HTMLButtonElement | null>(null);
-        //Create form validation object
-        const login = Yup.object().shape({});
-
-        //Form submit function
-        const onSubmitLogin = async (values: any) => {
+    methods: {
+        loginAs(role) {
+            const permissionStore = usePermissionStore();
+            const store = useAuthStore();
+            store.currentRole = role;
+            this.$router.push({path: permissionStore.getUrlByRole(store.currentRole.id)});
+        },
+        async onSubmitLogin(values: any) {
+            const store = useAuthStore();
+            this.$refs.submitButton.disabled = true;
+            this.$refs.submitButton.setAttribute("data-kt-indicator", "on");
+            console.log(this.$refs.submitButton)
             values = values as User;
             // Clear existing errors
             store.logout();
 
-            if (submitButton.value) {
+            if (this.$refs.submitButton.value) {
                 // eslint-disable-next-line
-                submitButton.value!.disabled = true;
+                this.$refs.submitButton.value!.disabled = true;
                 // Activate indicator
-                submitButton.value.setAttribute("data-kt-indicator", "on");
+                this.$refs.submitButton.value.setAttribute("data-kt-indicator", "on");
             }
 
             // Send login request
@@ -184,18 +186,15 @@ export default defineComponent({
             const message = store.messages;
 
             if (!message) {
-                Swal.fire({
-                    text: i18n.global.t("Вы успешно авторизовались!"),
-                    icon: "success",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ок!",
-                    heightAuto: false,
-                    customClass: {
-                        confirmButton: "btn fw-semobold btn-light-primary",
-                    },
-                }).then(() => {
-                    router.push({path: permissionStore.getUrlByRole(store.currentRole)});
-                });
+                console.log(store.roles);
+                if (Object.keys(store.roles).length > 1) {
+                    this.$refs.childComponent.openModal(store.roles);
+                } else {
+                    this.loginAs(store.currentRole)
+                }
+                // Swal.fire({
+                //     template: '#my-template'
+                // })
             } else {
                 Swal.fire({
                     text: message,
@@ -212,15 +211,17 @@ export default defineComponent({
             }
 
             //Deactivate indicator
-            submitButton.value?.removeAttribute("data-kt-indicator");
-            // eslint-disable-next-line
-            submitButton.value!.disabled = false;
-        };
-
+            this.$refs.submitButton.disabled = false;
+            this.$refs.submitButton.setAttribute("data-kt-indicator", "off");
+        }
+    },
+    setup() {
+        const store = useAuthStore();
+        store.errors = "";
+        //Create form validation object
+        const login = Yup.object().shape({});
         return {
-            onSubmitLogin,
             login,
-            submitButton,
         };
     },
 });
